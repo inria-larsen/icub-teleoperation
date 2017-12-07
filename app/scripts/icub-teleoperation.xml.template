@@ -1,0 +1,39 @@
+ <!-- Template for iCub teleoperation -- (C) Serena Ivaldi - serena.ivaldi@inria.fr -->
+
+<application>
+    <name>iCub Teleoperation</name>
+    <description>from XSens to iCub</description>
+    <version>1.0</version>
+
+
+    <!-- MODULES -->
+
+    <module>
+        <name>COMmapping </name>
+        <parameters>--from com_mapping.ini</parameters>
+        <node>andyNode</node>
+    </module>
+
+    <module>
+        <name>JointsMapping </name>
+        <parameters>--from joints_mapping.ini</parameters>
+        <node>andyNode</node>
+    </module>
+
+  
+    <!-- CONNECTIONS -->
+
+    <connection>
+          <from>/xsens/joints</from>
+          <to>/JointsMapping/joints:i</to>
+          <protocol>tcp</protocol>
+    </connection>
+
+    <connection>
+          <from>/xsens/joints</from>
+          <to>/COMmapping/joints:i</to>
+          <protocol>tcp</protocol>
+    </connection>    
+
+
+</application>
