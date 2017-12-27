@@ -26,7 +26,6 @@
 #include <yarp/os/LogStream.h>
 #include <yarp/os/BufferedPort.h>
 #include <yarp/os/ResourceFinder.h>
-#include <yarp/os/BufferedPort.h>
 #include <yarp/os/RateThread.h>
 #include <yarp/os/Semaphore.h>
 #include <yarp/os/Stamp.h>
@@ -97,10 +96,10 @@ class comMappingThread: public yarp::os::RateThread
 	}
 
 
-	void estimation_run()
+	void mapping_run()
 	{
-	    //Compute odometry
-	    publishOdometry();
+	    //Compute com
+	    publishCom();
 
 	    //if normal mode, publish the
 	    printCountdown = (printCountdown>=printPeriod) ? 0 : printCountdown +(int)getRate();   // countdown for next print (see sendMsg method)
@@ -214,7 +213,7 @@ class comMappingThread: public yarp::os::RateThread
 	}
 
 
-	void publishOdometry()
+	void publishCom()
 	{
 	    if( this->odometry_enabled )
 	    {
@@ -225,11 +224,6 @@ class comMappingThread: public yarp::os::RateThread
 		                               joint_status.getJointVelKDL(),
 		                               joint_status.getJointAccKDL());
 
-		// Get floating base position in the world
-		KDL::Frame world_H_floatingbase_kdl = odometry_helper.getWorldFrameTransform(this->odometry_floating_base_frame_index);
-
-		// Publish the floating base position on the port
-		KDLtoYarp_position(world_H_floatingbase_kdl,this->world_H_floatingbase);
 
 		// Stream com in world frame
 		KDL::Vector com = odometry_helper.getDynTree().getCOMKDL();
@@ -459,7 +453,7 @@ class comMappingThread: public yarp::os::RateThread
 	    this->run_mutex_acquired = true;
 	    getRobotJoints();
 
-	    estimation_run();
+	    mapping_run();
 	   
 	    this->run_mutex_acquired = false;
 	    run_mutex.unlock();
