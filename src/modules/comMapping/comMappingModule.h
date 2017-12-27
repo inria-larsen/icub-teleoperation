@@ -220,7 +220,7 @@ public:
 
 	    
 
-	    //--------------------------WHOLE BODY DYNAMICS THREAD--------------------------
+	    //--------------------------COM MAPPING THREAD--------------------------
 	    comThread = new comMappingThread(moduleName,
 		                                    robotName,
 		                                    period,
