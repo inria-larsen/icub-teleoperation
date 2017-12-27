@@ -375,7 +375,7 @@ class comMappingThread: public yarp::os::RateThread
 	    return true;
 	}
 
-
+	// TODO move icub-related functions in other local impl file... add settings in .ini file
 	void getRobotJoints()
 	{
 	/*  //Don't wait to get a sensor measure
@@ -390,7 +390,7 @@ class comMappingThread: public yarp::os::RateThread
 	*/
 
 	    //read joint angles value from xsens port
-            Bottle *input = port.read();  //to move to getData()
+            Bottle *input = port.read();  
 
             double neck_pitch = (input->get(17).asDouble())*-1;
 	    double neck_roll = input->get(15).asDouble();
