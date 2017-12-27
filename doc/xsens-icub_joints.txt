@@ -1,0 +1,40 @@
+/* Xsens - iCub Joints Mapping */
+
+	neck_pitch = (m_data.at(5).rotation[2])*-1;
+	neck_roll = (m_data.at(5).rotation[0]);
+	neck_yaw = (m_data.at(5).rotation[1]);
+	torso_yaw = (m_data.at(1).rotation[1] + m_data.at(2).rotation[1] + m_data.at(3).rotation[1])*-1;
+	torso_roll = (m_data.at(2).rotation[0] + m_data.at(3).rotation[0])*-1;
+	torso_pitch = (m_data.at(0).rotation[2] + m_data.at(1).rotation[2] + m_data.at(2).rotation[2]);
+	l_shoulder_pitch = (m_data.at(11).rotation[2])*-1;
+	l_shoulder_roll = (m_data.at(11).rotation[0]);
+	l_shoulder_yaw = (m_data.at(11).rotation[1]);
+	l_elbow = (m_data.at(12).rotation[2]);
+	l_wrist_prosup = (m_data.at(13).rotation[1])*-1;
+	l_wrist_pitch = (m_data.at(13).rotation[2])*-1;
+	l_wrist_yaw = (m_data.at(13).rotation[0])*-1;
+	r_shoulder_pitch = (m_data.at(7).rotation[2])*-1;
+	r_shoulder_roll = (m_data.at(7).rotation[0]);
+	r_shoulder_yaw = (m_data.at(7).rotation[1]);
+	r_elbow = (m_data.at(8).rotation[2]);
+	r_wrist_prosup = (m_data.at(9).rotation[1])*-1;
+	r_wrist_pitch = (m_data.at(9).rotation[2])*-1;
+	r_wrist_yaw = (m_data.at(9).rotation[0])*-1;
+	l_hip_pitch = (m_data.at(18).rotation[2]);
+	l_hip_roll = (m_data.at(18).rotation[0]);
+	l_hip_yaw = (m_data.at(18).rotation[1])*-1;
+	l_knee = (m_data.at(19).rotation[2])*-1;
+	l_ankle_pitch = (m_data.at(20).rotation[2])*-1;
+	l_ankle_roll = (m_data.at(20).rotation[0]);
+	r_hip_pitch = (m_data.at(14).rotation[2]);
+	r_hip_roll = (m_data.at(14).rotation[0]);
+	r_hip_yaw = (m_data.at(14).rotation[1])*-1;
+	r_knee = (m_data.at(15).rotation[2])*-1;
+	r_ankle_pitch = (m_data.at(16).rotation[2])*-1;
+	r_ankle_roll = (m_data.at(16).rotation[0]);
+
+//	m_data is the vector containing the 22 spherical joints of the Xsens-suit
+//	m_data.at(i).rotation[j] (i=0:21, j=0:2) is the joint associated to the spherical joint i, rotating w.r.t the X(j=0),Y(j=1) or Z(j=2) axes 
+//	Joint Reference Frame: X forward, Y up, Z right
+
+//SEE MVN_User_Manual.pdf for additional information
