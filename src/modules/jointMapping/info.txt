@@ -34,7 +34,7 @@
 	r_ankle_roll = (m_data.at(16).rotation[0]);
 
 //	m_data is the vector containing the 22 spherical joints of the Xsens-suit
-//	m_data.at(j).rotation[i] (i=0:21, j=0:2) is the joint associated to the spherical joint i, rotating w.r.t the X(j=0),Y(j=1) or Z(j=2) axes 
+//	m_data.at(i).rotation[j] (i=0:21, j=0:2) is the joint associated to the spherical joint i, rotating w.r.t the X(j=0),Y(j=1) or Z(j=2) axes 
 //	Joint Reference Frame: X forward, Y up, Z right
 
 //SEE MVN_User_Manual.pdf for additional information
