@@ -270,7 +270,6 @@ class comMappingThread: public yarp::os::RateThread
 	       run_mutex_acquired(false),
 	       odometry_enabled(false)
 	{
-		// TODO FIXME move all this logic in threadInit
 
 	       yInfo() << "Launching comMappingThread with name : " << _name << " and robotName " << _robotName << " and period " << _period;
 
@@ -375,7 +374,11 @@ class comMappingThread: public yarp::os::RateThread
 	    return true;
 	}
 
-	// TODO move icub-related functions in other local impl file... add settings in .ini file
+
+
+	//----------------------------
+	//-- xSens-Robot Joint Mapping
+	//----------------------------
 	void getRobotJoints()
 	{
 	/*  //Don't wait to get a sensor measure
@@ -392,46 +395,55 @@ class comMappingThread: public yarp::os::RateThread
 	    //read joint angles value from xsens port
             Bottle *input = port.read();  
 
-            double neck_pitch = (input->get(17).asDouble())*-1;
-	    double neck_roll = input->get(15).asDouble();
-	    double neck_yaw = input->get(16).asDouble();
-	    double torso_yaw = (input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble())*-1;
-	    double torso_roll = (input->get(6).asDouble()+input->get(9).asDouble())*-1;
-	    double torso_pitch = (input->get(8).asDouble()+input->get(5).asDouble()+input->get(2).asDouble());
-	    double l_shoulder_pitch = (input->get(35).asDouble())*-1;
-	    double l_shoulder_roll = input->get(33).asDouble();
-	    double l_shoulder_yaw = input->get(34).asDouble();
-	    double l_elbow = input->get(38).asDouble();
-	    double l_wrist_prosup = (input->get(40).asDouble())*-1;
-	    double l_wrist_pitch = (input->get(41).asDouble())*-1;
-	    double l_wrist_yaw = (input->get(39).asDouble())*-1;
-	    double r_shoulder_pitch = (input->get(23).asDouble())*-1;
-	    double r_shoulder_roll = input->get(21).asDouble();
-	    double r_shoulder_yaw = input->get(22).asDouble();
-	    double r_elbow = input->get(26).asDouble();
-	    double r_wrist_prosup = (input->get(28).asDouble())*-1;
-	    double r_wrist_pitch = (input->get(29).asDouble())*-1;
-	    double r_wrist_yaw = (input->get(27).asDouble())*-1;
-	    double l_hip_pitch = input->get(56).asDouble();
-	    double l_hip_roll = input->get(54).asDouble();
-	    double l_hip_yaw = (input->get(55).asDouble())*-1;
-	    double l_knee = (input->get(59).asDouble())*-1;
-	    double l_ankle_pitch = (input->get(62).asDouble())*-1;
-	    double l_ankle_roll = input->get(60).asDouble();
-	    double r_hip_pitch = input->get(44).asDouble();
-	    double r_hip_roll = input->get(42).asDouble();
-	    double r_hip_yaw = (input->get(43).asDouble())*-1;
-	    double r_knee = (input->get(47).asDouble())*-1;
-	    double r_ankle_pitch = (input->get(50).asDouble())*-1;
-	    double r_ankle_roll = input->get(48).asDouble();
+	    /////////////////
+	    //  xSens to iCub
+	    if (robotName.find("icub") != std::string::npos){
+		    double neck_pitch = (input->get(17).asDouble())*-1;
+		    double neck_roll = input->get(15).asDouble();
+		    double neck_yaw = input->get(16).asDouble();
+		    double torso_yaw = (input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble())*-1;
+		    double torso_roll = (input->get(6).asDouble()+input->get(9).asDouble())*-1;
+		    double torso_pitch = (input->get(8).asDouble()+input->get(5).asDouble()+input->get(2).asDouble());
+		    double l_shoulder_pitch = (input->get(35).asDouble())*-1;
+		    double l_shoulder_roll = input->get(33).asDouble();
+		    double l_shoulder_yaw = input->get(34).asDouble();
+		    double l_elbow = input->get(38).asDouble();
+		    double l_wrist_prosup = (input->get(40).asDouble())*-1;
+		    double l_wrist_pitch = (input->get(41).asDouble())*-1;
+		    double l_wrist_yaw = (input->get(39).asDouble())*-1;
+		    double r_shoulder_pitch = (input->get(23).asDouble())*-1;
+		    double r_shoulder_roll = input->get(21).asDouble();
+		    double r_shoulder_yaw = input->get(22).asDouble();
+		    double r_elbow = input->get(26).asDouble();
+		    double r_wrist_prosup = (input->get(28).asDouble())*-1;
+		    double r_wrist_pitch = (input->get(29).asDouble())*-1;
+		    double r_wrist_yaw = (input->get(27).asDouble())*-1;
+		    double l_hip_pitch = input->get(56).asDouble();
+		    double l_hip_roll = input->get(54).asDouble();
+		    double l_hip_yaw = (input->get(55).asDouble())*-1;
+		    double l_knee = (input->get(59).asDouble())*-1;
+		    double l_ankle_pitch = (input->get(62).asDouble())*-1;
+		    double l_ankle_roll = input->get(60).asDouble();
+		    double r_hip_pitch = input->get(44).asDouble();
+		    double r_hip_roll = input->get(42).asDouble();
+		    double r_hip_yaw = (input->get(43).asDouble())*-1;
+		    double r_knee = (input->get(47).asDouble())*-1;
+		    double r_ankle_pitch = (input->get(50).asDouble())*-1;
+		    double r_ankle_roll = input->get(48).asDouble();
 		
-	    jointPos.resize(32);
-	    jointPos << torso_pitch*PI/180, torso_roll*PI/180, torso_yaw*PI/180, neck_pitch*PI/180, neck_roll*PI/180, neck_yaw*PI/180, l_shoulder_pitch*PI/180, l_shoulder_roll*PI/180, l_shoulder_yaw*PI/180, l_elbow*PI/180, l_wrist_prosup*PI/180, l_wrist_pitch*PI/180, l_wrist_yaw*PI/180, r_shoulder_pitch*PI/180, r_shoulder_roll*PI/180, r_shoulder_yaw*PI/180, r_elbow*PI/180, r_wrist_prosup*PI/180, r_wrist_pitch*PI/180, r_wrist_yaw*PI/180, l_hip_pitch*PI/180, l_hip_roll*PI/180, l_hip_yaw*PI/180, l_knee*PI/180, l_ankle_pitch*PI/180, l_ankle_roll*PI/180, r_hip_pitch*PI/180, r_hip_roll*PI/180, r_hip_yaw*PI/180, r_knee*PI/180, r_ankle_pitch*PI/180, r_ankle_roll*PI/180;
+		    jointPos.resize(32);
+	    jointPos << torso_pitch, torso_roll, torso_yaw, neck_pitch, neck_roll, neck_yaw, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, l_wrist_pitch, l_wrist_yaw, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, r_wrist_pitch, r_wrist_yaw, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
+	    }
+	    ////////////////
+	    else {
+		yError() << "[ERROR] xSens-robot joint mapping not defined (implementation of getRobotJoints() required!)";
+	    	return;
+	    }
 
 	    q.resize(jointPos.size());
 	    for(int i =0; i < (q.size()); i++)
 	    {
-		q(i) = jointPos(i);
+		q(i) = jointPos(i)*PI/180;
             }	    
 
 	    joint_status.setJointPosYARP(q);

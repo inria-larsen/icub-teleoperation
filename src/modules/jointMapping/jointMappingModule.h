@@ -40,8 +40,9 @@ class jointMappingModule: public yarp::os::RFModule
     std::string  moduleName;
     std::string  robotName;
     int     period;
-    double     offset;
+    double  offset;
     int     actuatedDOFs;
+    bool    checkJointLimits;
     double  avgTime, stdDev, avgTimeUsed, stdDevUsed;
 
     yarp::os::Port                 rpcPort;        // a port to handle rpc messages
@@ -152,6 +153,7 @@ public:
 		                                    robotName,
 						    actuatedDOFs,
 						    *m_robot,
+						    checkJointLimits,
 						    wbiProperties,
 		                                    period,
 						    offset);

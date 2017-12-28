@@ -1,4 +1,3 @@
 TODO list
 
-1. separate header files and implementation files (problem with class references not found in .cpp file to solve)
-2. move icub specific functions to separate impl file
+1. separate header files and implementation files (problem class references not found in .cpp file)
