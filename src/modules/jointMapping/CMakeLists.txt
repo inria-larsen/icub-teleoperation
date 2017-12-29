@@ -13,7 +13,7 @@ find_package(iDynTree REQUIRED)
 find_package(wholeBodyInterface REQUIRED)
 find_package(yarpWholeBodyInterface REQUIRED)
 
-set(folder_source main.cpp)
+file(GLOB folder_source ./*.cpp)
 source_group("Source Files" FILES ${folder_source})
 add_executable(${PROJECT_NAME} ${folder_source})
 
