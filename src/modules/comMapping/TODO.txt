@@ -1,3 +1,0 @@
-TODO list
-
-1. separate header files and implementation files (problem class references not found in .cpp file)
