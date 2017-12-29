@@ -23,9 +23,6 @@
 #include <kdl/jntarray.hpp>
 
 #include <vector>
-#include <iCub/iDynTree/yarp_kdl.h>
-
-#include <wbi/iWholeBodySensors.h>
 
 class RobotJointStatus
 {
@@ -40,146 +37,40 @@ class RobotJointStatus
     KDL::JntArray torquesj_kdl;
 
 public:
-	bool zero()
-	{
-	    qj.zero();
-	    dqj.zero();
-	    ddqj.zero();
-	    torquesj.zero();
+    bool zero();
+    RobotJointStatus(int nrOfDOFs=0);
+    bool setNrOfDOFs(int nrOfDOFs);
 
-	    SetToZero(qj_kdl);
-	    SetToZero(dqj_kdl);
-	    SetToZero(ddqj_kdl);
-	    SetToZero(torquesj_kdl);
+    bool setJointPosYARP(const yarp::sig::Vector & qj);
+    bool setJointVelYARP(const yarp::sig::Vector & dqj);
+    bool setJointAccYARP(const yarp::sig::Vector & ddqj);
+    bool setJointTorquesYARP(const yarp::sig::Vector & torquesj);
 
-	    return true;
-	}
+    bool setJointPosKDL(const KDL::JntArray & qj);
+    bool setJointVelKDL(const KDL::JntArray & dqj);
+    bool setJointAccKDL(const KDL::JntArray & ddqj);
+    bool setJointTorquesKDL(const KDL::JntArray & torquesj);
 
-	RobotJointStatus(int nrOfDOFs=0){
-		    setNrOfDOFs(nrOfDOFs);
+    yarp::sig::Vector & getJointPosYARP();
+    yarp::sig::Vector & getJointVelYARP();
+    yarp::sig::Vector & getJointAccYARP();
+    yarp::sig::Vector & getJointTorquesYARP();
 
-		    this->zero();
-	}
+    KDL::JntArray & getJointPosKDL();
+    KDL::JntArray & getJointVelKDL();
+    KDL::JntArray & getJointAccKDL();
+    KDL::JntArray & getJointTorquesKDL();
 
-	bool setNrOfDOFs(int nrOfDOFs)
-	{
+    /**
+     * Copy in the yarp buffers the content of the KDL buffers.
+     */
+    bool updateYarpBuffers();
 
-	    qj.resize(nrOfDOFs);
-	    dqj.resize(nrOfDOFs);
-	    ddqj.resize(nrOfDOFs);
-	    torquesj.resize(nrOfDOFs);
-
-	    qj_kdl.resize(nrOfDOFs);
-	    dqj_kdl.resize(nrOfDOFs);
-	    ddqj_kdl.resize(nrOfDOFs);
-	    torquesj_kdl.resize(nrOfDOFs);
-
-	    return zero();
-	}
-
-	bool setJointPosYARP(const yarp::sig::Vector & _qj)
-	{
-	    qj = _qj;
-	    return YarptoKDL(qj,qj_kdl);
-	}
-	bool setJointVelYARP(const yarp::sig::Vector & _dqj)
-	{
-	    dqj = _dqj;
-	    return YarptoKDL(dqj,dqj_kdl);
-	}
-	bool setJointAccYARP(const yarp::sig::Vector & _ddqj)
-	{
-	    ddqj = _ddqj;
-	    return YarptoKDL(ddqj,ddqj_kdl);
-	}
-	bool setJointTorquesYARP(const yarp::sig::Vector & _torquesj)
-	{
-	    torquesj = _torquesj;
-	    return YarptoKDL(torquesj,torquesj_kdl);
-	}
-
-	bool setJointPosKDL(const KDL::JntArray & _qj)
-	{
-	    qj_kdl = _qj;
-	    return KDLtoYarp(qj_kdl,qj);
-	}
-	bool setJointVelKDL(const KDL::JntArray & _dqj)
-	{
-	    dqj_kdl = _dqj;
-	    return KDLtoYarp(dqj_kdl,dqj);
-	}
-	bool setJointAccKDL(const KDL::JntArray & _ddqj)
-	{
-	    ddqj_kdl = _ddqj;
-	    return KDLtoYarp(ddqj_kdl,ddqj);
-	}
-	bool setJointTorquesKDL(const KDL::JntArray & _torquesj)
-	{
-	    torquesj_kdl = _torquesj;
-	    return KDLtoYarp(torquesj_kdl,torquesj);
-	}
-
-	yarp::sig::Vector & getJointPosYARP()
-	{
-	    return qj;
-	}
-	yarp::sig::Vector & getJointVelYARP()
-	{
-	    return dqj;
-	}
-	yarp::sig::Vector & getJointAccYARP()
-	{
-	    return ddqj;
-	}
-	yarp::sig::Vector & getJointTorquesYARP()
-	{
-	    return torquesj;
-	}
-
-	KDL::JntArray & getJointPosKDL()
-	{
-	    return qj_kdl;
-	}
-	KDL::JntArray & getJointVelKDL()
-	{
-	    return dqj_kdl;
-	}
-	KDL::JntArray & getJointAccKDL()
-	{
-	    return ddqj_kdl;
-	}
-
-	KDL::JntArray & getJointTorquesKDL()
-	{
-	    return torquesj_kdl;
-	}
-
-	    /**
-	     * Copy in the yarp buffers the content of the KDL buffers.
-	     */
-	bool updateYarpBuffers()
-	{
-	    bool ok = true;
-	    ok = ok && KDLtoYarp(qj_kdl,qj);
-	    ok = ok && KDLtoYarp(dqj_kdl,dqj);
-	    ok = ok && KDLtoYarp(ddqj_kdl,ddqj);
-	    ok = ok && KDLtoYarp(torquesj_kdl,torquesj);
-	    return ok;
-	}
-
-	    /**
-	     * Copy in the KDL buffers the content of the YARP buffers.
-	     */
-	bool updateKDLBuffers()
-	{
-	    bool ok = true;
-	    ok = ok && YarptoKDL(qj,qj_kdl);
-	    ok = ok && YarptoKDL(dqj,dqj_kdl);
-	    ok = ok && YarptoKDL(ddqj,ddqj_kdl);
-	    ok = ok && YarptoKDL(torquesj,torquesj_kdl);
-	    return ok;
-	}
-	};
+    /**
+     * Copy in the KDL buffers the content of the YARP buffers.
+     */
+    bool updateKDLBuffers();
+};
 
 
 #endif
