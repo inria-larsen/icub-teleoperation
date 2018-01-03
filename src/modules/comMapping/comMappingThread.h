@@ -63,30 +63,20 @@ class comMappingThread: public yarp::os::RateThread
 	VectorXd jointPos;
 	yarp::sig::Vector q;
 
-	iCub::iDynTree::TorqueEstimationTree * icub_model_calibration;
-	iCub::iDynTree::TorqueEstimationTree * icub_model_world_base_position;
-	iCub::iDynTree::TorqueEstimationTree * icub_model_calibration_on_l_sole;
-	iCub::iDynTree::TorqueEstimationTree * icub_model_calibration_on_r_sole;
-	std::string calibration_support_link;
+	iCub::iDynTree::TorqueEstimationTree * icub_model;
 
 	int left_foot_link_idyntree_id;
 	int right_foot_link_idyntree_id;
 	int root_link_idyntree_id;
 
 	// iCubGui related variables
-	int icubgui_support_frame_idyntree_id;
-	KDL::Frame initial_world_H_supportFrame;
-
-	bool assume_fixed_base_calibration;
-	std::string fixed_link_calibration;
-	bool assume_fixed_base_calibration_from_odometry;
+	//int icubgui_support_frame_idyntree_id;
+	//KDL::Frame initial_world_H_supportFrame;
 
 	yarp::os::Property yarp_options;
 
 	// simpleLeggedOdometry private attributes and methods
 	simpleLeggedOdometry odometry_helper;
-	int odometry_floating_base_frame_index;
-	yarp::sig::Matrix world_H_floatingbase;
 	bool odometry_enabled;
 	yarp::os::BufferedPort<yarp::sig::Vector> * port_com;
 	yarp::os::BufferedPort<yarp::os::Bottle> port; /**<Port that reads the joint status*/
@@ -102,10 +92,7 @@ public:
 		     std::string _robotName,
 		     int _period,
 		     yarpWbi::yarpWholeBodySensors *_wbi,
-		     yarp::os::Property & _yarp_options,
-		     bool _assume_fixed_base_calibration,
-		     std::string _fixed_link_calibration,
-		     bool _assume_fixed_base_calibration_from_odometry);
+		     yarp::os::Property & _yarp_options);
 
 	bool threadInit();
 	void getRobotJoints();
