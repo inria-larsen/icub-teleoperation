@@ -81,39 +81,6 @@ bool comMappingModule::configure(yarp::os::ResourceFinder &rf)
     }
 
 
-    bool fixed_base = false;
-    bool fixed_base_calibration = false;
-    std::string fixed_link;
-    std::string fixed_link_calibration;
-    if( rf.check("assume_fixed") )
-    {
-	fixed_link = rf.find("assume_fixed").asString().c_str();
-	if( fixed_link != "root_link" &&
-	    fixed_link != "l_sole" &&
-	    fixed_link != "r_sole" &&
-	    fixed_link != "r_foot_dh_frame" &&
-	    fixed_link != "l_foot_dh_frame" )
-	{
-	    yError() << "assume_fixed option found, but disabled because " << fixed_link << " is not a recognized fixed_link ";
-	    return false;
-	} else {
-	    yInfo() << "assume_fixed option found, using " << fixed_link << " as fixed link as a kinematic root instead of the imu.";
-	    fixed_base = true;
-	    fixed_base_calibration = true;
-	    fixed_link_calibration = fixed_link;
-	    // \todo TODO workaround for heidelberg
-	    if( fixed_link == "l_sole" )
-	    {
-	        fixed_link = fixed_link_calibration = "l_foot_dh_frame";
-	    }
-
-	    if( fixed_link == "r_sole" )
-	    {
-	        fixed_link = fixed_link_calibration = "r_foot_dh_frame";
-	    }
-	}
-    }
-
     //--------------------------RPC PORT--------------------------------------------
     attach(rpcPort);
     std::string rpcPortName= "/";
@@ -153,26 +120,6 @@ bool comMappingModule::configure(yarp::os::ResourceFinder &rf)
 	}
     }
 
-    //Add to the options some wbd specific stuff
-    if( fixed_base )
-    {
-	yarpWbiOptions.put("fixed_base",fixed_link);
-    }
-
-    if( rf.check("assume_fixed_from_odometry") )
-    {
-	yarpWbiOptions.put("assume_fixed_from_odometry","dummy");
-    }
-  
-    if( rf.check("calibration_support_link") )
-    {
-	yarpWbiOptions.put("calibration_support_link",rf.find("calibration_support_link").asString());
-    }
-    else
-    {
-	yarpWbiOptions.put("calibration_support_link","root_link");
-    }
-
     sensors = new yarpWholeBodySensors(robotName.c_str(), yarpWbiOptions);
 
     sensors->addSensors(wbi::SENSOR_ENCODER,RobotDynamicModelJoints);
@@ -208,10 +155,7 @@ bool comMappingModule::configure(yarp::os::ResourceFinder &rf)
 	                                    robotName,
 	                                    period,
 	                                    sensors,
-	                                    yarpWbiOptions,
-	                                    fixed_base_calibration,
-	                                    fixed_link_calibration,
-	                                    rf.check("assume_fixed_from_odometry"));
+	                                    yarpWbiOptions);
     if(!comThread->start())
     {
 	yError() << getName()
