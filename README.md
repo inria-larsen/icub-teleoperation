@@ -1,13 +1,13 @@
-#icub-teleoperation
+# icub-teleoperation
 [WORK IN PROGRESS]
 
-##What is this
+## What is this
 
 A collection of modules for the teleoperation of the iCub robot.
 It implements the motion-retargeting from the xSens capture-motion system to the robot.
 
 
-##Software requirements
+## Software requirements
 
 On Ubuntu 16.04:
 * yarp
@@ -18,7 +18,7 @@ On Windows:
 * xsens-yarp streaming module
 * mvn xsens
 
-##Installation
+## Installation
 
 ```
 git clone https://github.com/inria-larsen/icub-teleoperation
@@ -29,7 +29,7 @@ cmake ..
 make
 ```
 
-##How to run the modules
+## How to run the modules
 
 ### Concept
 
