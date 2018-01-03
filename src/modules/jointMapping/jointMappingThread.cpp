@@ -51,7 +51,7 @@ bool jointMappingThread::threadInit()
     initJoint();
     
     //opening port
-    port.open(string("/"+moduleName+"/joint").c_str());
+    port.open(string("/"+moduleName+"/q").c_str());
   
     yInfo() << "jointMappingThread::threadInit finished successfully.";
 
