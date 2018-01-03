@@ -14,6 +14,8 @@ On Ubuntu 16.04:
 * codyco-superbuild
 * icub-main
 * icub-contrib
+
+
 On Windows:
 * xsens-yarp streaming module
 * mvn xsens
@@ -36,16 +38,20 @@ make
 ### Set-up procedure
 
 Firstly, the user must guarantee that both the host computer (the one running the yarp server), and the client computer (the one running xsens modules) are connected to the same network.
+
 The yarp.conf file in both the computers has to be properly set-up:
 - 'yarp conf', on both the computers to retrieve the yarp.conf files location.
 - on Windows: 'ipconfig', to retrieve the ip address assigned to the computer.
 - on Ubuntu: 'ifconfig'
 - edit the yarp.conf files:
 	On the host computer
+
 	```
 	<host-ip-address> 10000 yarp
 	```
+
 	On the client computer
+
 	```
 	<host-ip-address> 10000 yarp
 	<client-ip-address> 10000 yarp
