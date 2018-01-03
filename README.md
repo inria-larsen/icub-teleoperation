@@ -41,16 +41,17 @@ Firstly, the user must guarantee that both the host computer (the one running th
 
 The yarp.conf file in both the computers has to be properly set-up:
 - 'yarp conf', on both the computers to retrieve the yarp.conf files location.
-- on Windows: 'ipconfig', to retrieve the ip address assigned to the computer.
-- on Ubuntu: 'ifconfig'
-- edit the yarp.conf files:
-	On the host computer
+- On Windows: 'ipconfig', to retrieve the ip address assigned to the computer.
+- On Ubuntu: 'ifconfig'
+- Edit the yarp.conf files:
+	
+	on the host computer
 
 	```
 	<host-ip-address> 10000 yarp
 	```
 
-	On the client computer
+	on the client computer
 
 	```
 	<host-ip-address> 10000 yarp
