@@ -47,11 +47,7 @@ comMappingThread::comMappingThread(string _name,
                                          string _robotName,
                                          int _period,
                                          yarpWholeBodySensors *_wbs,
-                                         yarp::os::Property & _yarp_options,
-                                         bool _assume_fixed_base_calibration,
-                                         std::string _fixed_link_calibration,
-                                         bool _assume_fixed_base_calibration_from_odometry
-                                        )
+                                         yarp::os::Property & _yarp_options)
     :  RateThread(_period),
        moduleName(_name),
        robotName(_robotName),
@@ -59,9 +55,6 @@ comMappingThread::comMappingThread(string _name,
        yarp_options(_yarp_options),
        printCountdown(0),
        printPeriod(2000),
-       assume_fixed_base_calibration(_assume_fixed_base_calibration),
-       fixed_link_calibration(_fixed_link_calibration),
-       assume_fixed_base_calibration_from_odometry(_assume_fixed_base_calibration_from_odometry),
        run_mutex_acquired(false),
        odometry_enabled(false)
 {
@@ -101,60 +94,32 @@ comMappingThread::comMappingThread(string _name,
 	ID wbi_id;
 	ft_sensor_list.indexToID(ft,wbi_id);
 	ft_serialization.push_back(wbi_id.toString());
-    }
-
-       if( assume_fixed_base_calibration ) {
-	   icub_model_calibration = new iCub::iDynTree::TorqueEstimationTree(urdf_file_path,dof_serialization,ft_serialization,fixed_link_calibration);
-	   icub_model_world_base_position = new iCub::iDynTree::TorqueEstimationTree(urdf_file_path,dof_serialization,ft_serialization,fixed_link_calibration);
-       }
-       else if( assume_fixed_base_calibration_from_odometry )
-       {
-	   icub_model_calibration_on_l_sole = new iCub::iDynTree::TorqueEstimationTree(urdf_file_path,dof_serialization,ft_serialization,"l_sole");
-	   icub_model_calibration_on_r_sole = new iCub::iDynTree::TorqueEstimationTree(urdf_file_path,dof_serialization,ft_serialization,"r_sole");
-	   icub_model_calibration = new iCub::iDynTree::TorqueEstimationTree(urdf_file_path,dof_serialization,ft_serialization);
-       }
-       else
-       {
-	   icub_model_calibration = new iCub::iDynTree::TorqueEstimationTree(urdf_file_path,dof_serialization,ft_serialization);
-	   icub_model_world_base_position = new iCub::iDynTree::TorqueEstimationTree(urdf_file_path,dof_serialization,ft_serialization);
-       }
+    }    
+    icub_model = new iCub::iDynTree::TorqueEstimationTree(urdf_file_path,dof_serialization,ft_serialization);
+  
 }
 
 
 bool comMappingThread::threadInit()
 {
-    joint_status.setNrOfDOFs(icub_model_calibration->getNrOfDOFs());
+    joint_status.setNrOfDOFs(icub_model->getNrOfDOFs());
 
     //Find end effector ids
     int max_id = 100;
 
-    root_link_idyntree_id = icub_model_calibration->getLinkIndex("root_link");
+    root_link_idyntree_id = icub_model->getLinkIndex("root_link");
     //yAssert(root_link_idyntree_id >= 0 && root_link_idyntree_id < max_id );
-    left_foot_link_idyntree_id = icub_model_calibration->getLinkIndex("l_foot");
+    left_foot_link_idyntree_id = icub_model->getLinkIndex("l_foot");
     //yAssert(left_foot_link_idyntree_id >= 0  && left_foot_link_idyntree_id < max_id);
-    right_foot_link_idyntree_id = icub_model_calibration->getLinkIndex("r_foot");
+    right_foot_link_idyntree_id = icub_model->getLinkIndex("r_foot");
     //yAssert(right_foot_link_idyntree_id >= 0 && right_foot_link_idyntree_id < max_id);
     joint_status.zero();
 
-    if( assume_fixed_base_calibration )
-    {
-	icubgui_support_frame_idyntree_id = icub_model_calibration->getLinkIndex(fixed_link_calibration);
+    //icubgui_support_frame_idyntree_id = left_foot_link_idyntree_id;
 
-	if( icubgui_support_frame_idyntree_id < 0 )
-	{
-	    yError() << "Warning: unknown fixed link " << fixed_link_calibration;
-	    return false;
-	}
-    }
-    else
-    {
-	icubgui_support_frame_idyntree_id = left_foot_link_idyntree_id;
-    }
-
-    icub_model_calibration->setAng(joint_status.getJointPosYARP());
+    icub_model->setAng(joint_status.getJointPosYARP());
     //{}^world H_{leftFoot}
-    initial_world_H_supportFrame
-	    = icub_model_calibration->getPositionKDL(root_link_idyntree_id,icubgui_support_frame_idyntree_id);
+    ///initial_world_H_supportFrame = icub_model->getPositionKDL(root_link_idyntree_id,icubgui_support_frame_idyntree_id);
     
    //opening reading port
    port.open(string("/"+moduleName+"/com:i").c_str());
@@ -182,10 +147,10 @@ bool comMappingThread::initOdometry()
     }
 
     if( !odometry_group.check("initial_world_frame") ||
-	!odometry_group.check("initial_fixed_link") ||
+	!odometry_group.check("fixed_link") ||
 	!odometry_group.check("floating_base_frame") ||
 	!odometry_group.find("initial_world_frame").isString() ||
-	!odometry_group.find("initial_fixed_link").isString() ||
+	!odometry_group.find("fixed_link").isString() ||
 	!odometry_group.find("floating_base_frame").isString() )
     {
 	yError() << " SIMPLE_LEGGED_ODOMETRY group found but malformed, exiting";
@@ -194,22 +159,15 @@ bool comMappingThread::initOdometry()
     }
 
     std::string initial_world_frame = odometry_group.find("initial_world_frame").asString();
-    std::string initial_fixed_link = odometry_group.find("initial_fixed_link").asString();
+    std::string fixed_link = odometry_group.find("fixed_link").asString();
     std::string floating_base_frame = odometry_group.find("floating_base_frame").asString();
 
     // Allocate model
-    KDL::CoDyCo::UndirectedTree undirected_tree = this->icub_model_calibration->getKDLUndirectedTree();
+    KDL::CoDyCo::UndirectedTree undirected_tree = this->icub_model->getKDLUndirectedTree();
     bool ok = this->odometry_helper.init(undirected_tree,
 	                                 initial_world_frame,
-	                                 initial_fixed_link);
-    this->current_fixed_link_name = initial_fixed_link;
- //   externalWrenchTorqueEstimator->current_fixed_link_name = initial_fixed_link;
-
-    // Get floating base frame index
-    this->odometry_floating_base_frame_index = odometry_helper.getDynTree().getFrameIndex(floating_base_frame);
-
-    ok = ok && (this->odometry_floating_base_frame_index >= 0 &&
-	        this->odometry_floating_base_frame_index < odometry_helper.getDynTree().getNrOfFrames());
+	                                 fixed_link);
+    this->current_fixed_link_name = fixed_link; 
 
     if( !ok )
     {
@@ -218,10 +176,9 @@ bool comMappingThread::initOdometry()
     }
 
     yInfo() << " SIMPLE_LEGGED_ODOMETRY initialized with initial world frame coincident with "
-	   << initial_world_frame << " and initial fixed link " << initial_fixed_link;
+	   << initial_world_frame << " and  fixed link " << fixed_link;
 
     this->odometry_enabled = true;
-    world_H_floatingbase.resize(4,4);
 
     // Open ports
     port_com = new BufferedPort<Vector>;
@@ -386,19 +343,8 @@ void comMappingThread::threadRelease()
 {
     run_mutex.lock();
 
-    yInfo() << "Deleting icub models used for calibration";
-    delete icub_model_calibration;
-
-    if( this->assume_fixed_base_calibration_from_odometry )
-    {
-	delete icub_model_calibration_on_l_sole;
-	delete icub_model_calibration_on_r_sole;
-    }
-
-    if( !this->assume_fixed_base_calibration_from_odometry )
-    {
-	delete icub_model_world_base_position;
-    }
+    yInfo() << "Deleting icub model used";
+    delete icub_model;
 
     yInfo() << "Closing odometry class";
     closeOdometry();
