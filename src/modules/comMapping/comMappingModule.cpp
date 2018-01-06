@@ -38,10 +38,13 @@ using namespace yarpWbi;
 using namespace yarp::os;
 using namespace wbi;
 
-comMappingModule::comMappingModule(){
+comMappingModule::comMappingModule()
+	:  m_robot(0)
+{
     comThread      = 0;
     sensors  = 0;
     period          = 10;
+    offset 	    = 0.1;
 }
 
 
@@ -78,6 +81,11 @@ bool comMappingModule::configure(yarp::os::ResourceFinder &rf)
     if( !rf.check("period") && rf.check("rate") && rf.find("rate").isInt() )
     {
 	period = rf.find("rate").asInt();
+    }
+
+    if( rf.check("offset") && rf.find("offset").isDouble() )
+    {
+	offset = rf.find("offset").asDouble();
     }
 
 
@@ -119,7 +127,28 @@ bool comMappingModule::configure(yarp::os::ResourceFinder &rf)
 	    return false;
 	}
     }
+    
+    nDOFs = RobotDynamicModelJoints.size();
 
+    Value trueValue;
+    trueValue.fromString("true");
+    bool checkJointLimits = rf.check("check_limits", trueValue, "Looking for joint limits check option").asBool();
+
+    //create reference to wbi
+    m_robot = new yarpWbi::yarpWholeBodyInterface(moduleName.c_str(), yarpWbiOptions);
+    if (!m_robot) {
+        yError("Could not create wbi object.");
+        return false;
+    }
+
+    //add joints
+    m_robot->addJoints(RobotDynamicModelJoints);
+    if (!m_robot->init()) {
+        yError("Could not initialize wbi.");
+        return false;
+    }
+
+    //create reference to sensors
     sensors = new yarpWholeBodySensors(robotName.c_str(), yarpWbiOptions);
 
     sensors->addSensors(wbi::SENSOR_ENCODER,RobotDynamicModelJoints);
@@ -154,8 +183,12 @@ bool comMappingModule::configure(yarp::os::ResourceFinder &rf)
     comThread = new comMappingThread(moduleName,
 	                                    robotName,
 	                                    period,
+					    nDOFs,
+					    *m_robot,
+					    checkJointLimits,
 	                                    sensors,
-	                                    yarpWbiOptions);
+	                                    yarpWbiOptions,
+					    offset);
     if(!comThread->start())
     {
 	yError() << getName()
