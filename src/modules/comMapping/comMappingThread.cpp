@@ -46,17 +46,27 @@ const double PI = 3.141592653589793;
 comMappingThread::comMappingThread(string _name,
                                          string _robotName,
                                          int _period,
+	  				 int _nDOFs,
+			       		 wbi::wholeBodyInterface& robot,
+			       		 bool checkJointLimits,
                                          yarpWholeBodySensors *_wbs,
-                                         yarp::os::Property & _yarp_options)
+                                         yarp::os::Property & _yarp_options,
+					 double _offset)
     :  RateThread(_period),
        moduleName(_name),
        robotName(_robotName),
+       nDOFs(_nDOFs),
+       m_robot(robot),
        sensors(_wbs),
        yarp_options(_yarp_options),
+       m_checkJointLimits(checkJointLimits),	
+       offset(_offset),
        printCountdown(0),
        printPeriod(2000),
        run_mutex_acquired(false),
-       odometry_enabled(false)
+       odometry_enabled(false),
+       m_minJointLimits(_nDOFs),
+       m_maxJointLimits(_nDOFs)
 {
 
        yInfo() << "Launching comMappingThread with name : " << _name << " and robotName " << _robotName << " and period " << _period;
@@ -116,6 +126,20 @@ bool comMappingThread::threadInit()
     joint_status.zero();
 
     //icubgui_support_frame_idyntree_id = left_foot_link_idyntree_id;
+
+    //limits
+    bool result = false;
+    result = m_robot.getJointLimits(m_minJointLimits.data(), m_maxJointLimits.data());
+    if (!result) {
+        yError("Failed to compute joint limits.");
+        return false;
+    }
+
+    if (this->m_checkJointLimits) {
+        std::cout << "[INFO]Joint limits are:\nmin" <<m_minJointLimits.transpose() << "\nmax " << m_maxJointLimits.transpose() << "\n";
+    } else {
+        yInfo("Joint limits disabled");
+    }
 
     icub_model->setAng(joint_status.getJointPosYARP());
     //{}^world H_{leftFoot}
@@ -277,7 +301,7 @@ void comMappingThread::getRobotJoints()
 	    double r_ankle_pitch = (input->get(50).asDouble())*-1;
 	    double r_ankle_roll = input->get(48).asDouble();
 	
-	    jointPos.resize(32);
+	    jointPos.resize(nDOFs);
     jointPos << torso_pitch, torso_roll, torso_yaw, neck_pitch, neck_roll, neck_yaw, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, l_wrist_pitch, l_wrist_yaw, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, r_wrist_pitch, r_wrist_yaw, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
     }
     //----------------------------------------------------------
@@ -286,12 +310,22 @@ void comMappingThread::getRobotJoints()
     	return;
     }
 
+    // Tranform to radiants
     q.resize(jointPos.size());
     for(int i =0; i < (q.size()); i++)
     {
 	q(i) = jointPos(i)*PI/180;
-    }	    
+    }
 
+    if (this->m_checkJointLimits){
+	    // Avoid joint limits
+	    for (int i = 0; i < q.size(); i++){ 
+	    	if (q(i) <= m_minJointLimits(i))		//check min
+			q(i) = m_minJointLimits(i) + offset;
+		if (q(i) >= m_maxJointLimits(i))		//check max
+			q(i) = m_maxJointLimits(i) - offset;
+	    }    
+    }
     joint_status.setJointPosYARP(q);
     // Update yarp vectors
     joint_status.updateYarpBuffers();
