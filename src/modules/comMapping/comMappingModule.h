@@ -29,11 +29,15 @@ class comMappingModule: public yarp::os::RFModule, public wholeBodyDynamics_IDLS
     std::string  moduleName;
     std::string  robotName;
     int     period;
+    double  offset;
+    int     nDOFs;
+    bool    checkJointLimits;
     double  avgTime, stdDev, avgTimeUsed, stdDevUsed;
 
     yarp::os::Port                 rpcPort;        // a port to handle rpc messages
     comMappingThread*     comThread;     // locomotion control thread
     yarpWbi::yarpWholeBodySensors* sensors;
+    wbi::wholeBodyInterface* m_robot;
 
 public:
 	comMappingModule();
