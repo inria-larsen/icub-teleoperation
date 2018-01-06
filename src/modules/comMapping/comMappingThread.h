@@ -48,6 +48,9 @@ class comMappingThread: public yarp::os::RateThread
 	std::string robotName;
 	/** wholeBodySensors interface to get sensors readings */
 	wbi::iWholeBodySensors * sensors;
+	double offset;
+	/** wholeBody interface to get joint limits */
+        wbi::wholeBodyInterface& m_robot;
 	/** helper variable for printing every printPeriod milliseconds */
 	int                 printCountdown;
 	/** period after which some diagnostic messages are print */
@@ -59,9 +62,17 @@ class comMappingThread: public yarp::os::RateThread
 
 	yarp::os::Mutex run_mutex;
 	bool run_mutex_acquired;
+
+	/*Joint related*/
 	RobotJointStatus joint_status;
 	VectorXd jointPos;
 	yarp::sig::Vector q;
+	int nDOFs;
+        //Limits
+	bool m_checkJointLimits;
+        Eigen::VectorXd m_minJointLimits; /* nDOFs */
+        Eigen::VectorXd m_maxJointLimits; /* nDOFs */
+	/*end Joint related*/
 
 	iCub::iDynTree::TorqueEstimationTree * icub_model;
 
@@ -91,8 +102,12 @@ public:
     comMappingThread(std::string _name,
 		     std::string _robotName,
 		     int _period,
+		     int _nDOFs,
+		     wbi::wholeBodyInterface& robot,
+		     bool checkJointLimits,
 		     yarpWbi::yarpWholeBodySensors *_wbi,
-		     yarp::os::Property & _yarp_options);
+		     yarp::os::Property & _yarp_options,
+		     double _offset);
 
 	bool threadInit();
 	void getRobotJoints();
