@@ -72,15 +72,15 @@ On Ubuntu:
 - terminal 5. Launch `jointMapping`
 - terminal 6. Open a write port to to connect to the rpc module of the controller `yarp write /write`
 - terminal 7. `yarp connect /write /torqueBalancing/rpc`
-- terminal 7. Connect the output port of comMapping to the input com-reference port of the controller `yarp connect /comMapping/com:o /torqueBalancing/comDes:i`
-- terminal 7. Connect the output port of jointMapping to the input joint-reference port of the controller `yarp connect /jointMapping/q /torqueBalancing/qDes:i`
+- terminal 7. Connect the output port of comMapping to the input com-reference port of the controller `yarp connect /xsensToRobot/com:o /torqueBalancing/comDes:i`
+- terminal 7. Connect the output port of jointMapping to the input joint-reference port of the controller `yarp connect /xsensToRobot/q /torqueBalancing/qDes:i`
 
 On Windows:
 - Open MVN xsens
 - Connect the suit or open a recorded file.
 - Run xsens.exe
-- On another terminal. `yarp connect /xsens/JointAngles /comMapping/com:i`
-- `yarp connect /xsens/JointAngles /jointMapping/q`
+- On another terminal. `yarp connect /xsens/JointAngles /xsensToRobot/com:i`
+- `yarp connect /xsens/JointAngles /xsensToRobot/q`
 
 On Ubuntu again:
 - terminal 6. `start`
