@@ -51,7 +51,7 @@ bool jointMappingThread::threadInit()
     initJoint();
     
     //opening port
-    port.open(string("/"+moduleName+"/q").c_str());
+    port.open(string("/xsensToRobot/q").c_str());
   
     yInfo() << "jointMappingThread::threadInit finished successfully.";
 
@@ -179,9 +179,9 @@ void jointMappingThread::getRobotJoints()
 void jointMappingThread::avoidJointLimits() 
 {
     for (int i = 0; i < jointPos.size(); i++){ 
-    	if (jointPos(i) <= m_minJointLimits(i))		//check min
+    	if (jointPos(i) <= (m_minJointLimits(i) + offset))		//check min
 		jointPos(i) = m_minJointLimits(i) + offset;
-	if (jointPos(i) >= m_maxJointLimits(i))		//check max
+	if (jointPos(i) >= (m_maxJointLimits(i) - offset))		//check max
 		jointPos(i) = m_maxJointLimits(i) - offset;
     } 	  
 }
