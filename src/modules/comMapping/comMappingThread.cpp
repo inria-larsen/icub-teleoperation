@@ -146,7 +146,7 @@ bool comMappingThread::threadInit()
     ///initial_world_H_supportFrame = icub_model->getPositionKDL(root_link_idyntree_id,icubgui_support_frame_idyntree_id);
     
    //opening reading port
-   port.open(string("/"+moduleName+"/com:i").c_str());
+   port.open(string("/xsensToRobot/com:i").c_str());
 
    //---------------------------------------------------------
    //   Odometry initialization
@@ -206,7 +206,7 @@ bool comMappingThread::initOdometry()
 
     // Open ports
     port_com = new BufferedPort<Vector>;
-    port_com->open(string("/"+moduleName+"/com:o").c_str());
+    port_com->open(string("/xsensToRobot/com:o").c_str());
 
     return true;
 }
@@ -320,9 +320,9 @@ void comMappingThread::getRobotJoints()
     if (this->m_checkJointLimits){
 	    // Avoid joint limits
 	    for (int i = 0; i < q.size(); i++){ 
-	    	if (q(i) <= m_minJointLimits(i))		//check min
+	    	if (q(i) <= (m_minJointLimits(i) + offset))		//check min
 			q(i) = m_minJointLimits(i) + offset;
-		if (q(i) >= m_maxJointLimits(i))		//check max
+		if (q(i) >= (m_maxJointLimits(i) - offset))		//check max
 			q(i) = m_maxJointLimits(i) - offset;
 	    }    
     }
