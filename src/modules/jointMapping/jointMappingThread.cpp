@@ -77,8 +77,8 @@ bool jointMappingThread::initJoint()
 
     //output format
     joint_list = yarp_options.find("wbi_joint_list").asString();
-    
-    return true;
+    //controller
+    controller =yarp_options.find("controller").asString();
 }
 
 void jointMappingThread::publishJoints()
@@ -105,12 +105,12 @@ void jointMappingThread::getRobotJoints()
     /////////////////
     //  xSens to iCub
     if (robotName.find("icub") != std::string::npos){
+	    double torso_pitch = (input->get(8).asDouble()+input->get(5).asDouble()+input->get(2).asDouble());
+	    double torso_roll = (input->get(6).asDouble()+input->get(9).asDouble())*-1;
+	    double torso_yaw = (input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble())*-1; 
 	    double neck_pitch = (input->get(17).asDouble())*-1;
 	    double neck_roll = input->get(15).asDouble();
 	    double neck_yaw = input->get(16).asDouble();
-	    double torso_yaw = (input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble())*-1;
-	    double torso_roll = (input->get(6).asDouble()+input->get(9).asDouble())*-1;
-	    double torso_pitch = (input->get(8).asDouble()+input->get(5).asDouble()+input->get(2).asDouble());
 	    double l_shoulder_pitch = (input->get(35).asDouble())*-1;
 	    double l_shoulder_roll = input->get(33).asDouble();
 	    double l_shoulder_yaw = input->get(34).asDouble();
@@ -140,17 +140,17 @@ void jointMappingThread::getRobotJoints()
 	
 	    jointPos.resize(actuatedDOFs);
     
-	    if (joint_list.compare("ROBOT_TORQUE_CONTROL_JOINTS_WITHOUT_PRONOSUP") == 0){
+	    if ((joint_list.compare("ROBOT_TORQUE_CONTROL_JOINTS_WITHOUT_PRONOSUP") == 0) && (controller.compare("TorqueBalancing") == 0)){
 		jointPos << torso_yaw, torso_roll, torso_pitch, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
 		swap(m_minJointLimits(0),m_minJointLimits(2));
 		swap(m_maxJointLimits(0),m_maxJointLimits(2));
 	    }
-	    if (joint_list.compare("ROBOT_TORQUE_CONTROL_JOINTS") == 0){
+	    else if ((joint_list.compare("ROBOT_TORQUE_CONTROL_JOINTS") == 0) && (controller.compare("TorqueBalancing") == 0)){
 		jointPos << torso_yaw, torso_roll, torso_pitch, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
 		swap(m_minJointLimits(0),m_minJointLimits(2));
 		swap(m_maxJointLimits(0),m_maxJointLimits(2));
 	    }
-	    if (joint_list.compare("ROBOT_DYNAMIC_MODEL_JOINTS") == 0){
+	    else if ((joint_list.compare("ROBOT_DYNAMIC_MODEL_JOINTS") == 0) && (controller.compare("TorqueBalancing") == 0)){
 		jointPos << neck_pitch, neck_roll, neck_yaw, torso_yaw, torso_roll, torso_pitch, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, l_wrist_pitch, l_wrist_yaw, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, r_wrist_pitch, r_wrist_yaw, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
 		swap(m_minJointLimits(0),m_minJointLimits(3));
 		swap(m_maxJointLimits(0),m_maxJointLimits(3));
@@ -160,6 +160,23 @@ void jointMappingThread::getRobotJoints()
 		swap(m_maxJointLimits(2),m_maxJointLimits(5));
 		swap(m_minJointLimits(0),m_minJointLimits(2));
 		swap(m_maxJointLimits(0),m_maxJointLimits(2));
+	    }
+	    else if ((joint_list.compare("ROBOT_DYNAMIC_MODEL_JOINTS") == 0) && (controller.compare("QP") == 0)){
+		jointPos << torso_pitch, torso_roll, torso_yaw, neck_pitch, neck_roll, neck_yaw, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, l_wrist_pitch, l_wrist_yaw, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, r_wrist_pitch, r_wrist_yaw;
+ 		for (int i=20; i<32; i++){
+		    swap(m_minJointLimits(i),m_minJointLimits(i-14));
+		    swap(m_maxJointLimits(i),m_maxJointLimits(i-14));
+	        }
+	        for (int i=20; i<32; i+=2){
+		    swap(m_minJointLimits(i),m_minJointLimits(i-2));
+		    swap(m_maxJointLimits(i),m_maxJointLimits(i-2));
+		    swap(m_minJointLimits(i+1),m_minJointLimits(i-1));
+		    swap(m_maxJointLimits(i+1),m_maxJointLimits(i-1));
+ 		}
+	    }
+	    else {
+	        yError() << "[ERROR] this controller is not designed to control the selected joint list. Check the configuration file";
+ 	        return;
 	    }
     }
     /////////////////
