@@ -58,7 +58,7 @@ class jointMappingThread: public yarp::os::RateThread
 	double              printPeriod;
 	yarp::os::Stamp timestamp;
 	wbi::wholeBodyInterface& m_robot;
-
+             
 	/*Joint related*/
 	Eigen::VectorXd jointPos;
 	std::string joint_list;
@@ -68,7 +68,8 @@ class jointMappingThread: public yarp::os::RateThread
         Eigen::VectorXd m_minJointLimits; /* actuatedDOFs */
         Eigen::VectorXd m_maxJointLimits; /* actuatedDOFs */
 	/*end Joint related*/
-
+	
+        std::string controller;
 	yarp::os::Mutex run_mutex;
 	bool run_mutex_acquired;
 
