@@ -34,8 +34,6 @@ make
 
 ## How to run the modules
 
-### Concept
-
 ### Set-up procedure
 
 #### Communication on yarp
