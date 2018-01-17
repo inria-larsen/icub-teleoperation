@@ -43,9 +43,9 @@ make
 Firstly, the user must guarantee that both the host computer (the one running the yarp server), and the client computer (the one running xsens modules) are connected to the same network.
 
 The yarp.conf file in both the computers has to be properly set-up:
-- 'yarp conf', on both the computers to retrieve the yarp.conf files location.
-- On Windows: 'ipconfig', to retrieve the ip address assigned to the computer.
-- On Ubuntu: 'ifconfig'
+- `yarp conf`, on both the computers to retrieve the yarp.conf files location.
+- On Windows: `ipconfig`, to retrieve the ip address assigned to the computer.
+- On Ubuntu: `ifconfig`
 - Edit the yarp.conf files:
 	
 	on the host computer
@@ -63,11 +63,15 @@ The yarp.conf file in both the computers has to be properly set-up:
 
 #### MVN Xsens
 
-- Check that the right "<client-ip-address>" is assigned to the variable `server_name` in ../xsens/yarp/src/main.cpp
+- Check that the right <client-ip-address> is assigned to the variable `server_name` in ../xsens/yarp/src/main.cpp
 - Open MVN Xsens and ensure steaming is enabled:
+
     ->Options->Miscellaneous->network streamer
+
     check the following:
+
      [x] <client-ipaddress> 9763 UDP 0 0 [ ]
+
      [x] joint angles
 
 
@@ -126,13 +130,19 @@ On Windows again: (skip this step if using the suit)
 Be sure that the conf file of the controller respects the following (e.g. `torqueBalancing.ini`):
 - `period` and `modulePeriod` are the same as the `period` in the conf files `comMapping.ini` and `jointMapping.ini`
 - the controller TorqueBalancing has been tested and works with the following gains
+```
 comKp       (50 50 50)
+
 comKd       (15 15 15)
+
 comKi       (0 0 0)
 
+
 kw          1
+
 kImp        (100 100 100    10 10 10    20 20 20 20 20 20 20   20 20 20 20 20 20 20   30 30 30 60 10 10      30 30 30 60 10 10 )
 
 tsat        (24 24 24    24 24 24    24 24 24 24 24 24 24   24 24 24 24 24 24 24   24 24 24 24 24 24      24 24 24 24 24 24 )
+```
 
 
