@@ -40,7 +40,7 @@ using namespace Eigen;
 const double PI = 3.141592653589793;
 
 //===============================================
-//        ComMapping Main THREAD (runs every 10ms)
+//        ComMapping Main THREAD 
 //===============================================
 
 comMappingThread::comMappingThread(string _name,
@@ -49,7 +49,6 @@ comMappingThread::comMappingThread(string _name,
 	  				 int _nDOFs,
 			       		 wbi::wholeBodyInterface& robot,
 			       		 bool checkJointLimits,
-                                         yarpWholeBodySensors *_wbs,
                                          yarp::os::Property & _yarp_options,
 					 double _offset)
     :  RateThread(_period),
@@ -57,14 +56,12 @@ comMappingThread::comMappingThread(string _name,
        robotName(_robotName),
        nDOFs(_nDOFs),
        m_robot(robot),
-       sensors(_wbs),
        yarp_options(_yarp_options),
        m_checkJointLimits(checkJointLimits),	
        offset(_offset),
        printCountdown(0),
        printPeriod(2000),
        run_mutex_acquired(false),
-       odometry_enabled(false),
        m_minJointLimits(_nDOFs),
        m_maxJointLimits(_nDOFs)
 {
@@ -78,55 +75,33 @@ comMappingThread::comMappingThread(string _name,
        }
 
     std::string urdf_file = _yarp_options.find("urdf").asString().c_str();
+
+    std::string urdf_file_path = rf.findFileByName(urdf_file.c_str());
+
     yarp::os::ResourceFinder rf;
     if( _yarp_options.check("verbose") )
     {
 	rf.setVerbose();
     }
 
-    std::string urdf_file_path = rf.findFileByName(urdf_file.c_str());
+    //std::string urdf_file_path = rf.findFileByName(urdf_file.c_str());
+    
+    yInfo() << "Tryng to open " << urdf_file << " as robot model";
+    
+    bool ok = icub_model.loadURDFModel(urdf_file_path);
 
-    std::vector<std::string> dof_serialization;
-
-    // \todo TODO FIXME move IDList -> std::vector<std::string> conversion to wbiIdUtils
-    IDList torque_estimation_list = sensors->getSensorList(wbi::SENSOR_ENCODER);
-    for(int dof=0; dof < (int)torque_estimation_list.size(); dof++)
+    if( !ok )
     {
-	ID wbi_id;
-	torque_estimation_list.indexToID(dof,wbi_id);
-	dof_serialization.push_back(wbi_id.toString());
-    }
-
-    std::vector<std::string> ft_serialization;
-    IDList ft_sensor_list =  _wbs->getSensorList(wbi::SENSOR_FORCE_TORQUE);
-    for(int ft=0; ft < (int)ft_sensor_list.size(); ft++)
-    {
-	ID wbi_id;
-	ft_sensor_list.indexToID(ft,wbi_id);
-	ft_serialization.push_back(wbi_id.toString());
-    }    
-    icub_model = new iCub::iDynTree::TorqueEstimationTree(urdf_file_path,dof_serialization,ft_serialization);
+        std::cerr << "Loading urdf file " << urdf_file << " failed, exiting" << std::endl;
+        return;
+    }  
   
 }
 
 
 bool comMappingThread::threadInit()
 {
-    joint_status.setNrOfDOFs(icub_model->getNrOfDOFs());
-
-    //Find end effector ids
-    int max_id = 100;
-
-    root_link_idyntree_id = icub_model->getLinkIndex("root_link");
-    //yAssert(root_link_idyntree_id >= 0 && root_link_idyntree_id < max_id );
-    left_foot_link_idyntree_id = icub_model->getLinkIndex("l_foot");
-    //yAssert(left_foot_link_idyntree_id >= 0  && left_foot_link_idyntree_id < max_id);
-    right_foot_link_idyntree_id = icub_model->getLinkIndex("r_foot");
-    //yAssert(right_foot_link_idyntree_id >= 0 && right_foot_link_idyntree_id < max_id);
-    joint_status.zero();
-
-    //icubgui_support_frame_idyntree_id = left_foot_link_idyntree_id;
-
+    q.resize(icub_model.getNrOfDOFs());
     //limits
     bool result = false;
     result = m_robot.getJointLimits(m_minJointLimits.data(), m_maxJointLimits.data());
@@ -141,16 +116,18 @@ bool comMappingThread::threadInit()
         yInfo("Joint limits disabled");
     }
 
-    icub_model->setAng(joint_status.getJointPosYARP());
-    //{}^world H_{leftFoot}
-    ///initial_world_H_supportFrame = icub_model->getPositionKDL(root_link_idyntree_id,icubgui_support_frame_idyntree_id);
-    
-   //opening reading port
-   port.open(string("/xsensToRobot/com:i").c_str());
+    for (int i=0; i<q.size(); i++){
+        q(i)=0;
+    }
 
-   //---------------------------------------------------------
-   //   Odometry initialization
-   //---------------------------------------------------------
+    icub_model.setAng(q);
+    
+    //opening reading port
+    port.open(string("/xsensToRobot/com:i").c_str()); 
+
+    //---------------------------------------------------------
+    //   Odometry initialization
+    //---------------------------------------------------------
     initOdometry();
 
     yInfo() << "comMappingThread::threadInit finished successfully.";
@@ -161,48 +138,10 @@ bool comMappingThread::threadInit()
 
 bool comMappingThread::initOdometry()
 {
-    yarp::os::Bottle & odometry_group = yarp_options.findGroup("SIMPLE_LEGGED_ODOMETRY");
-
-    if( odometry_group.isNull()  )
-    {
-	yInfo() << " SIMPLE_LEGGED_ODOMETRY group not found, odometry disabled";
-	this->odometry_enabled = false;
-	return true;
-    }
-
-    if( !odometry_group.check("initial_world_frame") ||
-	!odometry_group.check("fixed_link") ||
-	!odometry_group.check("floating_base_frame") ||
-	!odometry_group.find("initial_world_frame").isString() ||
-	!odometry_group.find("fixed_link").isString() ||
-	!odometry_group.find("floating_base_frame").isString() )
-    {
-	yError() << " SIMPLE_LEGGED_ODOMETRY group found but malformed, exiting";
-	this->odometry_enabled = false;
-	return false;
-    }
-
-    std::string initial_world_frame = odometry_group.find("initial_world_frame").asString();
-    std::string fixed_link = odometry_group.find("fixed_link").asString();
-    std::string floating_base_frame = odometry_group.find("floating_base_frame").asString();
-
-    // Allocate model
-    KDL::CoDyCo::UndirectedTree undirected_tree = this->icub_model->getKDLUndirectedTree();
-    bool ok = this->odometry_helper.init(undirected_tree,
-	                                 initial_world_frame,
-	                                 fixed_link);
-    this->current_fixed_link_name = fixed_link; 
-
-    if( !ok )
-    {
-	yError() << "Odometry initialization failed, please check your parameters";
-	return false;
-    }
-
-    yInfo() << " SIMPLE_LEGGED_ODOMETRY initialized with initial world frame coincident with "
-	   << initial_world_frame << " and  fixed link " << fixed_link;
-
-    this->odometry_enabled = true;
+    
+    link_name = yarp_options.find("reference_frame").asString();
+	
+    link_index = icub_model.getLinkIndex(link_name);
 
     // Open ports
     port_com = new BufferedPort<Vector>;
@@ -214,29 +153,17 @@ bool comMappingThread::initOdometry()
 
 void comMappingThread::publishCom()
 {
-    if( this->odometry_enabled )
-    {
-	// Read joint position, velocity and accelerations into the odometry helper model
-	// This could be avoided by using the same geometric model
-	// for odometry, force/torque estimation and sensor force/torque calibration
-	odometry_helper.setJointsState(joint_status.getJointPosKDL(),
-	                               joint_status.getJointVelKDL(),
-	                               joint_status.getJointAccKDL());
-
-
-	// Stream com in world frame
-	KDL::Vector com = odometry_helper.getDynTree().getCOMKDL();
-
+	// Stream com in index frame
+	//KDL::Vector com = icub_model.getCOMKDL();
+        yarp::sig::Vector com = icub_model.getCOM(link_index);
+	
 	yarp::sig::Vector & com_to_send = port_com->prepare();
-	com_to_send.resize(3);
 
-	KDLtoYarp(com,com_to_send);
+	com_to_send.resize(3);
+        for (int i=0; i<3; i++)
+             com_to_send(i)=com(i);
 
 	port_com->write();
- 
-	// save the current link considered as fixed by the odometry
-	current_fixed_link_name = odometry_helper.getCurrentFixedLink();
-    }
 }
     
 
@@ -251,29 +178,18 @@ void comMappingThread::closeOdometry()
 //============================
 void comMappingThread::getRobotJoints()
 {
-/*  //Don't wait to get a sensor measure
-    bool wait = false;
-    //Don't get timestamps
-    double * stamps = NULL;
-
-    // Get joint encoders position, velocities and accelerations
-    sensors->readSensors(wbi::SENSOR_ENCODER_POS, joint_status.getJointPosKDL().data.data(), stamps, wait);
-    sensors->readSensors(wbi::SENSOR_ENCODER_SPEED, joint_status.getJointVelKDL().data.data(), stamps, wait);
-    sensors->readSensors(wbi::SENSOR_ENCODER_ACCELERATION, joint_status.getJointAccKDL().data.data(), stamps, wait);
-*/
-
     //read joint angles value from xsens port
     Bottle *input = port.read();  
 
     //-------------------------------
     //-- xSens to iCub
     if (robotName.find("icub") != std::string::npos){
+	    double torso_pitch = (input->get(8).asDouble()+input->get(5).asDouble()+input->get(2).asDouble());
+	    double torso_roll = (input->get(6).asDouble()+input->get(9).asDouble())*-1;
+	    double torso_yaw = (input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble())*-1; 
 	    double neck_pitch = (input->get(17).asDouble())*-1;
 	    double neck_roll = input->get(15).asDouble();
 	    double neck_yaw = input->get(16).asDouble();
-	    double torso_yaw = (input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble())*-1;
-	    double torso_roll = (input->get(6).asDouble()+input->get(9).asDouble())*-1;
-	    double torso_pitch = (input->get(8).asDouble()+input->get(5).asDouble()+input->get(2).asDouble());
 	    double l_shoulder_pitch = (input->get(35).asDouble())*-1;
 	    double l_shoulder_roll = input->get(33).asDouble();
 	    double l_shoulder_yaw = input->get(34).asDouble();
@@ -311,7 +227,6 @@ void comMappingThread::getRobotJoints()
     }
 
     // Tranform to radiants
-    q.resize(jointPos.size());
     for(int i =0; i < (q.size()); i++)
     {
 	q(i) = jointPos(i)*PI/180;
@@ -326,9 +241,7 @@ void comMappingThread::getRobotJoints()
 			q(i) = m_maxJointLimits(i) - offset;
 	    }    
     }
-    joint_status.setJointPosYARP(q);
-    // Update yarp vectors
-    joint_status.updateYarpBuffers();
+    icub_model.setAng(q);
 }
    
 //-----------------
@@ -376,9 +289,6 @@ void comMappingThread::mapping_run()
 void comMappingThread::threadRelease()
 {
     run_mutex.lock();
-
-    yInfo() << "Deleting icub model used";
-    delete icub_model;
 
     yInfo() << "Closing odometry class";
     closeOdometry();

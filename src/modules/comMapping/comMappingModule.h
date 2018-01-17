@@ -15,7 +15,6 @@
 #include <yarp/os/Vocab.h>
 #include "wholeBodyDynamics_IDLServer.h"
 
-#include <yarpWholeBodyInterface/yarpWholeBodySensors.h>
 
 #include "comMappingThread.h"
 
@@ -36,7 +35,6 @@ class comMappingModule: public yarp::os::RFModule, public wholeBodyDynamics_IDLS
 
     yarp::os::Port                 rpcPort;        // a port to handle rpc messages
     comMappingThread*     comThread;     // locomotion control thread
-    yarpWbi::yarpWholeBodySensors* sensors;
     wbi::wholeBodyInterface* m_robot;
 
 public:

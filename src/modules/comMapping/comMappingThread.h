@@ -27,27 +27,24 @@
 
 // iDynTree includes
 #include "iCub/iDynTree/yarp_kdl.h"
-#include <iCub/iDynTree/TorqueEstimationTree.h>
+#include <iCub/iDynTree/DynTree.h>
 
 #include <wbi/wbi.h>
 #include <yarpWholeBodyInterface/yarpWholeBodyInterface.h>
-#include <yarpWholeBodyInterface/yarpWholeBodySensors.h>
 #include <yarpWholeBodyInterface/yarpWbiUtil.h>
 
-// Local includes
-#include "simpleLeggedOdometry.h"
-#include "robotStatus.h"
 
 using namespace Eigen;
 
 class comMappingThread: public yarp::os::RateThread
 {
+	yarp::os::ResourceFinder rf;
 	/** prefix for all the ports opened by this module */
 	std::string moduleName;
 	/** prefix for all the ports of the robot at which we are connecting */
 	std::string robotName;
-	/** wholeBodySensors interface to get sensors readings */
-	wbi::iWholeBodySensors * sensors;
+	std::string link_name;
+        int link_index;
 	double offset;
 	/** wholeBody interface to get joint limits */
         wbi::wholeBodyInterface& m_robot;
@@ -64,7 +61,6 @@ class comMappingThread: public yarp::os::RateThread
 	bool run_mutex_acquired;
 
 	/*Joint related*/
-	RobotJointStatus joint_status;
 	VectorXd jointPos;
 	yarp::sig::Vector q;
 	int nDOFs;
@@ -74,24 +70,13 @@ class comMappingThread: public yarp::os::RateThread
         Eigen::VectorXd m_maxJointLimits; /* nDOFs */
 	/*end Joint related*/
 
-	iCub::iDynTree::TorqueEstimationTree * icub_model;
-
-	int left_foot_link_idyntree_id;
-	int right_foot_link_idyntree_id;
-	int root_link_idyntree_id;
-
-	// iCubGui related variables
-	//int icubgui_support_frame_idyntree_id;
-	//KDL::Frame initial_world_H_supportFrame;
+	iCub::iDynTree::DynTree icub_model;
 
 	yarp::os::Property yarp_options;
 
 	// simpleLeggedOdometry private attributes and methods
-	simpleLeggedOdometry odometry_helper;
-	bool odometry_enabled;
 	yarp::os::BufferedPort<yarp::sig::Vector> * port_com;
 	yarp::os::BufferedPort<yarp::os::Bottle> port; /**<Port that reads the joint status*/
-	std::string current_fixed_link_name;
 
 	bool initOdometry();
 	void publishCom();
@@ -105,7 +90,6 @@ public:
 		     int _nDOFs,
 		     wbi::wholeBodyInterface& robot,
 		     bool checkJointLimits,
-		     yarpWbi::yarpWholeBodySensors *_wbi,
 		     yarp::os::Property & _yarp_options,
 		     double _offset);
 

@@ -42,7 +42,6 @@ comMappingModule::comMappingModule()
 	:  m_robot(0)
 {
     comThread      = 0;
-    sensors  = 0;
     period          = 10;
     offset 	    = 0.1;
 }
@@ -148,34 +147,7 @@ bool comMappingModule::configure(yarp::os::ResourceFinder &rf)
         return false;
     }
 
-    //create reference to sensors
-    sensors = new yarpWholeBodySensors(robotName.c_str(), yarpWbiOptions);
-
-    sensors->addSensors(wbi::SENSOR_ENCODER,RobotDynamicModelJoints);
-
-     //List of 6-axis Force-Torque sensors in the robot
-    IDList RobotFTSensors;
-    std::string RobotFTSensorsListName = "ROBOT_MAIN_FTS";
-    if( !loadIdListFromConfig(RobotFTSensorsListName,yarpWbiOptions,RobotFTSensors) )
-    {
-	yError("comMapping: impossible to load wbiId list with name %s\n",RobotFTSensorsListName.c_str());
-    }
-    sensors->addSensors(wbi::SENSOR_FORCE_TORQUE,RobotFTSensors);
-
-    //List of IMUs sensors in the robot
-    IDList RobotIMUSensors;
-    std::string RobotIMUSensorsListName = "ROBOT_MAIN_IMUS";
-    if( !loadIdListFromConfig(RobotIMUSensorsListName,yarpWbiOptions,RobotIMUSensors) )
-    {
-	yError("comMapping: impossible to load wbiId list with name %s\n",RobotFTSensorsListName.c_str());
-    }
-    sensors->addSensors(wbi::SENSOR_IMU,RobotIMUSensors);
-
-    if(!sensors->init())
-    {
-	yError() << getName() << ": Error while initializing whole body estimator interface.Closing module";
-	return false;
-    }
+    
 
     
 
@@ -186,7 +158,6 @@ bool comMappingModule::configure(yarp::os::ResourceFinder &rf)
 					    nDOFs,
 					    *m_robot,
 					    checkJointLimits,
-	                                    sensors,
 	                                    yarpWbiOptions,
 					    offset);
     if(!comThread->start())
@@ -197,7 +168,7 @@ bool comMappingModule::configure(yarp::os::ResourceFinder &rf)
 	return false;
     }
 
-    yInfo() << "comMappingThread started";
+    yInfo("comMappingThread started. (Running at %d ms)",period);
 
 
     return true;
@@ -227,14 +198,14 @@ bool comMappingModule::close()
 	delete comThread;
 	comThread = 0;
     }
-    if(sensors)
+    if(m_robot)
     {
-	yInfo() << getName() << ": closing wholeBodySensors interface";
-	bool res=sensors->close();
+	yInfo() << getName() << ": closing robot interface";
+	bool res=m_robot->close();
 	if(!res)
-	    yError("Error while closing robot sensors interface\n");
-	delete sensors;
-	sensors = 0;
+	    yError("Error while closing robot model interface\n");
+	delete m_robot;
+	m_robot = 0;
     }
 
     //closing ports
