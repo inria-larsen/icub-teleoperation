@@ -10,12 +10,13 @@
 using namespace yarp::os;
 using namespace std;
 using namespace Eigen;
+using namespace yarp::math;
 
 const double PI = 3.141592653589793;
 
 
 //===============================================
-//        JointMapping Main THREAD (runs every 10ms)
+//        JointMapping Main THREAD
 //===============================================
 
 jointMappingThread::jointMappingThread(string _name,
@@ -141,25 +142,13 @@ void jointMappingThread::getRobotJoints()
 	    jointPos.resize(actuatedDOFs);
     
 	    if ((joint_list.compare("ROBOT_TORQUE_CONTROL_JOINTS_WITHOUT_PRONOSUP") == 0) && (controller.compare("TorqueBalancing") == 0)){
-		jointPos << torso_yaw, torso_roll, torso_pitch, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
-		swap(m_minJointLimits(0),m_minJointLimits(2));
-		swap(m_maxJointLimits(0),m_maxJointLimits(2));
+		jointPos << torso_pitch, torso_roll, torso_yaw, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
 	    }
 	    else if ((joint_list.compare("ROBOT_TORQUE_CONTROL_JOINTS") == 0) && (controller.compare("TorqueBalancing") == 0)){
-		jointPos << torso_yaw, torso_roll, torso_pitch, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
-		swap(m_minJointLimits(0),m_minJointLimits(2));
-		swap(m_maxJointLimits(0),m_maxJointLimits(2));
+		jointPos << torso_pitch, torso_roll, torso_yaw, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
 	    }
 	    else if ((joint_list.compare("ROBOT_DYNAMIC_MODEL_JOINTS") == 0) && (controller.compare("TorqueBalancing") == 0)){
-		jointPos << neck_pitch, neck_roll, neck_yaw, torso_yaw, torso_roll, torso_pitch, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, l_wrist_pitch, l_wrist_yaw, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, r_wrist_pitch, r_wrist_yaw, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
-		swap(m_minJointLimits(0),m_minJointLimits(3));
-		swap(m_maxJointLimits(0),m_maxJointLimits(3));
-		swap(m_minJointLimits(1),m_minJointLimits(4));
-		swap(m_maxJointLimits(1),m_maxJointLimits(4));
-		swap(m_minJointLimits(2),m_minJointLimits(5));
-		swap(m_maxJointLimits(2),m_maxJointLimits(5));
-		swap(m_minJointLimits(0),m_minJointLimits(2));
-		swap(m_maxJointLimits(0),m_maxJointLimits(2));
+		jointPos << torso_pitch, torso_roll, torso_yaw, neck_pitch, neck_roll, neck_yaw, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, l_wrist_pitch, l_wrist_yaw, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, r_wrist_pitch, r_wrist_yaw, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
 	    }
 	    else if ((joint_list.compare("ROBOT_DYNAMIC_MODEL_JOINTS") == 0) && (controller.compare("QP") == 0)){
 		jointPos << torso_pitch, torso_roll, torso_yaw, neck_pitch, neck_roll, neck_yaw, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, l_wrist_pitch, l_wrist_yaw, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, r_wrist_pitch, r_wrist_yaw;
@@ -219,7 +208,10 @@ void jointMappingThread::run()
     
     if (this->m_checkJointLimits)
     	avoidJointLimits();
+       
 
+    
+    double    t = yarp::os::Time::now();
     mapping_run();
    
     this->run_mutex_acquired = false;
@@ -229,6 +221,7 @@ void jointMappingThread::run()
 
 void jointMappingThread::mapping_run()
 {
+ 
     //Compute joints
     publishJoints();
 

@@ -128,7 +128,7 @@ bool jointMappingModule::configure(yarp::os::ResourceFinder &rf)
 	return false;
     }
 
-    yInfo() << "jointMappingThread started";
+    yInfo("jointMappingThread started. (Running at %d ms)",period);
 
 
     return true;
@@ -149,7 +149,7 @@ bool jointMappingModule::close()
     // Get for the last time time stats
     jointThread->getEstPeriod(avgTime, stdDev);
     jointThread->getEstUsed(avgTimeUsed, stdDevUsed);     // real duration of run()
-
+	
     //stop threads
     if(jointThread)
     {
