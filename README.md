@@ -101,7 +101,7 @@ On Ubuntu again: (if using the suit, the operator wearing the suit has to assume
 - terminal 6. `start`
 
 On Windows again: (skip this step if using the suit)
-- <Play button> on the recording on MVN Xsens
+- Play button on the recording on MVN Xsens
 
 
 #### From a recorded sequence on Ubuntu only 
@@ -120,7 +120,7 @@ On Windows again: (skip this step if using the suit)
 - terminal 8. Connect the output port of jointMapping to the input joint-reference port of the controller `yarp connect /xsensToRobot/q /torqueBalancing/qDes:i`
 - terminal 8. Connect the output streamed by yarpdataplayer to the input of jointMapping `yarp connect /xsens/JointAngles /xsensToRobot/q`
 - terminal 8. Connect the output streamed by yarpdataplayer to the input of comMapping `yarp connect /xsens/JointAngles /xsensToRobot/com:i`
-- <Play button> on yarpdataplayer
+- Play button on yarpdataplayer
 
 
 ### Configuration files
