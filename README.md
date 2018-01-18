@@ -61,14 +61,14 @@ The yarp.conf file in both the computers has to be properly set-up:
 
 #### MVN Xsens
 
-- Check that the right <client-ip-address> is assigned to the variable `server_name` in ../xsens/yarp/src/main.cpp
+- Check that the right `<client-ip-address>` is assigned to the variable `server_name` in ../xsens/yarp/src/main.cpp
 - Open MVN Xsens and ensure steaming is enabled:
 
     ->Options->Miscellaneous->network streamer
 
     check the following:
 
-     [x] <client-ipaddress> 9763 UDP 0 0 [ ]
+     [x] `<client-ipaddress>` 9763 UDP 0 0 [ ]
 
      [x] joint angles
 
