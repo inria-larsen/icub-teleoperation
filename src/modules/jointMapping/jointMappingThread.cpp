@@ -106,8 +106,8 @@ void jointMappingThread::getRobotJoints()
     /////////////////
     //  xSens to iCub
     if (robotName.find("icub") != std::string::npos){
-	    double torso_pitch = (input->get(8).asDouble()+input->get(5).asDouble()+input->get(2).asDouble());
-	    double torso_roll = (input->get(6).asDouble()+input->get(9).asDouble())*-1;
+	    double torso_pitch = (input->get(5).asDouble()+input->get(8).asDouble()+input->get(11).asDouble());
+	    double torso_roll = (input->get(3).asDouble()+input->get(6).asDouble()+input->get(9).asDouble())*-1;
 	    double torso_yaw = (input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble())*-1; 
 	    double neck_pitch = (input->get(17).asDouble())*-1;
 	    double neck_roll = input->get(15).asDouble();
