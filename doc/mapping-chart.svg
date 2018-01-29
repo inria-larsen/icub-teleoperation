@@ -120,7 +120,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.27"
-     inkscape:cx="581.78306"
+     inkscape:cx="396.47289"
      inkscape:cy="123.7559"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -148,7 +148,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -196,7 +196,7 @@
          y="491.7421"
          x="582.34265"
          id="tspan4160"
-         sodipodi:role="line"> </tspan><tspan
+         sodipodi:role="line" /><tspan
          id="tspan4162"
          y="529.24207"
          x="582.34265"
@@ -222,7 +222,7 @@
          sodipodi:role="line"
          id="tspan4168"
          x="584.70483"
-         y="670.48224"> </tspan><tspan
+         y="670.48224" /><tspan
          sodipodi:role="line"
          x="584.70483"
          y="707.98224"
@@ -297,8 +297,8 @@
        xml:space="preserve"><tspan
          y="751.18109"
          x="681.18109"
-         id="tspan4922"
-         sodipodi:role="line">/xsensToRobot/q:o</tspan></text>
+         sodipodi:role="line"
+         id="tspan4214">/xsensToRobot/q</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:25px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -320,7 +320,7 @@
          sodipodi:role="line"
          id="tspan4938"
          x="540"
-         y="562.36218"></tspan><tspan
+         y="562.36218" /><tspan
          sodipodi:role="line"
          x="540"
          y="612.36218"
