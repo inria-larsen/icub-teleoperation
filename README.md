@@ -12,9 +12,10 @@ It implements the motion-retargeting from the Xsens motion-capture system to the
 
 On Ubuntu 16.04:
 * yarp
-* codyco-superbuild
 * icub-main
 * icub-contrib
+* gazebo
+* codyco-superbuild
 
 To see how to install all the software on Ubuntu 16, check [here](https://github.com/inria-larsen/icub-manual/wiki/How-to-install-the-software-on-your-machine-(Ubuntu-16))
 
