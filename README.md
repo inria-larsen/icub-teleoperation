@@ -16,7 +16,7 @@ On Ubuntu 16.04:
 * icub-main
 * icub-contrib
 
-To see how to install all the software on Ubuntu 16 check [here](https://github.com/inria-larsen/icub-manual/wiki/How-to-install-the-software-on-your-machine-(Ubuntu-16))
+To see how to install all the software on Ubuntu 16, check [here](https://github.com/inria-larsen/icub-manual/wiki/How-to-install-the-software-on-your-machine-(Ubuntu-16))
 
 On Windows:
 * xsens-yarp streaming module
@@ -97,11 +97,7 @@ On Ubuntu:
 - (simulation only) terminal 2. Launch gazebo. If you want to use the synchronization between the controller and the simulator to avoid real-time factor related problems, launch gazebo as follows: `gazebo -slibgazebo_yarp_clock.so`
 
 You can also try:
-
-```
-`cd icub-teleoperation/utilities/world`
-`gazebo -slibgazebo_yarp_clock.so icub_retarget.world`
-```
+`cd icub-teleoperation/utilities/world` and `gazebo -slibgazebo_yarp_clock.so icub_retarget.world`
 
 - terminal 3. `cd icub-teleoperation/build/bin`
 - terminal 3. Launch `retargeting`
