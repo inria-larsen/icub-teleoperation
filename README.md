@@ -111,6 +111,7 @@ You can also try:
 On Windows:
 - Open MVN Xsens
 - Connect the suit or open a recorded file.
+- (if wearing the suit) IMPORTANT. Start in the same initial pose assumed by the robot (`homePoseRetarget.ini`, i.e. n-pose). 
 - Run xsens.exe
 - On another terminal. `yarp connect /xsens/JointAngles /retargeting/q:i`
 - (if using a recorded sequence) Play button on the recording on MVN Xsens
