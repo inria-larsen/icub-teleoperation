@@ -3,6 +3,8 @@
 # CopyPolicy: Released under the terms of the GNU GPL v2.0.
 
 
-add_subdirectory(retarget)
+add_subdirectory(retargeting)
+add_subdirectory(jointRetargeting)
+add_subdirectory(comRetargeting)
 
 
