@@ -143,9 +143,9 @@ kImp        (70 70 70    10 10 10    50 50 50 30 30 10 10   50 50 50 30 30 10 10
 ```
 `CONFIG.LEFT_RIGHT_FOOT_IN_CONTACT` is an array of two binary values, each for the contact status of the left and right foot respectively. 0 or 1 if the foot is not or is in contact with the ground   
 
-`CONFIG.SMOOTH_DES_COM`  If equal to one, the desired streamed values of the center of mass are smoothed for the first 50 frames 
+`CONFIG.SMOOTH_DES_COM`  If equal to one, the desired streamed values of the center of mass are smoothed (twice for the first 50 frames) 
 
-`CONFIG.SMOOTH_DES_Q`    If equal to one, the desired streamed values  of the postural tasks are smoothed for the first 50 frames 
+`CONFIG.SMOOTH_DES_Q`    If equal to one, the desired streamed values  of the postural tasks are smoothed (twice for the first 50 frames) 
 
 `references.smoothingTimeMinJerkComDesQDes` smoothing factor    
 
