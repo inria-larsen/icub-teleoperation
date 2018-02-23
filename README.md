@@ -138,7 +138,7 @@ comKd       (15 15 15)
 
 comKi       (0 0 0)
 
-kImp        (90 90 90    20 20 20    20 20 20 20 20 20 20   20 20 20 20 20 20 20   30 30 30 60 10 10      30 30 30 60 10 10 )
+kImp        (70 70 70    10 10 10    50 50 50 30 30 10 10   50 50 50 30 30 10 10   30 30 30 60 10 10      30 30 30 60 10 10 )
 
 ```
 `CONFIG.LEFT_RIGHT_FOOT_IN_CONTACT` is an array of two binary values, each for the contact status of the left and right foot respectively. 0 or 1 if the foot is not or is in contact with the ground   
