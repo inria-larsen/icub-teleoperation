@@ -7,9 +7,16 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.3176"
+    ComputedModelVersion    "1.3186"
     NumModelReferences	    0
-    NumTestPointedSignals   0
+    NumTestPointedSignals   1
+    TestPointedSignal {
+      SignalName	      "qRef"
+      FullBlockPath	      "torqueBalancingR2015bXsens/DesValues/Switch6"
+      LogSignal		      1
+      MaxPoints		      5000
+      Decimation	      2
+    }
   }
   ScopeRefreshTime	  0.035000
   OverrideScopeRefreshTime on
@@ -55,8 +62,8 @@ Model {
 	ViewObjType		"SimulinkSubsys"
 	LoadSaveID		"2087"
 	Extents			[1821.0, 911.0]
-	ZoomFactor		[0.6]
-	Offset			[-1175.264285714286, 2306.8452380952385]
+	ZoomFactor		[1.0]
+	Offset			[87.978571428571286, 2301.0]
       }
     }
   }
@@ -66,9 +73,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "waldezjr"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Feb 07 11:15:50 2018"
-  RTWModifiedTimeStamp	  439901585
-  ModelVersionFormat	  "1.%<AutoIncrement:3176>"
+  LastModifiedDate	  "Wed Feb 21 15:19:14 2018"
+  RTWModifiedTimeStamp	  441127148
+  ModelVersionFormat	  "1.%<AutoIncrement:3186>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -1061,6 +1068,14 @@ Model {
     Block {
       BlockType		      Terminator
     }
+    Block {
+      BlockType		      ToFile
+      Filename		      "untitled.mat"
+      MatrixName	      "ans"
+      SaveFormat	      "Array"
+      Decimation	      "1"
+      SampleTime	      "-1"
+    }
   }
   System {
     Name		    "torqueBalancingR2015bXsens"
@@ -1078,7 +1093,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "80"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "4076"
+    SIDHighWatermark	    "4088"
     Block {
       BlockType		      SubSystem
       Name		      "DesValues"
@@ -1104,7 +1119,7 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"60"
+	ZoomFactor		"100"
 	Block {
 	  BlockType		  Reference
 	  Name			  "Compare\nTo Zero"
@@ -1199,7 +1214,7 @@ Model {
 	  DisplayOption		  "bar"
 	  Port {
 	    PortNumber		    1
-	    Name		    "CoMRefs"
+	    Name		    "comDes"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
@@ -1239,7 +1254,7 @@ Model {
 	  Name			  "Demux1"
 	  SID			  "4073"
 	  Ports			  [1, 3]
-	  Position		  [780, 2425, 785, 2465]
+	  Position		  [1200, 2395, 1205, 2435]
 	  ZOrder		  712
 	  ShowName		  off
 	  Outputs		  "[3,3,3]"
@@ -1287,7 +1302,7 @@ Model {
 	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
-	    ZoomFactor		    "80"
+	    ZoomFactor		    "125"
 	    Block {
 	      BlockType		      Inport
 	      Name		      "jointAngles"
@@ -3558,7 +3573,7 @@ Model {
 	  Name			  "JointDes"
 	  SID			  "4076"
 	  Ports			  [1]
-	  Position		  [1095, 2509, 1125, 2541]
+	  Position		  [1145, 2499, 1175, 2531]
 	  ZOrder		  715
 	  ScopeSpecificationString "Simulink.scopes.TimeScopeBlockCfg('CurrentConfiguration', extmgr.ConfigurationSet(extmgr."
 	  "Configuration('Core','General UI',true),extmgr.Configuration('Core','Source UI',true),extmgr.Configuration('Sources"
@@ -3568,16 +3583,17 @@ Model {
 	  "'AxesTickColor',[0.686274509803922 0.686274509803922 0.686274509803922],'ColorOrder',[1 1 0.0666666666666667;0.0745"
 	  "098039215686 0.623529411764706 1;1 0.411764705882353 0.16078431372549;0.392156862745098 0.831372549019608 0.0745098"
 	  "039215686;0.717647058823529 0.274509803921569 1;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863],'Tit"
-	  "le','%<SignalLabel>','LinePropertiesCache',{{}},'UserDefinedChannelNames',{{}},'NumLines',23,'LineNames',{{'qDes:1'"
-	  ",'qDes:2','qDes:3','qDes:4','qDes:5','qDes:6','qDes:7','qDes:8','qDes:9','qDes:10','qDes:11','qDes:12','qDes:13','q"
-	  "Des:14','qDes:15','qDes:16','qDes:17','qDes:18','qDes:19','qDes:20','qDes:21','qDes:22','qDes:23'}},'ShowContent',t"
-	  "rue,'Placement',1)},'DisplayPropertyDefaults',struct('MinYLimReal','-1.17642','MaxYLimReal','1.32358','YLabelReal',"
-	  "'','MinYLimMag','0.00000','MaxYLimMag','1.32358','LegendVisibility','off','XGrid',true,'YGrid',true,'PlotMagPhase',"
-	  "false,'AxesColor',[0 0 0],'AxesTickColor',[0.686274509803922 0.686274509803922 0.686274509803922],'ColorOrder',[0.0"
-	  "745098039215686 0.623529411764706 1;1 0.411764705882353 0.16078431372549;1 1 0.0666666666666667;0.717647058823529 0"
-	  ".274509803921569 1;0.392156862745098 0.831372549019608 0.0745098039215686;0.0588235294117647 1 1;1 0.07450980392156"
-	  "86 0.650980392156863])),extmgr.Configuration('Tools','Plot Navigation',true,'OnceAtStop',false),extmgr.Configuratio"
-	  "n('Tools','Measurements',true,'Version','2015b')),'Version','2015b','Position',[1359 530 528 393])"
+	  "le','%<SignalLabel>','LinePropertiesCache',{{}},'UserDefinedChannelNames',{{}},'NumLines',32,'LineNames',{{'qRef:1'"
+	  ",'qRef:2','qRef:3','qRef:4','qRef:5','qRef:6','qRef:7','qRef:8','qRef:9','qRef:10','qRef:11','qRef:12','qRef:13','q"
+	  "Ref:14','qRef:15','qRef:16','qRef:17','qRef:18','qRef:19','qRef:20','qRef:21','qRef:22','qRef:23','qRef:24','qRef:2"
+	  "5','qRef:26','qRef:27','qRef:28','qRef:29','qRef:30','qRef:31','qRef:32'}},'ShowContent',true,'Placement',1)},'Disp"
+	  "layPropertyDefaults',struct('MinYLimReal','-1.17642','MaxYLimReal','1.32358','YLabelReal','','MinYLimMag','0.00000'"
+	  ",'MaxYLimMag','1.32358','LegendVisibility','off','XGrid',true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0]"
+	  ",'AxesTickColor',[0.686274509803922 0.686274509803922 0.686274509803922],'ColorOrder',[0.0745098039215686 0.6235294"
+	  "11764706 1;1 0.411764705882353 0.16078431372549;1 1 0.0666666666666667;0.717647058823529 0.274509803921569 1;0.3921"
+	  "56862745098 0.831372549019608 0.0745098039215686;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863])),e"
+	  "xtmgr.Configuration('Tools','Plot Navigation',true,'OnceAtStop',false),extmgr.Configuration('Tools','Measurements',"
+	  "true,'Version','2015b')),'Version','2015b','Position',[1359 446 528 393])"
 	}
 	Block {
 	  BlockType		  Logic
@@ -3590,6 +3606,44 @@ Model {
 	  Operator		  "OR"
 	  AllPortsSameDT	  off
 	  OutDataTypeStr	  "boolean"
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Minimum Jerk Trajectory Generator1"
+	  SID			  "4082"
+	  Ports			  [2, 1]
+	  Position		  [780, 2515, 920, 2555]
+	  ZOrder		  723
+	  ShowName		  off
+	  LibraryVersion	  "1.383"
+	  SourceBlock		  "WBToolboxLibrary/Utilities/Minimum Jerk Trajectory Generator"
+	  SourceType		  "Minimum Jerk Trajectory Generator"
+	  externalSettlingTime	  on
+	  settlingTime		  "1"
+	  sampleTime		  "CONFIG.Ts"
+	  resetOnSettlingTime	  off
+	  firstDerivatives	  off
+	  secondDerivatives	  off
+	  explicitInitialValue	  off
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Minimum Jerk Trajectory Generator2"
+	  SID			  "4077"
+	  Ports			  [2, 3]
+	  Position		  [785, 2395, 925, 2435]
+	  ZOrder		  720
+	  ShowName		  off
+	  LibraryVersion	  "1.383"
+	  SourceBlock		  "WBToolboxLibrary/Utilities/Minimum Jerk Trajectory Generator"
+	  SourceType		  "Minimum Jerk Trajectory Generator"
+	  externalSettlingTime	  on
+	  settlingTime		  "references.com.smoothingTime "
+	  sampleTime		  "CONFIG.Ts"
+	  resetOnSettlingTime	  off
+	  firstDerivatives	  on
+	  secondDerivatives	  on
+	  explicitInitialValue	  off
 	}
 	Block {
 	  BlockType		  MultiPortSwitch
@@ -3640,6 +3694,17 @@ Model {
 	  DisplayOption		  "bar"
 	}
 	Block {
+	  BlockType		  Mux
+	  Name			  "Mux3"
+	  SID			  "4078"
+	  Ports			  [3, 1]
+	  Position		  [965, 2391, 970, 2439]
+	  ZOrder		  717
+	  ShowName		  off
+	  Inputs		  "3"
+	  DisplayOption		  "bar"
+	}
+	Block {
 	  BlockType		  Constant
 	  Name			  "ON_GAZEBO\n3"
 	  SID			  "3271"
@@ -3668,7 +3733,7 @@ Model {
 	  LibraryVersion	  "1.383"
 	  SourceBlock		  "WBToolboxLibrary/Utilities/Yarp Read"
 	  SourceType		  "YARP Read"
-	  portName		  "'/xsensToRobot/com:o'"
+	  portName		  "'/retargeting/com:o'"
 	  signalSize		  "3"
 	  blocking		  off
 	  timestamp		  off
@@ -3680,14 +3745,14 @@ Model {
 	  Name			  "Read qDes_impednces"
 	  SID			  "2158"
 	  Ports			  [0, 1]
-	  Position		  [-975, 2509, -905, 2561]
+	  Position		  [-975, 2513, -905, 2567]
 	  ZOrder		  600
 	  ForegroundColor	  "[0.490196, 0.000000, 0.000000]"
 	  LibraryVersion	  "1.383"
 	  SourceBlock		  "WBToolboxLibrary/Utilities/Yarp Read"
 	  SourceType		  "YARP Read"
-	  portName		  "'/xsensToRobot/q:o'"
-	  signalSize		  "ROBOT_DOF+1"
+	  portName		  "'/retargeting/q:o'"
+	  signalSize		  "33"
 	  blocking		  off
 	  timestamp		  off
 	  autoconnect		  on
@@ -3703,6 +3768,24 @@ Model {
 	  ShowName		  off
 	  OutputDimensionality	  "Customize"
 	  OutputDimensions	  "[3,3]"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "SMOOTH_DES_COM"
+	  SID			  "4079"
+	  Position		  [830, 2345, 970, 2365]
+	  ZOrder		  719
+	  ShowName		  off
+	  Value			  "CONFIG.SMOOTH_DES_COM"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "SMOOTH_DES_COM2"
+	  SID			  "4083"
+	  Position		  [800, 2490, 935, 2510]
+	  ZOrder		  722
+	  ShowName		  off
+	  Value			  "CONFIG.SMOOTH_DES_Q"
 	}
 	Block {
 	  BlockType		  SubSystem
@@ -3835,7 +3918,7 @@ Model {
 	      Name		      "DoFs converter"
 	      SID		      "3712"
 	      Ports		      [1, 6]
-	      Position		      [485, 216, 580, 319]
+	      Position		      [485, 226, 580, 334]
 	      ZOrder		      659
 	      LibraryVersion	      "1.383"
 	      SourceBlock	      "WBToolboxLibrary/Utilities/DoFs converter"
@@ -3863,7 +3946,7 @@ Model {
 	      Name		      "DoFs converter1"
 	      SID		      "3713"
 	      Ports		      [1, 6]
-	      Position		      [495, 536, 590, 639]
+	      Position		      [495, 546, 590, 654]
 	      ZOrder		      660
 	      LibraryVersion	      "1.383"
 	      SourceBlock	      "WBToolboxLibrary/Utilities/DoFs converter"
@@ -4373,9 +4456,10 @@ Model {
 	    Line {
 	      Name		      "left_arm"
 	      ZOrder		      31
-	      Labels		      [1, 1]
+	      Labels		      [2, 1]
 	      SrcBlock		      "DoFs converter"
 	      SrcPort		      2
+	      Points		      [0, -5]
 	      DstBlock		      "Impedances(t)"
 	      DstPort		      2
 	    }
@@ -4427,7 +4511,7 @@ Model {
 	      Labels		      [2, 1]
 	      SrcBlock		      "DoFs converter1"
 	      SrcPort		      2
-	      Points		      [0, -20]
+	      Points		      [0, -25]
 	      DstBlock		      "qjDot(t) "
 	      DstPort		      2
 	    }
@@ -4490,6 +4574,19 @@ Model {
 	      DstPort		      2
 	    }
 	  }
+	}
+	Block {
+	  BlockType		  Selector
+	  Name			  "Selector"
+	  SID			  "4080"
+	  Ports			  [1, 1]
+	  Position		  [640, 2396, 675, 2414]
+	  ZOrder		  716
+	  ShowName		  off
+	  InputPortWidth	  "9"
+	  IndexOptions		  "Index vector (dialog)"
+	  Indices		  "[1 2 3]"
+	  OutputSizes		  "1"
 	}
 	Block {
 	  BlockType		  SubSystem
@@ -13597,6 +13694,17 @@ Model {
 	}
 	Block {
 	  BlockType		  Switch
+	  Name			  "Switch1"
+	  SID			  "4081"
+	  Position		  [1005, 2405, 1055, 2465]
+	  ZOrder		  718
+	  ShowName		  off
+	  Criteria		  "u2 > Threshold"
+	  InputSameDT		  off
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Switch
 	  Name			  "Switch2"
 	  SID			  "2245"
 	  Position		  [-840, 3025, -790, 3085]
@@ -13606,6 +13714,33 @@ Model {
 	  Criteria		  "u2 > Threshold"
 	  InputSameDT		  off
 	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Switch
+	  Name			  "Switch6"
+	  SID			  "4084"
+	  Position		  [1045, 2524, 1105, 2596]
+	  ZOrder		  721
+	  ShowName		  off
+	  Criteria		  "u2 > Threshold"
+	  InputSameDT		  off
+	  SaturateOnIntegerOverflow off
+	  Port {
+	    PortNumber		    1
+	    Name		    "qRef"
+	    RTWStorageClass	    "Auto"
+	    DataLogging		    on
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  ToFile
+	  Name			  "To File"
+	  SID			  "4087"
+	  Ports			  [1]
+	  Position		  [1195, 2580, 1255, 2610]
+	  ZOrder		  726
+	  Filename		  "actuatedQRef.mat"
 	}
 	Block {
 	  BlockType		  Reference
@@ -13629,7 +13764,7 @@ Model {
 	  Name			  "comDes"
 	  SID			  "4072"
 	  Ports			  [1]
-	  Position		  [815, 2374, 845, 2406]
+	  Position		  [1235, 2344, 1265, 2376]
 	  ZOrder		  711
 	  ScopeSpecificationString "Simulink.scopes.TimeScopeBlockCfg('CurrentConfiguration', extmgr.ConfigurationSet(extmgr."
 	  "Configuration('Core','General UI',true),extmgr.Configuration('Core','Source UI',true),extmgr.Configuration('Sources"
@@ -13654,7 +13789,7 @@ Model {
 	  Name			  "comReadingPort"
 	  SID			  "4043"
 	  Ports			  [1]
-	  Position		  [-640, 2409, -610, 2441]
+	  Position		  [-640, 2404, -610, 2436]
 	  ZOrder		  702
 	  ScopeSpecificationString "Simulink.scopes.TimeScopeBlockCfg('CurrentConfiguration', extmgr.ConfigurationSet(extmgr."
 	  "Configuration('Core','General UI',true),extmgr.Configuration('Core','Source UI',true),extmgr.Configuration('Sources"
@@ -13699,7 +13834,7 @@ Model {
 	  Name			  "dcomDes"
 	  SID			  "4074"
 	  Ports			  [1]
-	  Position		  [900, 2374, 930, 2406]
+	  Position		  [1320, 2344, 1350, 2376]
 	  ZOrder		  713
 	  ScopeSpecificationString "Simulink.scopes.TimeScopeBlockCfg('CurrentConfiguration', extmgr.ConfigurationSet(extmgr."
 	  "Configuration('Core','General UI',true),extmgr.Configuration('Core','Source UI',true),extmgr.Configuration('Sources"
@@ -13724,7 +13859,7 @@ Model {
 	  Name			  "ddcomDes"
 	  SID			  "4075"
 	  Ports			  [1]
-	  Position		  [990, 2404, 1020, 2436]
+	  Position		  [1410, 2374, 1440, 2406]
 	  ZOrder		  714
 	  ScopeSpecificationString "Simulink.scopes.TimeScopeBlockCfg('CurrentConfiguration', extmgr.ConfigurationSet(extmgr."
 	  "Configuration('Core','General UI',true),extmgr.Configuration('Core','Source UI',true),extmgr.Configuration('Sources"
@@ -13746,32 +13881,13 @@ Model {
 	}
 	Block {
 	  BlockType		  Scope
-	  Name			  "jAnglesReadingPort"
-	  SID			  "4045"
+	  Name			  "qReadingPort"
+	  SID			  "4085"
 	  Ports			  [1]
-	  Position		  [-605, 2489, -575, 2521]
-	  ZOrder		  703
-	  ScopeSpecificationString "Simulink.scopes.TimeScopeBlockCfg('CurrentConfiguration', extmgr.ConfigurationSet(extmgr."
-	  "Configuration('Core','General UI',true),extmgr.Configuration('Core','Source UI',true),extmgr.Configuration('Sources"
-	  "','WiredSimulink',true,'DataLoggingVariableName','ScopeData2'),extmgr.Configuration('Visuals','Time Domain',true,'S"
-	  "erializedDisplays',{struct('MinYLimReal','-1.00000','MaxYLimReal','1.00000','YLabelReal','','MinYLimMag','0.00000',"
-	  "'MaxYLimMag','1.00000','LegendVisibility','off','XGrid',true,'YGrid',true,'PlotMagPhase',false,'AxesColor',[0 0 0],"
-	  "'AxesTickColor',[0.686274509803922 0.686274509803922 0.686274509803922],'ColorOrder',[1 1 0.0666666666666667;0.0745"
-	  "098039215686 0.623529411764706 1;1 0.411764705882353 0.16078431372549;0.392156862745098 0.831372549019608 0.0745098"
-	  "039215686;0.717647058823529 0.274509803921569 1;0.0588235294117647 1 1;1 0.0745098039215686 0.650980392156863],'Tit"
-	  "le','%<SignalLabel>','LinePropertiesCache',{{}},'UserDefinedChannelNames',{{}},'NumLines',23,'LineNames',{{'Read qD"
-	  "es_impednces:1','Read qDes_impednces:2','Read qDes_impednces:3','Read qDes_impednces:4','Read qDes_impednces:5','Re"
-	  "ad qDes_impednces:6','Read qDes_impednces:7','Read qDes_impednces:8','Read qDes_impednces:9','Read qDes_impednces:1"
-	  "0','Read qDes_impednces:11','Read qDes_impednces:12','Read qDes_impednces:13','Read qDes_impednces:14','Read qDes_i"
-	  "mpednces:15','Read qDes_impednces:16','Read qDes_impednces:17','Read qDes_impednces:18','Read qDes_impednces:19','R"
-	  "ead qDes_impednces:20','Read qDes_impednces:21','Read qDes_impednces:22','Read qDes_impednces:23'}},'ShowContent',t"
-	  "rue,'Placement',1)},'DisplayPropertyDefaults',struct('MinYLimReal','-1.00000','MaxYLimReal','1.00000','YLabelReal',"
-	  "'','MinYLimMag','0.00000','MaxYLimMag','1.00000','LegendVisibility','off','XGrid',true,'YGrid',true,'PlotMagPhase',"
-	  "false,'AxesColor',[0 0 0],'AxesTickColor',[0.686274509803922 0.686274509803922 0.686274509803922],'ColorOrder',[0.0"
-	  "745098039215686 0.623529411764706 1;1 0.411764705882353 0.16078431372549;1 1 0.0666666666666667;0.717647058823529 0"
-	  ".274509803921569 1;0.392156862745098 0.831372549019608 0.0745098039215686;0.0588235294117647 1 1;1 0.07450980392156"
-	  "86 0.650980392156863])),extmgr.Configuration('Tools','Plot Navigation',true),extmgr.Configuration('Tools','Measurem"
-	  "ents',true,'Version','2015b')),'Version','2015b','Position',[76 1 560 420])"
+	  Position		  [-525, 2499, -495, 2531]
+	  ZOrder		  724
+	  ScopeSpecificationString "C++SS(StrPVP('SaveName','ScopeData1'),StrPVP('LimitDataPoints','on'),StrPVP('DataFormat',"
+	  "'Array'),StrPVP('Decimation','1'),StrPVP('BlockParamSampleInput','off'))"
 	}
 	Block {
 	  BlockType		  Outport
@@ -13878,17 +13994,17 @@ Model {
 	  ZOrder		  2
 	  SrcBlock		  "Read desired_x_dx_ddx_CoM\nas 9 element vector"
 	  SrcPort		  1
-	  Points		  [0, -10; 194, 0; 0, 15]
+	  Points		  [0, -10; 194, 0; 0, 10]
+	  Branch {
+	    ZOrder		    796
+	    Points		    [0, 635]
+	    DstBlock		    "Internal coordinator"
+	    DstPort		    3
+	  }
 	  Branch {
 	    ZOrder		    444
 	    DstBlock		    "comReadingPort"
 	    DstPort		    1
-	  }
-	  Branch {
-	    ZOrder		    443
-	    Points		    [0, 630]
-	    DstBlock		    "Internal coordinator"
-	    DstPort		    3
 	  }
 	}
 	Line {
@@ -14148,34 +14264,6 @@ Model {
 	  DstPort		  enable
 	}
 	Line {
-	  Name			  "qDes"
-	  ZOrder		  85
-	  Labels		  [1, 1]
-	  SrcBlock		  "Demux"
-	  SrcPort		  2
-	  Points		  [713, 0]
-	  Branch {
-	    ZOrder		    706
-	    DstBlock		    "JointDes"
-	    DstPort		    1
-	  }
-	  Branch {
-	    ZOrder		    705
-	    Points		    [0, 35]
-	    Branch {
-	      ZOrder		      685
-	      Points		      [0, 115]
-	      DstBlock		      "Scopes  "
-	      DstPort		      1
-	    }
-	    Branch {
-	      ZOrder		      683
-	      DstBlock		      "qDes"
-	      DstPort		      1
-	    }
-	  }
-	}
-	Line {
 	  ZOrder		  91
 	  SrcBlock		  "ON_GAZEBO\n3"
 	  SrcPort		  1
@@ -14323,40 +14411,21 @@ Model {
 	  DstPort		  1
 	}
 	Line {
-	  Name			  "CoMRefs"
-	  ZOrder		  330
-	  Labels		  [0, 0]
-	  SrcBlock		  "Demux"
-	  SrcPort		  1
-	  Points		  [368, 0]
-	  Branch {
-	    ZOrder		    701
-	    Points		    [0, -30]
-	    DstBlock		    "Demux1"
-	    DstPort		    1
-	  }
-	  Branch {
-	    ZOrder		    700
-	    DstBlock		    "Reshape"
-	    DstPort		    1
-	  }
-	}
-	Line {
 	  ZOrder		  54
 	  SrcBlock		  "Read qDes_impednces"
 	  SrcPort		  1
-	  Points		  [222, 0]
+	  Points		  [0, -5; 263, 0]
 	  Branch {
-	    ZOrder		    535
-	    Points		    [0, -30]
-	    DstBlock		    "jAnglesReadingPort"
-	    DstPort		    1
-	  }
-	  Branch {
-	    ZOrder		    534
-	    Points		    [41, 0; 0, 450]
+	    ZOrder		    799
+	    Points		    [0, 450]
 	    DstBlock		    "Internal coordinator"
 	    DstPort		    2
+	  }
+	  Branch {
+	    ZOrder		    798
+	    Points		    [0, -20]
+	    DstBlock		    "qReadingPort"
+	    DstPort		    1
 	  }
 	}
 	Line {
@@ -14396,6 +14465,178 @@ Model {
 	  Points		  [136, 0; 0, -26; 48, 0; 0, -14]
 	  DstBlock		  "ddcomDes"
 	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  743
+	  SrcBlock		  "Minimum Jerk Trajectory Generator2"
+	  SrcPort		  1
+	  DstBlock		  "Mux3"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  744
+	  SrcBlock		  "Minimum Jerk Trajectory Generator2"
+	  SrcPort		  2
+	  DstBlock		  "Mux3"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  745
+	  SrcBlock		  "Minimum Jerk Trajectory Generator2"
+	  SrcPort		  3
+	  DstBlock		  "Mux3"
+	  DstPort		  3
+	}
+	Line {
+	  ZOrder		  746
+	  SrcBlock		  "SMOOTH_DES_COM"
+	  SrcPort		  1
+	  Points		  [13, 0; 0, 80]
+	  DstBlock		  "Switch1"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  747
+	  SrcBlock		  "Mux3"
+	  SrcPort		  1
+	  DstBlock		  "Switch1"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  748
+	  SrcBlock		  "Selector"
+	  SrcPort		  1
+	  DstBlock		  "Minimum Jerk Trajectory Generator2"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "comDes"
+	  ZOrder		  755
+	  Labels		  [2, 0]
+	  SrcBlock		  "Demux"
+	  SrcPort		  1
+	  Points		  [148, 0; 0, -20]
+	  Branch {
+	    ZOrder		    757
+	    DstBlock		    "Switch1"
+	    DstPort		    3
+	  }
+	  Branch {
+	    ZOrder		    756
+	    Points		    [0, -50]
+	    DstBlock		    "Selector"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  Name			  "smoothingTimeMinJerkComDesQDes "
+	  ZOrder		  754
+	  Labels		  [0, 0]
+	  SrcBlock		  "Demux"
+	  SrcPort		  8
+	  Points		  [369, 0; 0, -280]
+	  Branch {
+	    ZOrder		    781
+	    Points		    [0, -120]
+	    DstBlock		    "Minimum Jerk Trajectory Generator2"
+	    DstPort		    2
+	  }
+	  Branch {
+	    ZOrder		    771
+	    DstBlock		    "Minimum Jerk Trajectory Generator1"
+	    DstPort		    2
+	  }
+	}
+	Line {
+	  ZOrder		  759
+	  SrcBlock		  "Switch1"
+	  SrcPort		  1
+	  Points		  [64, 0]
+	  Branch {
+	    ZOrder		    761
+	    Points		    [0, -20]
+	    DstBlock		    "Demux1"
+	    DstPort		    1
+	  }
+	  Branch {
+	    ZOrder		    760
+	    Points		    [4, 0; 0, 40]
+	    DstBlock		    "Reshape"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  ZOrder		  762
+	  SrcBlock		  "SMOOTH_DES_COM2"
+	  SrcPort		  1
+	  Points		  [23, 0; 0, 60]
+	  DstBlock		  "Switch6"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  768
+	  SrcBlock		  "Minimum Jerk Trajectory Generator1"
+	  SrcPort		  1
+	  DstBlock		  "Switch6"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "qRef"
+	  ZOrder		  773
+	  Labels		  [0, 0]
+	  SrcBlock		  "Switch6"
+	  SrcPort		  1
+	  Points		  [10, 0]
+	  Branch {
+	    ZOrder		    777
+	    Points		    [0, -45]
+	    DstBlock		    "JointDes"
+	    DstPort		    1
+	  }
+	  Branch {
+	    ZOrder		    776
+	    Points		    [41, 0]
+	    Branch {
+	      ZOrder		      892
+	      Points		      [0, 35]
+	      DstBlock		      "To File"
+	      DstPort		      1
+	    }
+	    Branch {
+	      ZOrder		      891
+	      Labels		      [1, 1]
+	      DstBlock		      "qDes"
+	      DstPort		      1
+	    }
+	  }
+	}
+	Line {
+	  Name			  "qDes"
+	  ZOrder		  783
+	  Labels		  [0, 0]
+	  SrcBlock		  "Demux"
+	  SrcPort		  2
+	  Points		  [271, 0]
+	  Branch {
+	    ZOrder		    785
+	    Points		    [0, 60; 416, 0]
+	    Branch {
+	      ZOrder		      787
+	      Points		      [0, 90]
+	      DstBlock		      "Scopes  "
+	      DstPort		      1
+	    }
+	    Branch {
+	      ZOrder		      786
+	      DstBlock		      "Switch6"
+	      DstPort		      3
+	    }
+	  }
+	  Branch {
+	    ZOrder		    784
+	    DstBlock		    "Minimum Jerk Trajectory Generator1"
+	    DstPort		    1
+	  }
 	}
       }
     }
@@ -14504,7 +14745,7 @@ Model {
 	  Port {
 	    PortNumber		    1
 	    Name		    "qj_des"
-	    PropagatedSignals	    "qDes"
+	    PropagatedSignals	    "qRef"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
@@ -14749,7 +14990,7 @@ Model {
 	  Name			  "DoFs converter"
 	  SID			  "3705"
 	  Ports			  [1, 6]
-	  Position		  [345, -4, 440, 99]
+	  Position		  [345, 6, 440, 114]
 	  ZOrder		  585
 	  LibraryVersion	  "1.383"
 	  SourceBlock		  "WBToolboxLibrary/Utilities/DoFs converter"
@@ -14777,7 +15018,7 @@ Model {
 	  Name			  "DoFs converter1"
 	  SID			  "3706"
 	  Ports			  [1, 6]
-	  Position		  [345, 151, 440, 254]
+	  Position		  [345, 161, 440, 269]
 	  ZOrder		  586
 	  LibraryVersion	  "1.383"
 	  SourceBlock		  "WBToolboxLibrary/Utilities/DoFs converter"
@@ -14805,7 +15046,7 @@ Model {
 	  Name			  "DoFs converter2"
 	  SID			  "3707"
 	  Ports			  [1, 6]
-	  Position		  [345, 286, 440, 389]
+	  Position		  [345, 296, 440, 404]
 	  ZOrder		  587
 	  LibraryVersion	  "1.383"
 	  SourceBlock		  "WBToolboxLibrary/Utilities/DoFs converter"
@@ -14833,7 +15074,7 @@ Model {
 	  Name			  "DoFs converter3"
 	  SID			  "3708"
 	  Ports			  [1, 6]
-	  Position		  [980, 16, 1075, 119]
+	  Position		  [980, 26, 1075, 134]
 	  ZOrder		  588
 	  LibraryVersion	  "1.383"
 	  SourceBlock		  "WBToolboxLibrary/Utilities/DoFs converter"
@@ -14861,7 +15102,7 @@ Model {
 	  Name			  "DoFs converter4"
 	  SID			  "3709"
 	  Ports			  [1, 6]
-	  Position		  [980, 151, 1075, 254]
+	  Position		  [980, 161, 1075, 269]
 	  ZOrder		  589
 	  LibraryVersion	  "1.383"
 	  SourceBlock		  "WBToolboxLibrary/Utilities/DoFs converter"
@@ -14889,7 +15130,7 @@ Model {
 	  Name			  "DoFs converter5"
 	  SID			  "3710"
 	  Ports			  [1, 6]
-	  Position		  [980, 286, 1075, 389]
+	  Position		  [980, 296, 1075, 404]
 	  ZOrder		  590
 	  LibraryVersion	  "1.383"
 	  SourceBlock		  "WBToolboxLibrary/Utilities/DoFs converter"
@@ -16799,9 +17040,10 @@ Model {
 	Line {
 	  Name			  "left_arm"
 	  ZOrder		  125
-	  Labels		  [1, 1]
+	  Labels		  [2, 1]
 	  SrcBlock		  "DoFs converter3"
 	  SrcPort		  2
+	  Points		  [0, -5]
 	  DstBlock		  "qj"
 	  DstPort		  2
 	}
@@ -16975,6 +17217,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter"
 	  SrcPort		  2
+	  Points		  [0, -5]
 	  DstBlock		  "tauDes"
 	  DstPort		  2
 	}
@@ -17018,6 +17261,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter1"
 	  SrcPort		  2
+	  Points		  [0, -5]
 	  DstBlock		  "tauError"
 	  DstPort		  2
 	}
@@ -17071,6 +17315,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter2"
 	  SrcPort		  2
+	  Points		  [0, -5]
 	  DstBlock		  "tauMeasured"
 	  DstPort		  2
 	}
@@ -17141,6 +17386,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter4"
 	  SrcPort		  2
+	  Points		  [0, -5]
 	  DstBlock		  "qjDes"
 	  DstPort		  2
 	}
@@ -17201,6 +17447,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter5"
 	  SrcPort		  2
+	  Points		  [0, -5]
 	  DstBlock		  "qj_err"
 	  DstPort		  2
 	}
@@ -17812,7 +18059,7 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"125"
+	ZoomFactor		"80"
 	Block {
 	  BlockType		  Inport
 	  Name			  "impedances"
