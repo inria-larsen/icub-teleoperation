@@ -103,8 +103,8 @@ You can also try:
 - terminal 3. `cd icub-teleoperation/build/bin`
 - terminal 3. Launch `retargeting`
 - terminal 4. Launch `wholeBodyDynamics` as follows: `YARP_ROBOT_NAME=icubGazeboSim yarprobotinterface --config launch-wholebodydynamics.xml`
-- terminal 5 (OPTIONAL) type on a terminal `yarp rpc /wholeBodyDynamics/rpc` and execute the command `resetOffset all 300`. It will reset offsets of fake FT measurements, that might be affected by the results of a previous simulation. Fake FT measurements are used e.g. for defining the threshold for switching from single to double support balancing
-- terminal 6. Launch Matlab (`matlab_codyco` to avoid problems with libstdc++. This is further discussed in [WB-Toolbox](https://github.com/robotology/WB-Toolbox) and in this [issue](https://github.com/robotology/codyco-superbuild/issues/141#issuecomment-257892256)
+- terminal 5 Type on a terminal `yarp rpc /wholeBodyDynamics/rpc` and execute the command `resetOffset all 300`. It will reset offsets of fake FT measurements, that might be affected by the results of a previous simulation. Fake FT measurements are used e.g. for defining the threshold for switching from single to double support balancing
+- terminal 6. Launch Matlab (`matlab_codyco` to avoid problems with libstdc++. This is further discussed in [WB-Toolbox](https://github.com/robotology/WB-Toolbox) and in this [issue](https://github.com/robotology/codyco-superbuild/issues/141#issuecomment-257892256))
 - Open the simulink model in `icub-teleoperation/controllers/torqueBalancing` and run the module.
 
 
@@ -121,7 +121,7 @@ On Windows:
 
 Follow the same steps as in the above procedure on Ubuntu and then:
 - terminal 8. Launch `yarpdataplayer`
-- ->File->Open Directory->retargetdata and select the folder of the sequence you want to play
+- ->File->Open Directory->retargetData and select the folder of the sequence you want to play
 - terminal 8. Connect the output streamed by yarpdataplayer to the input of the `retargeting` module `yarp connect /xsens/JointAngles /retargeting/q:i`
 - Play button on yarpdataplayer
 
