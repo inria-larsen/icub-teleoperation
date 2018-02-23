@@ -67,7 +67,7 @@ class retargetThread: public yarp::os::RateThread
 	double              printPeriod;
 	yarp::os::Stamp timestamp;
 	wbi::wholeBodyInterface& m_robot;
-        int acc_counter; 
+        
 
 	/*Joint related*/
 	Eigen::VectorXd jointPos;
@@ -88,6 +88,7 @@ class retargetThread: public yarp::os::RateThread
 
 	iCub::iDynTree::DynTree icub_model;
 	
+
         std::string controller;
 	yarp::os::Mutex run_mutex;
 	bool run_mutex_acquired;
@@ -97,6 +98,21 @@ class retargetThread: public yarp::os::RateThread
         yarp::os::BufferedPort<yarp::os::Bottle> posRead; /**<Port that reads the segments position*/
         yarp::os::BufferedPort<yarp::sig::Vector> * port_com;
         yarp::os::BufferedPort<yarp::os::Bottle> port_joint;
+
+        //----------------------------
+        //* Initial status check-procedure 
+        //* Control has to start in n-pose  
+        //----------------------------
+        bool safe_start;
+        bool n_pose;
+	yarp::os::Bottle* minJointSpan_yarp;
+	yarp::os::Bottle* maxJointSpan_yarp;
+        Eigen::VectorXd minJointSpan;        
+        Eigen::VectorXd maxJointSpan;
+        
+        int counter;
+        int frame_counter;
+ 
 
 	bool initCoM();
         bool initJoint();

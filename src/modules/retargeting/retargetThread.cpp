@@ -87,8 +87,11 @@ retargetThread::retargetThread(string _name,
 
 bool retargetThread::threadInit()
 {  
-    acc_counter = 0;
+    frame_counter = 0;
+    counter = 0;
+    n_pose = false;
 
+   
     initJoint();
     
     initCoM();
@@ -125,6 +128,18 @@ bool retargetThread::initJoint()
     joint_list = yarp_options.find("wbi_joint_list").asString();
     //controller
     controller =yarp_options.find("controller").asString();
+    //start if in n-pose
+    safe_start =yarp_options.find("safe_start").asBool();
+    //tolerance range for the safe start
+    minJointSpan_yarp =yarp_options.find("minJointSpan").asList();
+    maxJointSpan_yarp =yarp_options.find("maxJointSpan").asList();
+    
+    minJointSpan.resize(minJointSpan_yarp->size());
+    maxJointSpan.resize(maxJointSpan_yarp->size());    
+    for (int i=0; i<minJointSpan.size(); i++){
+        minJointSpan(i) = minJointSpan_yarp->get(i).asDouble();
+        maxJointSpan(i) = maxJointSpan_yarp->get(i).asDouble();
+    }
  
     // Open writing port for joints
     port_joint.open(string("/"+moduleName+"/q:o").c_str()); 
@@ -156,65 +171,29 @@ void retargetThread::publishJoints()
 {
     Bottle& output = port_joint.prepare();
     output.clear();
-    output.addDouble(acc_counter);
+
+    output.addDouble(frame_counter);
+
     for (int i=0; i < jointPos.size(); i++){
         output.addDouble(jointPos(i));
     }
     
-    //if (acc_counter>=2){
     port_joint.write();
-    //}
 }
 
 void retargetThread::publishCom()
 {
 	// Stream com in index frame
-	//KDL::Vector com = icub_model.getCOMKDL();
         yarp::sig::Vector com = icub_model.getCOM(link_index);
-       /* 
-	dcom.resize(3);
-        if (acc_counter>=1) {
-		for (int i=0; i<3; i++){
-		    dcom(i) = (com(i) - old_com(i))/(period*0.001);
-		}
-        }
-	else {
-                for (int i=0; i<3; i++){
-		    dcom(i) = 0;
-		}
-        }
-
-        ddcom.resize(3);
-        if (acc_counter>=2) {
-		for (int i=0; i<3; i++){
-		    ddcom(i) = (dcom(i) - old_dcom(i))/(period*0.001);
-		}
-        }
-	else {
-                for (int i=0; i<3; i++){
-		    ddcom(i) = 0;
-		}
-        }
-*/
+       
 	yarp::sig::Vector & com_to_send = port_com->prepare();
         
 	com_to_send.resize(3);
         for (int i=0; i<3; i++){
              com_to_send(i)=com(i);
         }
-/*	for (int i=3; i<6; i++){
-             com_to_send(i)=dcom(i-3);
-        }
-	for (int i=6; i<9; i++)
-             com_to_send(i)=ddcom(i-6);
 
-        old_com = com;
-        old_dcom = dcom;
- */       
-        //if (acc_counter>=2){
 	port_com->write();
-        //}
-        //acc_counter++;
         
 }
     
@@ -231,9 +210,9 @@ void retargetThread::getRobotJoints()
     /////////////////
     //  xSens to iCub
     if (robotName.find("icub") != std::string::npos){
-	    double torso_pitch = (input->get(5).asDouble()+input->get(8).asDouble()+input->get(11).asDouble());
-	    double torso_roll = (input->get(3).asDouble()+input->get(6).asDouble()+input->get(9).asDouble())*-1;
-	    double torso_yaw = (input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble())*-1; 
+	    double torso_pitch = (input->get(5).asDouble()+input->get(8).asDouble()+input->get(11).asDouble()) - offset_torso(0);
+	    double torso_roll = ((input->get(3).asDouble()+input->get(6).asDouble()+input->get(9).asDouble())*-1) - offset_torso(1);
+	    double torso_yaw = ((input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble())*-1) - offset_torso(2); 
 	    double neck_pitch = (input->get(17).asDouble())*-1;
 	    double neck_roll = input->get(15).asDouble();
 	    double neck_yaw = input->get(16).asDouble();
@@ -251,20 +230,20 @@ void retargetThread::getRobotJoints()
 	    double r_wrist_prosup = (input->get(28).asDouble())*-1;
 	    double r_wrist_pitch = (input->get(29).asDouble())*-1;
 	    double r_wrist_yaw = (input->get(27).asDouble())*-1;
-	    double l_hip_pitch = input->get(56).asDouble();
-	    double l_hip_roll = input->get(54).asDouble();
-	    double l_hip_yaw = (input->get(55).asDouble())*-1;
-	    double l_knee = (input->get(59).asDouble())*-1;
-	    double l_ankle_pitch = (input->get(62).asDouble())*-1;
-	    double l_ankle_roll = input->get(60).asDouble();
-	    double r_hip_pitch = input->get(44).asDouble();
-	    double r_hip_roll = input->get(42).asDouble();
-	    double r_hip_yaw = (input->get(43).asDouble())*-1;
-	    double r_knee = (input->get(47).asDouble())*-1;
-	    double r_ankle_pitch = (input->get(50).asDouble())*-1;
-            double r_ankle_roll = input->get(48).asDouble();
-	
-
+	    double l_hip_pitch = (input->get(56).asDouble()) - offset_l_leg(0);
+	    double l_hip_roll = (input->get(54).asDouble()) - offset_l_leg(1);
+	    double l_hip_yaw = ((input->get(55).asDouble())*-1) - offset_l_leg(2);
+	    double l_knee = ((input->get(59).asDouble())*-1) - offset_l_leg(3);
+	    double l_ankle_pitch = ((input->get(62).asDouble())*-1) - offset_l_leg(4);
+	    double l_ankle_roll = (input->get(60).asDouble()) - offset_l_leg(5);
+	    double r_hip_pitch = (input->get(44).asDouble()) - offset_r_leg(0);
+	    double r_hip_roll = (input->get(42).asDouble()) - offset_r_leg(1);
+	    double r_hip_yaw = ((input->get(43).asDouble())*-1) - offset_r_leg(2);
+	    double r_knee = ((input->get(47).asDouble())*-1) - offset_r_leg(3);
+	    double r_ankle_pitch = ((input->get(50).asDouble())*-1) - offset_r_leg(4);
+            double r_ankle_roll = (input->get(48).asDouble()) - offset_r_leg(5);
+ 
+ 
             jointPosCoM.resize(q.size());
             jointPosCoM << torso_pitch, torso_roll, torso_yaw, neck_pitch, neck_roll, neck_yaw, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, l_wrist_pitch, l_wrist_yaw, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, r_wrist_pitch, r_wrist_yaw, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
 
@@ -272,11 +251,21 @@ void retargetThread::getRobotJoints()
 	    if ((joint_list.compare("ROBOT_TORQUE_CONTROL_JOINTS_WITHOUT_PRONOSUP") == 0) && (controller.compare("TorqueBalancing") == 0)){
 		jointPos << torso_pitch, torso_roll, torso_yaw, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
 	    }
-	    else if ((joint_list.compare("ROBOT_TORQUE_CONTROL_JOINTS") == 0) && (controller.compare("TorqueBalancing") == 0)){
+	    else if ((joint_list.compare("ROBOT_TORSO_JOINTS") == 0) && (controller.compare("TorqueBalancing") == 0)){
+		jointPos << torso_pitch,torso_roll,torso_yaw;
+	    }
+            else if ((joint_list.compare("ROBOT_LEFT_LEG_JOINTS") == 0) && (controller.compare("TorqueBalancing") == 0)){
+		jointPos << l_hip_pitch,l_hip_roll,l_hip_yaw,l_knee,l_ankle_pitch,l_ankle_roll;
+	    }
+            else if ((joint_list.compare("ROBOT_RIGHT_LEG_JOINTS") == 0) && (controller.compare("TorqueBalancing") == 0)){
+		jointPos << r_hip_pitch,r_hip_roll,r_hip_yaw,r_knee,r_ankle_pitch,r_ankle_roll;
+	    }
+            else if ((joint_list.compare("ROBOT_TORQUE_CONTROL_JOINTS") == 0) && (controller.compare("TorqueBalancing") == 0)){
 		jointPos << torso_pitch, torso_roll, torso_yaw, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
 	    }
 	    else if ((joint_list.compare("ROBOT_DYNAMIC_MODEL_JOINTS") == 0) && (controller.compare("TorqueBalancing") == 0)){
 		jointPos << torso_pitch, torso_roll, torso_yaw, neck_pitch, neck_roll, neck_yaw, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, l_wrist_pitch, l_wrist_yaw, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, r_wrist_pitch, r_wrist_yaw, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll;
+
 	    }
 	    else if ((joint_list.compare("ROBOT_DYNAMIC_MODEL_JOINTS") == 0) && (controller.compare("QP") == 0)){
 		jointPos << torso_pitch, torso_roll, torso_yaw, neck_pitch, neck_roll, neck_yaw, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, l_wrist_pitch, l_wrist_yaw, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, r_wrist_pitch, r_wrist_yaw;
@@ -295,6 +284,273 @@ void retargetThread::getRobotJoints()
 	        yError() << "[ERROR] this controller is not designed to control the selected joint list. Check the configuration file";
  	        return;
 	    }
+
+            //---------------------------
+	    //-- Safe start: Check n-pose
+            //---------------------------
+            if (safe_start) {        
+                if((jointPos(0)>maxJointSpan(0)) || (jointPos(0)<minJointSpan(0)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] TORSO PITCH: " << jointPos(0) << "\nn-pose range: " << minJointSpan(0) << " - " << maxJointSpan(0)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = true;
+		}
+                if((jointPos(1)>maxJointSpan(1)) || (jointPos(1)<minJointSpan(1)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] TORSO ROLL: " << jointPos(1) << "\nn-pose range: " << minJointSpan(1) << " - " << maxJointSpan(1)<< "\n";
+		   n_pose = false;
+		}else{
+		    n_pose = n_pose && true;
+		}
+                if((jointPos(2)>maxJointSpan(2)) || (jointPos(2)<minJointSpan(2)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] TORSO YAW: " << jointPos(2) << "\nn-pose range: " << minJointSpan(2) << " - " << maxJointSpan(2)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(3)>maxJointSpan(3)) || (jointPos(3)<minJointSpan(3)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] NECK PITCH: " << jointPos(3) << "\nn-pose range: " << minJointSpan(3) << " - " << maxJointSpan(3)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(4)>maxJointSpan(4)) || (jointPos(4)<minJointSpan(4)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] NECK ROLL: " << jointPos(4) << "\nn-pose range: " << minJointSpan(4) << " - " << maxJointSpan(4)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(5)>maxJointSpan(5)) || (jointPos(5)<minJointSpan(5)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] NECK YAW: " << jointPos(5) << "\nn-pose range: " << minJointSpan(5) << " - " << maxJointSpan(5)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(6)>maxJointSpan(6)) || (jointPos(6)<minJointSpan(6)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] L SHOULDER PITCH: " << jointPos(6) << "\nn-pose range: " << minJointSpan(6) << " - " << maxJointSpan(6)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(7)>maxJointSpan(7)) || (jointPos(7)<minJointSpan(7)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] L SHOULDER ROLL: " << jointPos(7) << "\nn-pose range: " << minJointSpan(7) << " - " << maxJointSpan(7)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(8)>maxJointSpan(8)) || (jointPos(8)<minJointSpan(8)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] L SHOULDER YAW: " << jointPos(8) << "\nn-pose range: " << minJointSpan(8) << " - " << maxJointSpan(8)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(9)>maxJointSpan(9)) || (jointPos(9)<minJointSpan(9)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] L ELBOW: " << jointPos(9) << "\nn-pose range: " << minJointSpan(9) << " - " << maxJointSpan(9)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}		
+                if((jointPos(10)>maxJointSpan(10)) || (jointPos(10)<minJointSpan(10)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] L WRIST PROSUP: " << jointPos(10) << "\nn-pose range: " << minJointSpan(10) << " - " << maxJointSpan(10)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(11)>maxJointSpan(11)) || (jointPos(11)<minJointSpan(11)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] L WRIST PITCH: " << jointPos(11) << "\nn-pose range: " << minJointSpan(11) << " - " << maxJointSpan(11)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(12)>maxJointSpan(12)) || (jointPos(12)<minJointSpan(12)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] L WRIST YAW: " << jointPos(12) << "\nn-pose range: " << minJointSpan(12) << " - " << maxJointSpan(12)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(13)>maxJointSpan(13)) || (jointPos(13)<minJointSpan(13)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] R SHOULDER PITCH: " << jointPos(13) << "\nn-pose range: " << minJointSpan(13) << " - " << maxJointSpan(13)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(14)>maxJointSpan(14)) || (jointPos(14)<minJointSpan(14)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] R SHOULDER ROLL: " << jointPos(14) << "\nn-pose range" << minJointSpan(14) << " - " << maxJointSpan(14)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(15)>maxJointSpan(15)) || (jointPos(15)<minJointSpan(15)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] R SHOULDER YAW: " << jointPos(15) << "\nn-pose range: " << minJointSpan(15) << " - " << maxJointSpan(15)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(16)>maxJointSpan(16)) || (jointPos(16)<minJointSpan(16)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] R ELBOW: " << jointPos(16) << "\nn-pose range: " << minJointSpan(16) << " - " << maxJointSpan(16)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(17)>maxJointSpan(17)) || (jointPos(17)<minJointSpan(17)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] R WRIST PROSUP: " << jointPos(17) << "\nn-pose range: " << minJointSpan(17) << " - " << maxJointSpan(17)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(18)>maxJointSpan(18)) || (jointPos(18)<minJointSpan(18)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] R WRIST PITCH gap: " << jointPos(18) << "\nn-pose range: " << minJointSpan(18) << " - " << maxJointSpan(18)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(19)>maxJointSpan(19)) || (jointPos(19)<minJointSpan(19)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] R WRIST YAW: " << jointPos(19) << "\nn-pose range: " << minJointSpan(19) << " - " << maxJointSpan(19)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(20)>maxJointSpan(20)) || (jointPos(20)<minJointSpan(20)))
+		{
+                   if (counter%100==0)
+		  	 std::cout << "[INFO] L HIP PITCH: " << jointPos(20) << "\nn-pose range: " << minJointSpan(20) << " - " << maxJointSpan(20)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(21)>maxJointSpan(21)) || (jointPos(21)<minJointSpan(21)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] L HIP ROLL: " << jointPos(21) << "\nn-pose range: " << minJointSpan(21) << " - " << maxJointSpan(21)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(22)>maxJointSpan(22)) || (jointPos(22)<minJointSpan(22)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] L HIP YAW: " << jointPos(22) << "\nn-pose range: " << minJointSpan(22) << " - " << maxJointSpan(22)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(23)>maxJointSpan(23)) || (jointPos(23)<minJointSpan(23)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] L KNEE: " << jointPos(23) << "\nn-pose range: " << minJointSpan(23) << " - " << maxJointSpan(23)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(24)>maxJointSpan(24)) || (jointPos(24)<minJointSpan(24)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] L ANKLE PITCH: " << jointPos(24) << "\nn-pose range: " << minJointSpan(24) << " - " << maxJointSpan(24)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(25)>maxJointSpan(25)) || (jointPos(25)<minJointSpan(25)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] L ANKLE ROLL: " << jointPos(25) << "\nn-pose range: " << minJointSpan(25) << " - " << maxJointSpan(25)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(26)>maxJointSpan(26)) || (jointPos(26)<minJointSpan(26)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] R HIP PITCH: " << jointPos(26) << "\nn-pose range: " << minJointSpan(26) << " - " << maxJointSpan(26)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(27)>maxJointSpan(27)) || (jointPos(27)<minJointSpan(27)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] R HIP ROLL: " << jointPos(27) << "\nn-pose range: " << minJointSpan(27) << " - " << maxJointSpan(27)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(28)>maxJointSpan(28)) || (jointPos(28)<minJointSpan(28)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] R HIP YAW: " << jointPos(28) << "\nn-pose range: " << minJointSpan(28) << " - " << maxJointSpan(28)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(29)>maxJointSpan(29)) || (jointPos(29)<minJointSpan(29)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] R KNEE: " << jointPos(29) << "\nn-pose range: " << minJointSpan(29) << " - " << maxJointSpan(29)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(30)>maxJointSpan(30)) || (jointPos(30)<minJointSpan(30)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] R ANKLE PITCH: " << jointPos(30) << "\nn-pose range: " << minJointSpan(30) << " - " << maxJointSpan(30)<< "\n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+                if((jointPos(31)>maxJointSpan(31)) || (jointPos(31)<minJointSpan(31)))
+		{
+                   if (counter%100==0)
+		   	std::cout << "[INFO] R ANKLE ROLL: " << jointPos(31) << "\nn-pose range: " << minJointSpan(31) << " - " << maxJointSpan(31)<< "\n \n \n \n";
+		   n_pose = false;
+		}else{
+		   n_pose = n_pose && true;
+		}
+		if(n_pose){
+		   safe_start = false;
+		}
+
+           }
+
     }
     /////////////////////////////////////
     else {
@@ -379,7 +635,10 @@ void retargetThread::mapping_run()
     //Compute com
     publishCom();
     
-    acc_counter++;
+    if (!safe_start)
+       frame_counter++;
+
+    counter++;
 
     printCountdown = (printCountdown>=printPeriod) ? 0 : printCountdown +(int)getRate();   // countdown for next print (see sendMsg method)
 
@@ -400,11 +659,8 @@ void retargetThread::threadRelease()
     //run_mutex.lock();
 
     yInfo() << "Closing all the ports";
-    jointRead.interrupt();
     jointRead.close();
-    posRead.interrupt();
     posRead.close();
-    port_joint.interrupt();
     port_joint.close();
     
     closePort(port_com);
@@ -423,5 +679,4 @@ void retargetThread::closePort(yarp::os::Contactable *_port)
 	_port = 0;
     }
 }
-
 
