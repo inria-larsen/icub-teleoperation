@@ -87,7 +87,7 @@ The yarp.conf file in both the computers has to be properly set-up:
 
 
 
-### Human-adapted kinetic Retargeting - Launch procedure
+### Human-adapted Retargeting - Launch procedure
 
 #### From a live motion or from a recorded Xsense sequence 
 
