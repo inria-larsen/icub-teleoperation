@@ -210,9 +210,9 @@ void retargetThread::getRobotJoints()
     /////////////////
     //  xSens to iCub
     if (robotName.find("icub") != std::string::npos){
-	    double torso_pitch = (input->get(5).asDouble()+input->get(8).asDouble()+input->get(11).asDouble()) - offset_torso(0);
-	    double torso_roll = ((input->get(3).asDouble()+input->get(6).asDouble()+input->get(9).asDouble())*-1) - offset_torso(1);
-	    double torso_yaw = ((input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble())*-1) - offset_torso(2); 
+	    double torso_pitch = (input->get(5).asDouble()+input->get(8).asDouble()+input->get(11).asDouble());
+	    double torso_roll = ((input->get(3).asDouble()+input->get(6).asDouble()+input->get(9).asDouble())*-1);
+	    double torso_yaw = ((input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble())*-1); 
 	    double neck_pitch = (input->get(17).asDouble())*-1;
 	    double neck_roll = input->get(15).asDouble();
 	    double neck_yaw = input->get(16).asDouble();
@@ -230,18 +230,18 @@ void retargetThread::getRobotJoints()
 	    double r_wrist_prosup = (input->get(28).asDouble())*-1;
 	    double r_wrist_pitch = (input->get(29).asDouble())*-1;
 	    double r_wrist_yaw = (input->get(27).asDouble())*-1;
-	    double l_hip_pitch = (input->get(56).asDouble()) - offset_l_leg(0);
-	    double l_hip_roll = (input->get(54).asDouble()) - offset_l_leg(1);
-	    double l_hip_yaw = ((input->get(55).asDouble())*-1) - offset_l_leg(2);
-	    double l_knee = ((input->get(59).asDouble())*-1) - offset_l_leg(3);
-	    double l_ankle_pitch = ((input->get(62).asDouble())*-1) - offset_l_leg(4);
-	    double l_ankle_roll = (input->get(60).asDouble()) - offset_l_leg(5);
-	    double r_hip_pitch = (input->get(44).asDouble()) - offset_r_leg(0);
-	    double r_hip_roll = (input->get(42).asDouble()) - offset_r_leg(1);
-	    double r_hip_yaw = ((input->get(43).asDouble())*-1) - offset_r_leg(2);
-	    double r_knee = ((input->get(47).asDouble())*-1) - offset_r_leg(3);
-	    double r_ankle_pitch = ((input->get(50).asDouble())*-1) - offset_r_leg(4);
-            double r_ankle_roll = (input->get(48).asDouble()) - offset_r_leg(5);
+	    double l_hip_pitch = (input->get(56).asDouble());
+	    double l_hip_roll = (input->get(54).asDouble());
+	    double l_hip_yaw = ((input->get(55).asDouble())*-1);
+	    double l_knee = ((input->get(59).asDouble())*-1);
+	    double l_ankle_pitch = ((input->get(62).asDouble())*-1);
+	    double l_ankle_roll = (input->get(60).asDouble());
+	    double r_hip_pitch = (input->get(44).asDouble());
+	    double r_hip_roll = (input->get(42).asDouble());
+	    double r_hip_yaw = ((input->get(43).asDouble())*-1);
+	    double r_knee = ((input->get(47).asDouble())*-1);
+	    double r_ankle_pitch = ((input->get(50).asDouble())*-1);
+            double r_ankle_roll = (input->get(48).asDouble());
  
  
             jointPosCoM.resize(q.size());
