@@ -7,7 +7,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.3186"
+    ComputedModelVersion    "1.3187"
     NumModelReferences	    0
     NumTestPointedSignals   1
     TestPointedSignal {
@@ -54,16 +54,37 @@ Model {
 	$ClassName		"Simulink.ExplorerBarInfo"
 	Visible			[1]
       }
-      Object {
-	$PropName		"EditorsInfo"
-	$ObjectID		5
-	$ClassName		"Simulink.EditorInfo"
-	IsActive		[1]
-	ViewObjType		"SimulinkSubsys"
-	LoadSaveID		"2087"
-	Extents			[1821.0, 911.0]
-	ZoomFactor		[1.0]
-	Offset			[87.978571428571286, 2301.0]
+      Array {
+	Type			"Simulink.EditorInfo"
+	Dimension		3
+	Object {
+	  $ObjectID		  5
+	  IsActive		  [0]
+	  ViewObjType		  "SimulinkTopLevel"
+	  LoadSaveID		  "0"
+	  Extents		  [1821.0, 905.0]
+	  ZoomFactor		  [0.8]
+	  Offset		  [0.41666666666674246, 1.2500000000002274]
+	}
+	Object {
+	  $ObjectID		  6
+	  IsActive		  [0]
+	  ViewObjType		  "SimulinkSubsys"
+	  LoadSaveID		  "2087"
+	  Extents		  [1821.0, 905.0]
+	  ZoomFactor		  [0.8]
+	  Offset		  [-1120.2714285714287, 2239.5]
+	}
+	Object {
+	  $ObjectID		  7
+	  IsActive		  [1]
+	  ViewObjType		  "SimulinkSubsys"
+	  LoadSaveID		  "2098"
+	  Extents		  [1821.0, 905.0]
+	  ZoomFactor		  [1.0]
+	  Offset		  [-902.70573640054852, 164.35516008881518]
+	}
+	PropName		"EditorsInfo"
       }
     }
   }
@@ -73,9 +94,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "waldezjr"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Feb 21 15:19:14 2018"
-  RTWModifiedTimeStamp	  441127148
-  ModelVersionFormat	  "1.%<AutoIncrement:3186>"
+  LastModifiedDate	  "Mon Feb 26 16:39:10 2018"
+  RTWModifiedTimeStamp	  441560939
+  ModelVersionFormat	  "1.%<AutoIncrement:3187>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -117,7 +138,7 @@ Model {
   TryForcingSFcnDF	  off
   Object {
     $PropName		    "DataLoggingOverride"
-    $ObjectID		    6
+    $ObjectID		    8
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
     model_		    "torqueBalancingR2015bS86"
     signals_		    []
@@ -162,13 +183,13 @@ Model {
     Type		    "Handle"
     Dimension		    1
     Simulink.ConfigSet {
-      $ObjectID		      7
+      $ObjectID		      9
       Version		      "1.15.1"
       Array {
 	Type			"Handle"
 	Dimension		9
 	Simulink.SolverCC {
-	  $ObjectID		  8
+	  $ObjectID		  10
 	  Version		  "1.15.1"
 	  StartTime		  "0.0"
 	  StopTime		  "CONFIG.SIMULATION_TIME "
@@ -205,7 +226,7 @@ Model {
 	  InsertRTBMode		  "Whenever possible"
 	}
 	Simulink.DataIOCC {
-	  $ObjectID		  9
+	  $ObjectID		  11
 	  Version		  "1.15.1"
 	  Decimation		  "1"
 	  ExternalInput		  "[t, u]"
@@ -241,7 +262,7 @@ Model {
 	  LoggingIntervals	  "[-inf, inf]"
 	}
 	Simulink.OptimizationCC {
-	  $ObjectID		  10
+	  $ObjectID		  12
 	  Version		  "1.15.1"
 	  Array {
 	    Type		    "Cell"
@@ -298,7 +319,7 @@ Model {
 	  AccelVerboseBuild	  off
 	}
 	Simulink.DebuggingCC {
-	  $ObjectID		  11
+	  $ObjectID		  13
 	  Version		  "1.15.1"
 	  RTPrefix		  "error"
 	  ConsistencyChecking	  "none"
@@ -388,7 +409,7 @@ Model {
 	  IntegerSaturationMsg	  "warning"
 	}
 	Simulink.HardwareCC {
-	  $ObjectID		  12
+	  $ObjectID		  14
 	  Version		  "1.15.1"
 	  ProdBitPerChar	  8
 	  ProdBitPerShort	  16
@@ -428,7 +449,7 @@ Model {
 	  ProdEqTarget		  on
 	}
 	Simulink.ModelReferenceCC {
-	  $ObjectID		  13
+	  $ObjectID		  15
 	  Version		  "1.15.1"
 	  UpdateModelReferenceTargets "IfOutOfDateOrStructuralChange"
 	  EnableRefExpFcnMdlSchedulingChecks on
@@ -444,7 +465,7 @@ Model {
 	  SupportModelReferenceSimTargetCustomCode off
 	}
 	Simulink.SFSimCC {
-	  $ObjectID		  14
+	  $ObjectID		  16
 	  Version		  "1.15.1"
 	  SFSimEcho		  on
 	  SimCtrlC		  on
@@ -456,7 +477,7 @@ Model {
 	}
 	Simulink.RTWCC {
 	  $BackupClass		  "Simulink.RTWCC"
-	  $ObjectID		  15
+	  $ObjectID		  17
 	  Version		  "1.15.1"
 	  Array {
 	    Type		    "Cell"
@@ -528,7 +549,7 @@ Model {
 	    Type		    "Handle"
 	    Dimension		    2
 	    Simulink.CodeAppCC {
-	      $ObjectID		      16
+	      $ObjectID		      18
 	      Version		      "1.15.1"
 	      Array {
 		Type			"Cell"
@@ -601,7 +622,7 @@ Model {
 	    }
 	    Simulink.GRTTargetCC {
 	      $BackupClass	      "Simulink.TargetCC"
-	      $ObjectID		      17
+	      $ObjectID		      19
 	      Version		      "1.15.1"
 	      Array {
 		Type			"Cell"
@@ -691,7 +712,7 @@ Model {
 	  }
 	}
 	SlCovCC.ConfigComp {
-	  $ObjectID		  18
+	  $ObjectID		  20
 	  Version		  "1.15.1"
 	  Description		  "Simulink Coverage Configuration Component"
 	  Name			  "Simulink Coverage"
@@ -727,11 +748,11 @@ Model {
   }
   Simulink.ConfigSet {
     $PropName		    "ActiveConfigurationSet"
-    $ObjectID		    7
+    $ObjectID		    9
   }
   Object {
     $PropName		    "DataTransfer"
-    $ObjectID		    19
+    $ObjectID		    21
     $ClassName		    "Simulink.GlobalDataTransfer"
     DefaultTransitionBetweenSyncTasks "Ensure deterministic transfer (maximum delay)"
     DefaultTransitionBetweenAsyncTasks "Ensure data integrity only"
@@ -1080,7 +1101,7 @@ Model {
   System {
     Name		    "torqueBalancingR2015bXsens"
     Location		    [65, 24, 1920, 1080]
-    Open		    off
+    Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
     ScreenColor		    "white"
@@ -1119,7 +1140,7 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"100"
+	ZoomFactor		"80"
 	Block {
 	  BlockType		  Reference
 	  Name			  "Compare\nTo Zero"
@@ -1291,7 +1312,7 @@ Model {
 	  System {
 	    Name		    "Internal coordinator"
 	    Location		    [65, 24, 1920, 1080]
-	    Open		    off
+	    Open		    on
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -1302,7 +1323,7 @@ Model {
 	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
-	    ZoomFactor		    "125"
+	    ZoomFactor		    "100"
 	    Block {
 	      BlockType		      Inport
 	      Name		      "jointAngles"
@@ -2033,7 +2054,7 @@ Model {
 	      Variant		      off
 	      Object {
 		$PropName		"MaskObject"
-		$ObjectID		20
+		$ObjectID		22
 		$ClassName		"Simulink.Mask"
 		Description		"This block evaluates the homogeneous transformation between the world and the root link, i.e. ^wH_b. I"
 		"t assumes that the link specified by the variable 'link_name' has a constant position\nw.r.t. an inertial frame, but"
@@ -2042,7 +2063,7 @@ Model {
 		"r str;\n\nport_label('input',1,'q_j','texmode','on')\n\nport_label('input',2,'inertial','texmode','on')\n"
 		Object {
 		  $PropName		  "Parameters"
-		  $ObjectID		  21
+		  $ObjectID		  23
 		  $ClassName		  "Simulink.MaskParameter"
 		  Type			  "edit"
 		  Name			  "link_name"
@@ -2966,7 +2987,7 @@ Model {
 		TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 		TiledPageScale		1
 		ShowPageBoundaries	off
-		ZoomFactor		"250"
+		ZoomFactor		"200"
 		Block {
 		  BlockType		  Inport
 		  Name			  "w_H_b"
@@ -3752,7 +3773,7 @@ Model {
 	  SourceBlock		  "WBToolboxLibrary/Utilities/Yarp Read"
 	  SourceType		  "YARP Read"
 	  portName		  "'/retargeting/q:o'"
-	  signalSize		  "33"
+	  signalSize		  "24"
 	  blocking		  off
 	  timestamp		  off
 	  autoconnect		  on
@@ -3917,7 +3938,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "DoFs converter"
 	      SID		      "3712"
-	      Ports		      [1, 6]
+	      Ports		      [1, 5]
 	      Position		      [485, 226, 580, 334]
 	      ZOrder		      659
 	      LibraryVersion	      "1.383"
@@ -3945,7 +3966,7 @@ Model {
 	      BlockType		      Reference
 	      Name		      "DoFs converter1"
 	      SID		      "3713"
-	      Ports		      [1, 6]
+	      Ports		      [1, 5]
 	      Position		      [495, 546, 590, 654]
 	      ZOrder		      660
 	      LibraryVersion	      "1.383"
@@ -4449,7 +4470,7 @@ Model {
 	      Labels		      [2, 1]
 	      SrcBlock		      "DoFs converter"
 	      SrcPort		      1
-	      Points		      [0, -5]
+	      Points		      [0, -15]
 	      DstBlock		      "Impedances(t)"
 	      DstPort		      1
 	    }
@@ -4459,7 +4480,7 @@ Model {
 	      Labels		      [2, 1]
 	      SrcBlock		      "DoFs converter"
 	      SrcPort		      2
-	      Points		      [0, -5]
+	      Points		      [0, -15]
 	      DstBlock		      "Impedances(t)"
 	      DstPort		      2
 	    }
@@ -4501,7 +4522,7 @@ Model {
 	      Labels		      [2, 1]
 	      SrcBlock		      "DoFs converter1"
 	      SrcPort		      1
-	      Points		      [0, -25]
+	      Points		      [0, -35]
 	      DstBlock		      "qjDot(t) "
 	      DstPort		      1
 	    }
@@ -4511,7 +4532,7 @@ Model {
 	      Labels		      [2, 1]
 	      SrcBlock		      "DoFs converter1"
 	      SrcPort		      2
-	      Points		      [0, -25]
+	      Points		      [0, -35]
 	      DstBlock		      "qjDot(t) "
 	      DstPort		      2
 	    }
@@ -8081,11 +8102,11 @@ Model {
 		  Variant		  off
 		  Object {
 		    $PropName		    "MaskObject"
-		    $ObjectID		    22
+		    $ObjectID		    24
 		    $ClassName		    "Simulink.Mask"
 		    Object {
 		    $PropName		    "Parameters"
-		    $ObjectID		    23
+		    $ObjectID		    25
 		    $ClassName		    "Simulink.MaskParameter"
 		    Type		    "edit"
 		    Name		    "link_name"
@@ -8494,11 +8515,11 @@ Model {
 		  Variant		  off
 		  Object {
 		    $PropName		    "MaskObject"
-		    $ObjectID		    24
+		    $ObjectID		    26
 		    $ClassName		    "Simulink.Mask"
 		    Object {
 		    $PropName		    "Parameters"
-		    $ObjectID		    25
+		    $ObjectID		    27
 		    $ClassName		    "Simulink.MaskParameter"
 		    Type		    "edit"
 		    Name		    "link_name"
@@ -8943,7 +8964,7 @@ Model {
 		  Variant		  off
 		  Object {
 		    $PropName		    "MaskObject"
-		    $ObjectID		    26
+		    $ObjectID		    28
 		    $ClassName		    "Simulink.Mask"
 		    Description		    "This block evaluates the homogeneous transformation between the world and the root link, i.e. "
 		    "^wH_b. It assumes that the link specified by the variable 'link_name' has a constant position\nw.r.t. an inertia"
@@ -8952,7 +8973,7 @@ Model {
 		    ")\nclear str;\n\nport_label('input',1,'q_j','texmode','on')\n\nport_label('input',2,'inertial','texmode','on')\n"
 		    Object {
 		    $PropName		    "Parameters"
-		    $ObjectID		    27
+		    $ObjectID		    29
 		    $ClassName		    "Simulink.MaskParameter"
 		    Type		    "edit"
 		    Name		    "link_name"
@@ -9864,7 +9885,7 @@ Model {
 		  Variant		  off
 		  Object {
 		    $PropName		    "MaskObject"
-		    $ObjectID		    28
+		    $ObjectID		    30
 		    $ClassName		    "Simulink.Mask"
 		    Description		    "This block evaluates the homogeneous transformation between the world and the root link, i.e. "
 		    "^wH_b. It assumes that the link specified by the variable 'link_name' has a constant position\nw.r.t. an inertia"
@@ -9873,7 +9894,7 @@ Model {
 		    ")\nclear str;\n\nport_label('input',1,'q_j','texmode','on')\n\nport_label('input',2,'inertial','texmode','on')\n"
 		    Object {
 		    $PropName		    "Parameters"
-		    $ObjectID		    29
+		    $ObjectID		    31
 		    $ClassName		    "Simulink.MaskParameter"
 		    Type		    "edit"
 		    Name		    "link_name"
@@ -10942,7 +10963,7 @@ Model {
 	      Variant		      off
 	      Object {
 		$PropName		"MaskObject"
-		$ObjectID		30
+		$ObjectID		32
 		$ClassName		"Simulink.Mask"
 		Description		"This block evaluates the homogeneous transformation between the world and the root link, i.e. ^wH_b. I"
 		"t assumes that the link specified by the variable 'link_name' has a constant position\nw.r.t. an inertial frame, but"
@@ -10951,7 +10972,7 @@ Model {
 		"r str;\n\nport_label('input',1,'q_j','texmode','on')\n\nport_label('input',2,'inertial','texmode','on')\n"
 		Object {
 		  $PropName		  "Parameters"
-		  $ObjectID		  31
+		  $ObjectID		  33
 		  $ClassName		  "Simulink.MaskParameter"
 		  Type			  "edit"
 		  Name			  "link_name"
@@ -11863,7 +11884,7 @@ Model {
 	      Variant		      off
 	      Object {
 		$PropName		"MaskObject"
-		$ObjectID		32
+		$ObjectID		34
 		$ClassName		"Simulink.Mask"
 		Description		"This block evaluates the homogeneous transformation between the world and the root link, i.e. ^wH_b. I"
 		"t assumes that the link specified by the variable 'link_name' has a constant position\nw.r.t. an inertial frame, but"
@@ -11872,7 +11893,7 @@ Model {
 		"r str;\n\nport_label('input',1,'q_j','texmode','on')\n\nport_label('input',2,'inertial','texmode','on')\n"
 		Object {
 		  $PropName		  "Parameters"
-		  $ObjectID		  33
+		  $ObjectID		  35
 		  $ClassName		  "Simulink.MaskParameter"
 		  Type			  "edit"
 		  Name			  "link_name"
@@ -14989,7 +15010,7 @@ Model {
 	  BlockType		  Reference
 	  Name			  "DoFs converter"
 	  SID			  "3705"
-	  Ports			  [1, 6]
+	  Ports			  [1, 5]
 	  Position		  [345, 6, 440, 114]
 	  ZOrder		  585
 	  LibraryVersion	  "1.383"
@@ -15017,7 +15038,7 @@ Model {
 	  BlockType		  Reference
 	  Name			  "DoFs converter1"
 	  SID			  "3706"
-	  Ports			  [1, 6]
+	  Ports			  [1, 5]
 	  Position		  [345, 161, 440, 269]
 	  ZOrder		  586
 	  LibraryVersion	  "1.383"
@@ -15045,7 +15066,7 @@ Model {
 	  BlockType		  Reference
 	  Name			  "DoFs converter2"
 	  SID			  "3707"
-	  Ports			  [1, 6]
+	  Ports			  [1, 5]
 	  Position		  [345, 296, 440, 404]
 	  ZOrder		  587
 	  LibraryVersion	  "1.383"
@@ -15073,7 +15094,7 @@ Model {
 	  BlockType		  Reference
 	  Name			  "DoFs converter3"
 	  SID			  "3708"
-	  Ports			  [1, 6]
+	  Ports			  [1, 5]
 	  Position		  [980, 26, 1075, 134]
 	  ZOrder		  588
 	  LibraryVersion	  "1.383"
@@ -15101,7 +15122,7 @@ Model {
 	  BlockType		  Reference
 	  Name			  "DoFs converter4"
 	  SID			  "3709"
-	  Ports			  [1, 6]
+	  Ports			  [1, 5]
 	  Position		  [980, 161, 1075, 269]
 	  ZOrder		  589
 	  LibraryVersion	  "1.383"
@@ -15129,7 +15150,7 @@ Model {
 	  BlockType		  Reference
 	  Name			  "DoFs converter5"
 	  SID			  "3710"
-	  Ports			  [1, 6]
+	  Ports			  [1, 5]
 	  Position		  [980, 296, 1075, 404]
 	  ZOrder		  590
 	  LibraryVersion	  "1.383"
@@ -17033,7 +17054,7 @@ Model {
 	  Labels		  [2, 1]
 	  SrcBlock		  "DoFs converter3"
 	  SrcPort		  1
-	  Points		  [0, -5]
+	  Points		  [0, -15]
 	  DstBlock		  "qj"
 	  DstPort		  1
 	}
@@ -17043,7 +17064,7 @@ Model {
 	  Labels		  [2, 1]
 	  SrcBlock		  "DoFs converter3"
 	  SrcPort		  2
-	  Points		  [0, -5]
+	  Points		  [0, -15]
 	  DstBlock		  "qj"
 	  DstPort		  2
 	}
@@ -17207,7 +17228,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter"
 	  SrcPort		  1
-	  Points		  [0, -5]
+	  Points		  [0, -15]
 	  DstBlock		  "tauDes"
 	  DstPort		  1
 	}
@@ -17217,7 +17238,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter"
 	  SrcPort		  2
-	  Points		  [0, -5]
+	  Points		  [0, -15]
 	  DstBlock		  "tauDes"
 	  DstPort		  2
 	}
@@ -17251,7 +17272,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter1"
 	  SrcPort		  1
-	  Points		  [0, -5]
+	  Points		  [0, -15]
 	  DstBlock		  "tauError"
 	  DstPort		  1
 	}
@@ -17261,7 +17282,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter1"
 	  SrcPort		  2
-	  Points		  [0, -5]
+	  Points		  [0, -15]
 	  DstBlock		  "tauError"
 	  DstPort		  2
 	}
@@ -17305,7 +17326,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter2"
 	  SrcPort		  1
-	  Points		  [0, -5]
+	  Points		  [0, -15]
 	  DstBlock		  "tauMeasured"
 	  DstPort		  1
 	}
@@ -17315,7 +17336,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter2"
 	  SrcPort		  2
-	  Points		  [0, -5]
+	  Points		  [0, -15]
 	  DstBlock		  "tauMeasured"
 	  DstPort		  2
 	}
@@ -17376,7 +17397,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter4"
 	  SrcPort		  1
-	  Points		  [0, -5]
+	  Points		  [0, -15]
 	  DstBlock		  "qjDes"
 	  DstPort		  1
 	}
@@ -17386,7 +17407,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter4"
 	  SrcPort		  2
-	  Points		  [0, -5]
+	  Points		  [0, -15]
 	  DstBlock		  "qjDes"
 	  DstPort		  2
 	}
@@ -17437,7 +17458,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter5"
 	  SrcPort		  1
-	  Points		  [0, -5]
+	  Points		  [0, -15]
 	  DstBlock		  "qj_err"
 	  DstPort		  1
 	}
@@ -17447,7 +17468,7 @@ Model {
 	  Labels		  [-1, 0]
 	  SrcBlock		  "DoFs converter5"
 	  SrcPort		  2
-	  Points		  [0, -5]
+	  Points		  [0, -15]
 	  DstBlock		  "qj_err"
 	  DstPort		  2
 	}
@@ -18059,7 +18080,7 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"80"
+	ZoomFactor		"125"
 	Block {
 	  BlockType		  Inport
 	  Name			  "impedances"
@@ -19406,7 +19427,7 @@ Model {
 	      Variant		      off
 	      Object {
 		$PropName		"MaskObject"
-		$ObjectID		34
+		$ObjectID		36
 		$ClassName		"Simulink.Mask"
 		Description		"This block evaluates the homogeneous transformation between the world and the root link, i.e. ^wH_b. I"
 		"t assumes that the link specified by the variable 'link_name' has a constant position\nw.r.t. an inertial frame, but"
@@ -19415,7 +19436,7 @@ Model {
 		"r str;\n\nport_label('input',1,'q_j','texmode','on')\n\nport_label('input',2,'inertial','texmode','on')\n"
 		Object {
 		  $PropName		  "Parameters"
-		  $ObjectID		  35
+		  $ObjectID		  37
 		  $ClassName		  "Simulink.MaskParameter"
 		  Type			  "edit"
 		  Name			  "link_name"
@@ -20327,7 +20348,7 @@ Model {
 	      Variant		      off
 	      Object {
 		$PropName		"MaskObject"
-		$ObjectID		36
+		$ObjectID		38
 		$ClassName		"Simulink.Mask"
 		Description		"This block evaluates the homogeneous transformation between the world and the root link, i.e. ^wH_b. I"
 		"t assumes that the link specified by the variable 'link_name' has a constant position\nw.r.t. an inertial frame, but"
@@ -20336,7 +20357,7 @@ Model {
 		"r str;\n\nport_label('input',1,'q_j','texmode','on')\n\nport_label('input',2,'inertial','texmode','on')\n"
 		Object {
 		  $PropName		  "Parameters"
-		  $ObjectID		  37
+		  $ObjectID		  39
 		  $ClassName		  "Simulink.MaskParameter"
 		  Type			  "edit"
 		  Name			  "link_name"
@@ -23456,7 +23477,7 @@ Model {
       Variant		      off
       Object {
 	$PropName		"MaskObject"
-	$ObjectID		38
+	$ObjectID		40
 	$ClassName		"Simulink.Mask"
 	Display			"disp('SYNCHRONIZER')"
       }
@@ -25589,7 +25610,10 @@ Stateflow {
     firstTransition	    113
     firstJunction	    112
     viewObj		    89
+    visible		    1
     machine		    1
+    subviewS {
+    }
     ssIdHighWaterMark	    83
     decomposition	    CLUSTER_CHART
     type		    EML_CHART

@@ -1,5 +1,5 @@
 %% OVERWRITING SOME OF THE PARAMETERS CONTAINED IN gains.m WHEN USING FSM
-if strcmpi(SM.SM_TYPE, 'WALKING')
+if CONFIG.USE_SM
     reg.pinvDamp    = 0.0001;
     sat.torque = 50;
 
@@ -25,23 +25,19 @@ if strcmpi(SM.SM_TYPE, 'WALKING')
 
 gain.dampings           = 0.0*sqrt(gain.impedances(4,:));
 
+end              
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                      
+         
 %% %%%%%%%%%%%%%%%%    FINITE STATE MACHINE SPECIFIC PARAMETERS
-sm.com.threshold                 =   0.02;
-sm.wrench.threshold             = 120;
+sm.com.threshold                 =   0.005;
+sm.wrench.threshold              = 70;
+sm.joints = struct;
 sm.joints.thresholdNotInContact =  3;
-sm.joints.thresholdInContact    = 80;
+sm.joints.thresholdInContact    = 50;
 
 sm.stateAt0               = 1;
 
 sm.DT                     = 1;
 
-end              
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                      
-         
-
-
 sm.joints.smoothingTime    = references.joints.smoothingTime;
 sm.com.smoothingTime       = references.com.smoothingTime;
-
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                      
-         

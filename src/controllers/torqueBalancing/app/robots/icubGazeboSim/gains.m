@@ -1,6 +1,6 @@
 
-ROBOT_DOF = 32;
-%ROBOT_DOF = 23;
+%ROBOT_DOF = 32;
+ROBOT_DOF = 23;
 CONFIG.ON_GAZEBO = true;
 PORTS.IMU = '/icubSim/inertial';
 
@@ -13,8 +13,8 @@ CONFIG.SMOOTH_DES_COM      = 1;    % If equal to one, the desired streamed value
 CONFIG.SMOOTH_DES_Q        = 1;    % If equal to one, the desired streamed values 
                             % of the postural tasks are smoothed internally 
 
-WBT_wbiList = '(torso_pitch, torso_roll, torso_yaw, neck_pitch, neck_roll, neck_yaw, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, l_wrist_pitch, l_wrist_yaw, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, r_wrist_pitch, r_wrist_yaw, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll)';
-%WBT_wbiList = '(torso_pitch, torso_roll, torso_yaw, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll)';
+%WBT_wbiList = '(torso_pitch, torso_roll, torso_yaw, neck_pitch, neck_roll, neck_yaw, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, l_wrist_prosup, l_wrist_pitch, l_wrist_yaw, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, r_wrist_prosup, r_wrist_pitch, r_wrist_yaw, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll)';
+WBT_wbiList = '(torso_pitch, torso_roll, torso_yaw, l_shoulder_pitch, l_shoulder_roll, l_shoulder_yaw, l_elbow, r_shoulder_pitch, r_shoulder_roll, r_shoulder_yaw, r_elbow, l_hip_pitch, l_hip_roll, l_hip_yaw, l_knee, l_ankle_pitch, l_ankle_roll, r_hip_pitch, r_hip_roll, r_hip_yaw, r_knee, r_ankle_pitch, r_ankle_roll)';
 WBT_robotName          = 'icubSim';
 
 dump.left_wrench_port  = '/icubSim/left_foot/analog:o';
@@ -52,24 +52,24 @@ if (sum(CONFIG.LEFT_RIGHT_FOOT_IN_CONTACT) == 2)
     impTorso            = [70   70   70
                             0    0    0]; 
                         
-    impLeftArm         = [50   50    50    30    30    10    10  
-                            0    0     0    0      0    0     0 ];                     
+    %impLeftArm         = [50   50    50    30    30    10    10  
+     %                       0    0     0    0      0    0     0 ];                     
                         
-    impRightArm             = [50   50    50    30    30    10    10  
-                            0    0     0    0      0    0     0 ];
+    %impRightArm             = [50   50    50    30    30    10    10  
+    %                        0    0     0    0      0    0     0 ];
                         
-   % impArms             = [20   20    20    20 
-    %    0    0     0    0];
+   impArms             = [50   50    50    50 
+        0    0     0    0];
                         
-    impLeftLeg          = [ 30   30   30    60     10  10
+    impLeftLeg          = [ 30   30   30    70     10  10
                              0    0    0     0      0   0]; 
                          
-    impRightLeg         = [ 30   30   30    60     10  10
+    impRightLeg         = [ 30   30   30    70     10  10
                              0    0    0     0      0   0]; 
     
     intHead             = [0   0    0];                  
     intTorso            = [0   0    0]; 
-    intArms             = [0   0    0   0   0   0   0];
+    intArms             = [0   0    0   0  ];
                         
     intLeftLeg          = [0   0    0    0   0  0]; 
 
@@ -124,13 +124,13 @@ end
 
 sat.integral              = 0;
 
-gain.integral             = [intTorso,intHead,intArms,intArms,intLeftLeg,intRightLeg];
-%gain.integral             = [intTorso,intArms,intArms,intLeftLeg,intRightLeg];
+%gain.integral             = [intTorso,intHead,intArms,intArms,intLeftLeg,intRightLeg];
+gain.integral             = [intTorso,intArms,intArms,intLeftLeg,intRightLeg];
 
-gain.impedances           = [impTorso(1,:),impHead(1,:),impLeftArm(1,:),impRightArm(1,:),impLeftLeg(1,:),impRightLeg(1,:)];
-gain.increasingRatesImp   = [impTorso(2,:),impHead(2,:),impLeftArm(2,:),impRightArm(2,:),impLeftLeg(2,:),impRightLeg(2,:)];
-%gain.impedances           = [impTorso(1,:),impArms(1,:),impArms(1,:),impLeftLeg(1,:),impRightLeg(1,:)];
-%gain.increasingRatesImp   = [impTorso(2,:),impArms(2,:),impArms(2,:),impLeftLeg(2,:),impRightLeg(2,:)];
+%gain.impedances           = [impTorso(1,:),impHead(1,:),impLeftArm(1,:),impRightArm(1,:),impLeftLeg(1,:),impRightLeg(1,:)];
+%gain.increasingRatesImp   = [impTorso(2,:),impHead(2,:),impLeftArm(2,:),impRightArm(2,:),impLeftLeg(2,:),impRightLeg(2,:)];
+gain.impedances           = [impTorso(1,:),impArms(1,:),impArms(1,:),impLeftLeg(1,:),impRightLeg(1,:)];
+gain.increasingRatesImp   = [impTorso(2,:),impArms(2,:),impArms(2,:),impLeftLeg(2,:),impRightLeg(2,:)];
 
 gain.dampings             = 0*sqrt(gain.impedances);
 sat.impedences            = [80   25    1400];
