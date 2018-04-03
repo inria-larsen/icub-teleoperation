@@ -70,11 +70,12 @@ class retargetThread: public yarp::os::RateThread
         
 
 	/*Joint related*/
+	Eigen::VectorXd jointPosCoM;
 	Eigen::VectorXd jointPos;
-        Eigen::VectorXd jointPosCoM;
 	std::string joint_list;
         int actuatedDOFs;
         yarp::sig::Vector q;
+        yarp::sig::Vector qActuated;
         //Limits
 	bool m_checkJointLimits;
         Eigen::VectorXd m_minJointLimits; /* actuatedDOFs */
