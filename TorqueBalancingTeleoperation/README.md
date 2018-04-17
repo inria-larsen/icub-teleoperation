@@ -42,7 +42,7 @@ The data from the motion capture system MVN Xsens is used as a reference for the
 Hence, as a first step you can use a retargeting module, to obtain joint angles references congruent with the robot and to generate corresponding CoM position references. The output of the module is sent as a reference to the controller [torqueBalancing](https://www.frontiersin.org/articles/10.3389/frobt.2015.00006/full#B25). This retargeting framework is human-adapted in the sense that it works under the assumption that the motion performed by the human operator is a stable motion for the robot.
 An improvement of the retargeting could be obtained by a cascade of the QP controller, which allows to compute a a weighted average of the desired tasks, generating a motion that is a compromise between the robot capabilities and the human reference, and the torque based controller that allows the robot to maintain the balance under the change of rigid non-coplanar contacts. 
 
-![alt text](https://github.com/inria-larsen/icub-teleoperation/blob/master/TorqueBalancing/doc/retargeting-chart.png "Software concept")
+![alt text](https://github.com/inria-larsen/icub-teleoperation/blob/master/TorqueBalancingTeleoperation/doc/retargeting-chart.png "Software concept")
 
 
 ## How to run the modules
