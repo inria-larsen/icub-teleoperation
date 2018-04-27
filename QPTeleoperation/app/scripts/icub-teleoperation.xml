@@ -1,4 +1,4 @@
-
+ <!-- iCub teleoperation -- (C) Luigi Penco --> 
 <application>
     <name>iCub Teleoperation</name>
     <description>from XSens to iCub</description>
@@ -35,13 +35,13 @@
           <to>/retargeting/q:o</to>
           <protocol>udp</protocol>
     </connection>
-<!--
+
     <connection>
-          <from>/xsens/PoseEuler</from>
-          <to>/retargeting/pose:o</to>
+          <from>/xsens/PoseQuaternion</from>
+          <to>/retargeting/pos:o</to>
           <protocol>udp</protocol>
     </connection>  
--->
+
 <!--
     <connection>
           <from>/retargeting/q:o</from>

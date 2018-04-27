@@ -1,10 +1,12 @@
- <!-- Template for iCub teleoperation -- (C) Serena Ivaldi - serena.ivaldi@inria.fr -->
+ <!-- Data dumper iCub teleoperation -- (C) Luigi Penco -->
 
 <application>
 <name>iCub Teleoperation data dumper</name>
 <dependencies>
 	<port>/icub/right_arm/state:o</port>
 	<port>/icub/left_arm/state:o</port>
+	<port>/icub/right_leg/state:o</port>
+	<port>/icub/left_leg/state:o</port>
 	<port>/icub/torso/state:o</port>
 	<port>/icub/head/state:o</port>
 </dependencies>
