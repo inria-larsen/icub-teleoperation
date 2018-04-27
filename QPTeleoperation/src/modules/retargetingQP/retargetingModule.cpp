@@ -50,26 +50,62 @@ bool retargetingModule::configure(yarp::os::ResourceFinder &rf)
 	period = rf.find("rate").asInt();
     }
 
+    //Loading safety offset from limits
     if( rf.check("offset") && rf.find("offset").isDouble() )
     {
 	offset = rf.find("offset").asDouble();
     }
 
+    //Loading ratio between icub and human wearing the xsens limbs
+    Bottle *ratioLimbs = rf.find("ratio_limbs").asList(); 
+    int size = ratioLimbs->size();
+    m_ratioLimbs.resize(size);
+    for (int i=0; i<size; i++){
+        m_ratioLimbs(i) = ratioLimbs->get(i).asDouble();
+    }
+
+    //Loading ref frame for body segments
+    if( rf.check("ref_frame") && rf.find("ref_frame").isString() )
+    {
+	ref_frame = rf.find("ref_frame").asString();
+    }
+
+    //Loading start pose
+    if( rf.check("start_pos") && rf.find("start_pos").isString() )
+    {
+	ref_frame = rf.find("start_pos").asString();
+    }
+ 
     //Loading joints information
-    jointList = rf.find("joint_list").asList();
+    Bottle *jointList = rf.find("joint_list").asList();
     actuatedDOFs = jointList->size();
  std::cout << "[INFO]Joint list:\n" << jointList->toString() << std::endl;
     Value trueValue;
     trueValue.fromString("true");
     bool checkJointLimits = rf.check("check_limits", trueValue, "Looking for joint limits check option").asBool();
-    //limits
-    minJointLimits =rf.find("minJointLimits").asList();
-    maxJointLimits =rf.find("maxJointLimits").asList();
+    //Loading limits
+    Bottle *minJointLimits =rf.find("minJointLimits").asList();
+    Bottle *maxJointLimits =rf.find("maxJointLimits").asList();
     m_minJointLimits.resize(actuatedDOFs);
     m_maxJointLimits.resize(actuatedDOFs);
     for (int i=0; i<actuatedDOFs; i++){
         m_minJointLimits(i) = minJointLimits->get(i).asDouble();
         m_maxJointLimits(i) = maxJointLimits->get(i).asDouble();
+    }
+
+    //Loading robot Tpose reference positions
+    Bottle *p_ref_T_r = rf.find("p_ref_T_r").asList(); 
+    size = p_ref_T_r->size();
+    m_p_ref_T_r.resize(size);
+    for (int i=0; i<size; i++){
+        m_p_ref_T_r(i) = p_ref_T_r->get(i).asDouble();
+    }
+    //Loading human Tpose reference positions
+    Bottle *p_ref_T_h = rf.find("p_ref_T_h").asList(); 
+    size = p_ref_T_h->size();
+    m_p_ref_T_h.resize(size);
+    for (int i=0; i<size; i++){
+        m_p_ref_T_h(i) = p_ref_T_h->get(i).asDouble();
     }
 
 
@@ -94,7 +130,12 @@ bool retargetingModule::configure(yarp::os::ResourceFinder &rf)
                                             m_minJointLimits,
                                             m_maxJointLimits,
 	                                    period,
-					    offset);
+					    offset,
+					    m_ratioLimbs,
+					    m_p_ref_T_h,
+				            m_p_ref_T_r,
+                                            ref_frame,
+					    start_pos);
     if(!rThread->start())
     {
 	yError() << getName()

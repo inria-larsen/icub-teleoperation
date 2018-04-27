@@ -42,12 +42,16 @@ class retargetingModule: public yarp::os::RFModule
     double  offset;
     int     actuatedDOFs;
     bool    checkJointLimits;
-    yarp::os::Bottle* minJointLimits;
-    yarp::os::Bottle* maxJointLimits;
+    //yarp::os::Bottle* minJointLimits;
     Eigen::VectorXd m_minJointLimits; /* actuatedDOFs */
     Eigen::VectorXd m_maxJointLimits; /* actuatedDOFs */
-    yarp::os::Bottle* jointList;
-    /*end Joint related*/
+    /*Body segment pose related*/
+    std::string ref_frame;
+    std::string start_pos;
+    Eigen::VectorXd m_ratioLimbs;
+    Eigen::VectorXd m_p_ref_T_r;
+    Eigen::VectorXd m_p_ref_T_h;    
+
     double  avgTime, stdDev, avgTimeUsed, stdDevUsed;
     
     yarp::os::Port                 rpcPort;        // a port to handle rpc messages

@@ -57,6 +57,8 @@ class retargetingThread: public yarp::os::RateThread
 	/** period after which some diagnostic messages are print */
 	double              printPeriod;
 	yarp::os::Stamp timestamp;
+	bool streamingJoint;
+	bool streamingPos;
              
 	/*Joint related*/
 	Eigen::VectorXd jointPos;
@@ -64,12 +66,18 @@ class retargetingThread: public yarp::os::RateThread
 	bool m_checkJointLimits;
         Eigen::VectorXd m_minJointLimits; /* actuatedDOFs */
         Eigen::VectorXd m_maxJointLimits; /* actuatedDOFs */
-	/*end Joint related*/
+        /*Body segment pose related*/
         Eigen::VectorXd bodySegPos;
+        std::string ref_frame;
+        Eigen::VectorXd m_ratioLimbs;
+        Eigen::VectorXd m_p_ref_T_r;
+        Eigen::VectorXd m_p_ref_T_h;  
+        std::string start_pos; 
+
 	
-	//Port for reading and writing the joint positions
+	//Port for reading and writing the joint position
         yarp::os::BufferedPort<yarp::os::Bottle> joint_port; 
-        //Port for reading and writing the body segment positions
+        //Port for reading and writing the body segment pose
         yarp::os::BufferedPort<yarp::os::Bottle> pos_port;
 
 	void mapping_run();
@@ -92,7 +100,12 @@ public:
                            Eigen::VectorXd minJointLimits,
                            Eigen::VectorXd maxJointLimits,
 			   int _period,
-			   double _offset);
+			   double _offset,
+                           Eigen::VectorXd ratioLimbs,
+                           Eigen::VectorXd p_ref_T_h,
+                           Eigen::VectorXd p_ref_T_r,
+                           std::string _ref_frame,
+                           std::string _start_pos);
 	
 	bool threadInit();
 	void run();
