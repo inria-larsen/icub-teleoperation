@@ -57,55 +57,76 @@ class retargetingThread: public yarp::os::RateThread
 	/** period after which some diagnostic messages are print */
 	double              printPeriod;
 	yarp::os::Stamp timestamp;
-	bool streamingJoint;
-	bool streamingPos;
-             
+	bool streamingJoint=false;
+	bool streamingPos=false;
+	bool streamingCoM=false;
+	bool firstRunPos=true;
+	bool firstRunJ=true;
+
 	/*Joint related*/
 	Eigen::VectorXd jointPos;
-        int actuatedDOFs;
+    int actuatedDOFs;
 	bool m_checkJointLimits;
-        Eigen::VectorXd m_minJointLimits; /* actuatedDOFs */
-        Eigen::VectorXd m_maxJointLimits; /* actuatedDOFs */
-        /*Body segment pose related*/
-        Eigen::VectorXd bodySegPos;
-        std::string ref_frame;
-        Eigen::VectorXd m_ratioLimbs;
-        Eigen::VectorXd m_p_ref_T_r;
-        Eigen::VectorXd m_p_ref_T_h;  
-        std::string start_pos; 
+    Eigen::VectorXd m_minJointLimits; /* actuatedDOFs */
+    Eigen::VectorXd m_maxJointLimits; /* actuatedDOFs */
+    std::string joint_value;
+    Eigen::VectorXd j_start_r_T;
+    Eigen::VectorXd j_start_h;
+    /*Body segment pose related*/
+    Eigen::VectorXd bodySegPos;
+    std::string ref_frame;
+    Eigen::VectorXd m_ratioLimbs; 
+    Eigen::VectorXd p_start_r_T;  
+    Eigen::VectorXd p_start_h;
+    std::string start_pos; 
+    bool stream_feet;
+    Eigen::VectorXd l_foot;
+    Eigen::VectorXd r_foot;
+	/*CoM related*/
+	Eigen::VectorXd com;
+	double o_com; // com offset from left foot on the vector connecting the two feet
+	Eigen::Vector2d p_com;
+	Eigen::Vector2d p_Lfoot;
+	Eigen::Vector2d p_Rfoot;
 
 	
 	//Port for reading and writing the joint position
-        yarp::os::BufferedPort<yarp::os::Bottle> joint_port; 
-        //Port for reading and writing the body segment pose
-        yarp::os::BufferedPort<yarp::os::Bottle> pos_port;
+    yarp::os::BufferedPort<yarp::os::Bottle> joint_port; 
+    //Port for reading and writing the body segment pose
+    yarp::os::BufferedPort<yarp::os::Bottle> pos_port;
+    //Port for reading and writing CoM information
+    yarp::os::BufferedPort<yarp::os::Bottle> com_port;
 
-	void mapping_run();
+	void publishData();
 	//----------------------------
 	//-- xSens-Robot Joint Retargeting
 	//----------------------------
 	void getRobotJoints();
 	void getRobotPos();
+	void getXsensCoM();
 	void avoidJointLimits();
 	void publishJoints();
 	void publishPos();
+	void publishCoM();
 	  
 
 public:
 
-    	retargetingThread(std::string _name,
+	retargetingThread(std::string _name,
 			   std::string _robotName,
 			   int _actuatedDOFs,
 			   bool checkJointLimits,
-                           Eigen::VectorXd minJointLimits,
-                           Eigen::VectorXd maxJointLimits,
+               Eigen::VectorXd minJointLimits,
+               Eigen::VectorXd maxJointLimits,
 			   int _period,
 			   double _offset,
-                           Eigen::VectorXd ratioLimbs,
-                           Eigen::VectorXd p_ref_T_h,
-                           Eigen::VectorXd p_ref_T_r,
-                           std::string _ref_frame,
-                           std::string _start_pos);
+               Eigen::VectorXd ratioLimbs,
+               Eigen::VectorXd j_start_r_T_,
+               Eigen::VectorXd p_start_r_T_,
+               std::string _ref_frame,
+               std::string _start_pos,
+               bool _stream_feet,
+               std::string _joint_value);
 	
 	bool threadInit();
 	void run();

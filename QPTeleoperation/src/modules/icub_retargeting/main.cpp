@@ -25,7 +25,7 @@ int main (int argc, char * argv[])
     //Creating and preparing the Resource Finder
     ResourceFinder rf;
     rf.setVerbose(true);
-    rf.setDefaultConfigFile("retargetingQP.ini");         //default config file name.
+    rf.setDefaultConfigFile("retargetingIcub.ini");         //default config file name.
     rf.setDefaultContext(DEFAULT_YARP_CONTEXT); //when no parameters are given to the module this is the default context
     rf.configure(argc,argv);
 

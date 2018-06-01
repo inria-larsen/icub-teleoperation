@@ -3,7 +3,7 @@ Limb length [cm]
 iCub
 waist-head	32.45
 shoulder-hand	29.09
-hip-foot	42.2
+hip-foot	43.5
 
 Luigi		
 waist-head	59.55
@@ -13,6 +13,6 @@ hip-calcaneus	89.65
 ratio iCub/Luigi
 waist-head	0.544920235
 shoulder-hand	0.509457093
-hip-foot	0.470719465
+hip-foot	0.485220301
 
 	

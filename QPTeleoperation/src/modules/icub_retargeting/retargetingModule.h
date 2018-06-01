@@ -42,15 +42,16 @@ class retargetingModule: public yarp::os::RFModule
     double  offset;
     int     actuatedDOFs;
     bool    checkJointLimits;
-    //yarp::os::Bottle* minJointLimits;
     Eigen::VectorXd m_minJointLimits; /* actuatedDOFs */
     Eigen::VectorXd m_maxJointLimits; /* actuatedDOFs */
+    std::string joint_value;
     /*Body segment pose related*/
     std::string ref_frame;
     std::string start_pos;
     Eigen::VectorXd m_ratioLimbs;
-    Eigen::VectorXd m_p_ref_T_r;
-    Eigen::VectorXd m_p_ref_T_h;    
+    Eigen::VectorXd p_start_r_T;
+    Eigen::VectorXd j_start_r_T;   
+    bool stream_feet; 
 
     double  avgTime, stdDev, avgTimeUsed, stdDevUsed;
     
@@ -66,10 +67,10 @@ public:
 	double getPeriod(){ return period;  }
 	bool updateModule();
 	
-	    /**
-	     * Quit the module.
-	     * @return true/false on success/failure
-	     */
+    /**
+     * Quit the module.
+     * @return true/false on success/failure
+     */
 	virtual bool quit();
 	
 };
