@@ -191,6 +191,7 @@ void retargetingThread::getRobotJoints()
 			delta_j_h = ji_h - j_start_h;
 			delta_j_r = delta_j_h;
 			
+
 			if (joint_value.compare("istantaneous")==0){
 				jointPos = ji_h;
 			}
