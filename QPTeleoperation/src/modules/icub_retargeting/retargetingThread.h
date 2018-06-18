@@ -74,12 +74,16 @@ class retargetingThread: public yarp::os::RateThread
     Eigen::VectorXd j_start_h;
     /*Body segment pose related*/
     Eigen::VectorXd bodySegPos;
+    double basei_r;
     std::string ref_frame;
     Eigen::VectorXd m_ratioLimbs; 
     Eigen::VectorXd p_start_r_T;  
     Eigen::VectorXd p_start_h;
+    double base_start_r_T;  
+    double base_start_h;
     std::string start_pos; 
     bool stream_feet;
+    bool stream_base;
     Eigen::VectorXd l_foot;
     Eigen::VectorXd r_foot;
 	/*CoM related*/
@@ -88,6 +92,7 @@ class retargetingThread: public yarp::os::RateThread
 	Eigen::Vector2d p_com;
 	Eigen::Vector2d p_Lfoot;
 	Eigen::Vector2d p_Rfoot;
+	Eigen::Vector2d p_RLfeet;
 
 	
 	//Port for reading and writing the joint position
@@ -123,9 +128,11 @@ public:
                Eigen::VectorXd ratioLimbs,
                Eigen::VectorXd j_start_r_T_,
                Eigen::VectorXd p_start_r_T_,
+               double base_start_r_T_,
                std::string _ref_frame,
                std::string _start_pos,
                bool _stream_feet,
+               bool _base_feet,
                std::string _joint_value);
 	
 	bool threadInit();

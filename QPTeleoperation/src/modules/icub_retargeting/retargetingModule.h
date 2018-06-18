@@ -50,8 +50,10 @@ class retargetingModule: public yarp::os::RFModule
     std::string start_pos;
     Eigen::VectorXd m_ratioLimbs;
     Eigen::VectorXd p_start_r_T;
-    Eigen::VectorXd j_start_r_T;   
-    bool stream_feet; 
+    Eigen::VectorXd j_start_r_T; 
+    double base_start_r_T;  
+    bool stream_feet;
+    bool stream_base; 
 
     double  avgTime, stdDev, avgTimeUsed, stdDevUsed;
     

@@ -31,9 +31,11 @@ retargetingThread::retargetingThread(string _name,
    			 	   Eigen::VectorXd ratioLimbs,
 			       Eigen::VectorXd j_start_r_T_,
                    Eigen::VectorXd p_start_r_T_,
+                   double base_start_r_T_,
                    std::string _ref_frame,
                    std::string _start_pos,
                    bool _stream_feet,
+                   bool _stream_base,
                    std::string _joint_value)
 :   RateThread(_period),
 	moduleName(_name),
@@ -46,9 +48,11 @@ retargetingThread::retargetingThread(string _name,
 	m_ratioLimbs(ratioLimbs),
 	j_start_r_T(j_start_r_T_),
 	p_start_r_T(p_start_r_T_),
+	base_start_r_T(base_start_r_T_),
 	ref_frame(_ref_frame),
 	start_pos(_start_pos),
 	stream_feet(_stream_feet),
+	stream_base(_stream_base),
 	joint_value(_joint_value),
 	printCountdown(0),
 	printPeriod(2000)
@@ -105,6 +109,17 @@ void retargetingThread::publishPos()
 	for (int i=0; i < bodySegPos.size(); i++){
 		output.addDouble(bodySegPos(i));
 	}
+	if (stream_feet){
+		for (int i=0; i < 3; i++){
+			output.addDouble(l_foot(i));
+		}
+		for (int i=0; i < 3; i++){
+			output.addDouble(r_foot(i));
+		}
+	}
+	if (stream_base){
+		output.addDouble(basei_r);
+	}
 
 	pos_port.write();
 }
@@ -130,7 +145,7 @@ void retargetingThread::getRobotJoints()
 	//read joint positions from xsens
 	Bottle *input = joint_port.read(false); 
 
-	//++++++++  xSens to iCub +++++++++++
+	//++++++++ xSens to iCub +++++++++++
 	if (robotName.find("icub") != std::string::npos){
 		if(input!=NULL){
 			streamingJoint = true;
@@ -195,17 +210,25 @@ void retargetingThread::getRobotJoints()
 			if (joint_value.compare("istantaneous")==0){
 				jointPos = ji_h;
 			}
-			else{
+			if(joint_value.compare("delta")==0){
 				// ji_r = j_start_r + delta_j_r 
 				//		= j_start_r + delta_j_h
 				//		= j_start_r + (ji_h - j_start_h)
 				if (start_pos.compare("T")==0){
-				    ji_r =  j_start_r_T + delta_j_r;
+				    ji_r = j_start_r_T + delta_j_r;
 		
 					jointPos = ji_r;
 				}
 				else{ // delta_j_r
 					jointPos = delta_j_r;
+				}
+			}
+			else{ //hybrid
+				jointPos = delta_j_r; 
+				// istantaneous for the wrists
+				for (int i=10; i<13; i++){
+					jointPos(i) = ji_h(i);
+					jointPos(i+7) = ji_h(i+7);
 				}
 			}
 		}
@@ -312,6 +335,11 @@ void retargetingThread::getRobotPos()
 		Eigen::VectorXd delta_p_r(15);
 		Eigen::VectorXd delta_p_h(15);
 
+		// Robot and human base z position
+		double basei_h;
+		double delta_base_r;
+		double delta_base_h;
+
 		// compute human relative position in global frame
 		for (int i=0; i<3; i++) {
 			waist(i) = (pelvis(i) + L5(i))/2;
@@ -342,10 +370,13 @@ void retargetingThread::getRobotPos()
 		else{
 			pi_h << waist_head, l_upperArm_hand, r_upperArm_hand, l_upperLeg_foot, r_upperLeg_foot;
 		}
+
+		basei_h = pelvis(2);
 		
 		// store starting reference human position
 		if(firstRunPos) {
 			p_start_h = pi_h;
+			base_start_h = basei_h;
 		}
 		firstRunPos = false;
 
@@ -361,24 +392,20 @@ void retargetingThread::getRobotPos()
 			delta_p_r(i) = m_ratioLimbs(2)*delta_p_h(i);
 		}
 
+		delta_base_h = basei_h - base_start_h;
+		delta_base_r = m_ratioLimbs(3) * delta_base_h;
 		
 		// pi_r = p_start_r + delta_p_r 
 		//		= p_start_r + m * delta_p_h
 		//		= p_start_r + m * (pi_h - p_start_h)
 		if (start_pos.compare("T")==0){
-		    pi_r =  p_start_r_T + delta_p_r;
-			if (stream_feet){
-				bodySegPos.resize(21);
-				bodySegPos << pi_r, l_foot(0), l_foot(1), l_foot(2), r_foot(0), r_foot(1), r_foot(2);
-			}else
-				bodySegPos = pi_r;
+		    pi_r = p_start_r_T + delta_p_r;
+			bodySegPos = pi_r;
+			basei_r = base_start_r_T + delta_base_r;
 		}
 		else{ // delta_p_r
-			if (stream_feet){
-				bodySegPos.resize(21);
-				bodySegPos << delta_p_r, l_foot(0), l_foot(1), l_foot(2), r_foot(0), r_foot(1), r_foot(2);
-			}else
-				bodySegPos = delta_p_r;
+			bodySegPos = delta_p_r;
+			basei_r = delta_base_r;
 		}
 	}
 	else {
@@ -410,10 +437,11 @@ void retargetingThread::getXsensCoM()
 		p_Rfoot(0) = r_foot(0);
 		p_Rfoot(1) = r_foot(1);
 
+		p_RLfeet = p_Rfoot - p_Lfoot;
 		double norm;
-		norm = p_Rfoot(0)*p_Rfoot(0)+p_Rfoot(1)*p_Rfoot(1)-(p_Lfoot(0)*p_Lfoot(0)+p_Lfoot(1)*p_Lfoot(1));
+		norm = abs(p_RLfeet(0)*p_RLfeet(0) + p_RLfeet(1)*p_RLfeet(1));
 
-		o_com = (p_com - p_Lfoot).dot(p_Rfoot - p_Lfoot)/norm;
+		o_com = ((p_com - p_Lfoot).dot(p_Rfoot - p_Lfoot))/norm;
 		com(3) = o_com;
 	}
 }

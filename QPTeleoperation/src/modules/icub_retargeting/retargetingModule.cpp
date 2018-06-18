@@ -82,6 +82,11 @@ bool retargetingModule::configure(yarp::os::ResourceFinder &rf)
         stream_feet = rf.find("stream_feet").asBool();
     }
  
+     //check if base z streaming
+    if( rf.check("stream_base") && rf.find("stream_base").isBool() )
+    {
+        stream_base = rf.find("stream_base").asBool();
+    }
  
     //Loading joints information
     Bottle *jointList = rf.find("joint_list").asList();
@@ -114,12 +119,18 @@ bool retargetingModule::configure(yarp::os::ResourceFinder &rf)
         p_start_r_T(i) = p_start_r_T_->get(i).asDouble();
     }
 
-    //Loading human Tpose reference joint angles
+    //Loading robot Tpose reference joint angles
     Bottle *j_start_r_T_ = rf.find("j_start_r_T").asList(); 
     size = j_start_r_T_->size();
     j_start_r_T.resize(size);
     for (int i=0; i<size; i++){
         j_start_r_T(i) = j_start_r_T_->get(i).asDouble();
+    }
+
+    //Loading robot Tpose reference base frame z
+    if( rf.check("base_start_r_T") && rf.find("base_start_r_T").isDouble() )
+    {
+       base_start_r_T = rf.find("base_start_r_T").asDouble();
     }
 
 
@@ -146,9 +157,11 @@ bool retargetingModule::configure(yarp::os::ResourceFinder &rf)
                 					    m_ratioLimbs,
                 					    j_start_r_T,
 				                        p_start_r_T,
+                                        base_start_r_T,
                                         ref_frame,
 				                        start_pos,
                                         stream_feet,
+                                        stream_base,
                                         joint_value);
     if(!rThread->start())
     {
