@@ -4,8 +4,8 @@
 * CopyPolicy: Released under the terms of the GNU GPL v2.0.
 */
 
-#ifndef __RETARGETING_MODULE_H__
-#define __RETARGETING_MODULE_H__
+#ifndef __LIP_MODULE_H__
+#define __LIP_MODULE_H__
 
 #include <iostream>
 #include <string>
@@ -23,44 +23,29 @@
 #include <yarp/os/Thread.h>
 #include <yarp/os/Stamp.h>
 #include <yarp/sig/Vector.h>
-#include <yarp/dev/PolyDriver.h>
-#include <yarp/dev/Drivers.h>
 
 #include <yarp/os/LogStream.h>
 
-#include "retargetingThread.h"
+#include "LIPThread.h"
 
 
-class retargetingModule: public yarp::os::RFModule
+class LIPModule: public yarp::os::RFModule
 {
     /* module parameters */
     std::string  moduleName;
     std::string  robotName;
-    int     period;
-    /*Joint related*/
-    double  offset;
-    int     actuatedDOFs;
-    bool    checkJointLimits;
-    Eigen::VectorXd m_minJointLimits; /* actuatedDOFs */
-    Eigen::VectorXd m_maxJointLimits; /* actuatedDOFs */
-    std::string joint_value;
-    /*Body segment pose related*/
-    std::string ref_frame;
-    std::string start_pos;
-    Eigen::VectorXd m_ratioLimbs;
-    Eigen::VectorXd p_start_r_T;
-    Eigen::VectorXd j_start_r_T; 
-    double base_start_r_T;  
-    bool stream_feet;
-    bool stream_base; 
+    int     period; 
+    Eigen::Vector2d m_lambdaD;
 
     double  avgTime, stdDev, avgTimeUsed, stdDevUsed;
     
     yarp::os::Port                 rpcPort;        // a port to handle rpc messages
-    retargetingThread*     rThread;     //  control thread
+    LIPThread*     lThread;     //  control thread
+
+
 
 public:
-	retargetingModule();
+	LIPModule();
 
 	bool configure(yarp::os::ResourceFinder &rf); // configure all the module parameters and return true if successful    
 	bool interruptModule();                       // interrupt, e.g., the ports

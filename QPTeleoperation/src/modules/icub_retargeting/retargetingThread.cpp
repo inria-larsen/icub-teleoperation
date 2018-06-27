@@ -11,7 +11,6 @@
 using namespace yarp::os;
 using namespace std;
 using namespace Eigen;
-using namespace yarp::math;
 
 const double PI = 3.141592653589793;
 
@@ -498,5 +497,3 @@ void retargetingThread::closePort()
 	com_port.close();
 	yInfo() << "com port closed";
 }
-
-

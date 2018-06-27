@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/icub_retargeting/main.cpp" "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/src/modules/icub_retargeting/CMakeFiles/retargeting.dir/main.cpp.o"
-  "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/icub_retargeting/retargetingModule.cpp" "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/src/modules/icub_retargeting/CMakeFiles/retargeting.dir/retargetingModule.cpp.o"
-  "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/icub_retargeting/retargetingThread.cpp" "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/src/modules/icub_retargeting/CMakeFiles/retargeting.dir/retargetingThread.cpp.o"
+  "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPModule.cpp" "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPModule.cpp.o"
+  "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPThread.cpp" "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPThread.cpp.o"
+  "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/main.cpp" "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/src/modules/LIP_retargeting/CMakeFiles/LIP.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -22,6 +22,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/home/waldezjr/icub/software/src/yarp/src/libYARP_name/include"
   "/home/waldezjr/icub/software/src/yarp/src/libYARP_manager/include"
   "/home/waldezjr/icub/software/src/yarp/src/libYARP_logger/include"
+  "/home/waldezjr/icub/software/src/qpOASES/include"
   )
 
 # Targets to which this target links.

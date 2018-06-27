@@ -9,8 +9,6 @@
 
 using namespace yarp::dev;
 using namespace yarp::os;
-using namespace yarpWbi;
-using namespace wbi;
 
 
 retargetingModule::retargetingModule()
@@ -145,7 +143,7 @@ bool retargetingModule::configure(yarp::os::ResourceFinder &rf)
     }
     
 
-    //--------------------------JOINT RETARGETING THREAD--------------------------
+    //--------------------------RETARGETING THREAD--------------------------
     rThread = new retargetingThread(moduleName,
 	                                    robotName,
                 					    actuatedDOFs,

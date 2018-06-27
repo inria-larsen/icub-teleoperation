@@ -28,21 +28,6 @@
         <stdio>luigi</stdio>
         <tag>XsensStreamer</tag>
     </module>
-  
-    <module>
-        <name>yarpdataplayer</name>
-        <node>luigi</node>
-        <stdio>luigi</stdio>
-        <tag>XsensStreamer1</tag>
-    </module>
-
-    <module>
-        <name>yarpdataplayer</name>
-        <node>luigi</node>
-        <stdio>luigi</stdio>
-        <tag>XsensStreamer2</tag>
-    </module>
-
 
     <!-- CONNECTIONS -->
 

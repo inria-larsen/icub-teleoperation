@@ -2,8 +2,9 @@
 # Author: Serena Ivaldi
 # CopyPolicy: Released under the terms of the GNU GPL v2.0.
 
-
 add_subdirectory(icub_retargeting)
+add_subdirectory(LIP_retargeting)
+
 
 
 

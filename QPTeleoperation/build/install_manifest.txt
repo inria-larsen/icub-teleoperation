@@ -1,5 +1,7 @@
-/home/waldezjr/icub/software/bin/retargeting
-/home/waldezjr/icub/software/share/yarp/contexts/retargetingIcub.ini
-/home/waldezjr/icub/software/share/yarp/applications/icub-teleoperation.xml.template
-/home/waldezjr/icub/software/share/yarp/applications/teleop-dumper.xml
-/home/waldezjr/icub/software/share/yarp/applications/icub-teleoperation.xml
+/usr/local/bin/retargeting
+/usr/local/bin/LIP
+/usr/local/share/yarp/contexts/retargetingLIP.ini
+/usr/local/share/yarp/contexts/retargetingIcub.ini
+/usr/local/share/yarp/applications/icub-teleoperation.xml.template
+/usr/local/share/yarp/applications/teleop-dumper.xml
+/usr/local/share/yarp/applications/icub-teleoperation.xml

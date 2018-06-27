@@ -7,30 +7,7 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/home/waldezjr/icub/software/lib/ICUBcontrib/ICUBcontribConfig.cmake"
-  "/home/waldezjr/icub/software/share/ICUBcontrib/cmake/ICUBcontribHelpers.cmake"
-  "/home/waldezjr/icub/software/share/ICUBcontrib/cmake/ICUBcontribOptions.cmake"
-  "/home/waldezjr/icub/software/share/ICUBcontrib/cmake/templates/icubcontrib-config-uninstall.cmake.in"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/iDynTree/iDynTreeConfig.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/iDynTree/iDynTreeConfigVersion.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/iDynTree/iDynTreeTargets-release.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/iDynTree/iDynTreeTargets.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/yarpWholeBodyInterface/yarpWholeBodyInterfaceConfig.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/yarpWholeBodyInterface/yarpWholeBodyInterfaceConfigVersion.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/yarpWholeBodyInterface/yarpWholeBodyInterfaceTargets-release.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/yarpWholeBodyInterface/yarpWholeBodyInterfaceTargets.cmake"
   "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/YCM/cmake/YCMConfigVersion.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/orocos_kdl/OrocosKDLTargets-release.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/orocos_kdl/OrocosKDLTargets.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/orocos_kdl/orocos_kdl-config-version.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/orocos_kdl/orocos_kdl-config.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/wholeBodyInterface/wholeBodyInterface-target-release.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/wholeBodyInterface/wholeBodyInterface-target.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/wholeBodyInterface/wholeBodyInterfaceConfig.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/wholeBodyInterface/wholeBodyInterfaceConfigVersion.cmake"
-  "/home/waldezjr/icub/software/src/icub-main/build/icub-config.cmake"
-  "/home/waldezjr/icub/software/src/icub-main/build/icub-export-build-includes.cmake"
-  "/home/waldezjr/icub/software/src/icub-main/build/icub-export-build.cmake"
   "../CMakeLists.txt"
   "../app/CMakeLists.txt"
   "CMakeFiles/3.5.1/CMakeCCompiler.cmake"
@@ -38,6 +15,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.5.1/CMakeSystem.cmake"
   "../src/CMakeLists.txt"
   "../src/modules/CMakeLists.txt"
+  "../src/modules/LIP_retargeting/CMakeLists.txt"
   "../src/modules/icub_retargeting/CMakeLists.txt"
   "/home/waldezjr/icub/software/src/yarp/build/YARPConfig.cmake"
   "/home/waldezjr/icub/software/src/yarp/build/YARPConfigVersion.cmake"
@@ -46,10 +24,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/waldezjr/icub/software/src/yarp/cmake/YarpIDL.cmake"
   "/home/waldezjr/icub/software/src/yarp/cmake/YarpInstallationHelpers.cmake"
   "/home/waldezjr/icub/software/src/yarp/cmake/YarpPlugin.cmake"
-  "/home/waldezjr/icub/software/src/yarp/cmake/ycm-0.4.0/find-modules/FindTinyXML.cmake"
-  "/home/waldezjr/icub/software/src/yarp/cmake/ycm-0.4.0/modules/ExtractVersion.cmake"
-  "/home/waldezjr/icub/software/src/yarp/cmake/ycm-0.4.0/modules/ReplaceImportedTargets.cmake"
-  "/home/waldezjr/icub/software/src/yarp/cmake/ycm-0.4.0/modules/StandardFindModule.cmake"
   "/usr/share/cmake-3.5/Modules/CMakeCInformation.cmake"
   "/usr/share/cmake-3.5/Modules/CMakeCXXInformation.cmake"
   "/usr/share/cmake-3.5/Modules/CMakeCommonLanguageInclude.cmake"
@@ -64,7 +38,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.5/Modules/Compiler/GNU.cmake"
   "/usr/share/cmake-3.5/Modules/FindPackageHandleStandardArgs.cmake"
   "/usr/share/cmake-3.5/Modules/FindPackageMessage.cmake"
-  "/usr/share/cmake-3.5/Modules/FindPkgConfig.cmake"
   "/usr/share/cmake-3.5/Modules/GNUInstallDirs.cmake"
   "/usr/share/cmake-3.5/Modules/MultiArchCross.cmake"
   "/usr/share/cmake-3.5/Modules/Platform/Linux-GNU-C.cmake"
@@ -72,7 +45,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.5/Modules/Platform/Linux-GNU.cmake"
   "/usr/share/cmake-3.5/Modules/Platform/Linux.cmake"
   "/usr/share/cmake-3.5/Modules/Platform/UnixPaths.cmake"
-  "/usr/share/cmake-3.5/Modules/SelectLibraryConfigurations.cmake"
   )
 
 # The corresponding makefile is:
@@ -83,16 +55,16 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
-  "icubcontrib-config-uninstall.cmake"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "src/CMakeFiles/CMakeDirectoryInformation.cmake"
   "src/modules/CMakeFiles/CMakeDirectoryInformation.cmake"
   "src/modules/icub_retargeting/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "src/modules/LIP_retargeting/CMakeFiles/CMakeDirectoryInformation.cmake"
   "app/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/uninstall.dir/DependInfo.cmake"
   "src/modules/icub_retargeting/CMakeFiles/retargeting.dir/DependInfo.cmake"
+  "src/modules/LIP_retargeting/CMakeFiles/LIP.dir/DependInfo.cmake"
   )

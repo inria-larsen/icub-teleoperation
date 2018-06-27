@@ -54,37 +54,66 @@
 	<stdio>luigi</stdio>
 	<tag>right-leg-joints</tag>
 </module>
+
+
+<!-- COM -->
+<module>
+	<name>yarpdatadumper</name>
+	<parameters>--name /comDes --type bottle --rxTime</parameters>
+	<node>luigi</node>
+	<stdio>luigi</stdio>
+	<tag>des-com</tag>
+</module>
+
+<module>
+	<name>yarpdatadumper</name>
+	<parameters>--name /comStab --type bottle --rxTime</parameters>
+	<node>luigi</node>
+	<stdio>luigi</stdio>
+	<tag>stab-com</tag>
+</module>
   
 
 <!-- CONNECTIONS -->
 <connection>
-  <from>/icub/right_arm/state:o</from>
+  <from>/icub_description/right_arm/state:o</from>
   <to>/dump_upperbody/rightArm</to>
   <protocol>udp</protocol>
 </connection>
 <connection>
-  <from>/icub/left_arm/state:o</from>
+  <from>/icub_description/left_arm/state:o</from>
   <to>/dump_upperbody/leftArm</to>
   <protocol>udp</protocol>
 </connection>
 <connection>
-  <from>/icub/head/state:o</from>
+  <from>/icub_description/head/state:o</from>
   <to>/dump_upperbody/head</to>
   <protocol>udp</protocol>
 </connection>
 <connection>
-  <from>/icub/torso/state:o</from>
+  <from>/icub_description/torso/state:o</from>
   <to>/dump_upperbody/torso</to>
   <protocol>udp</protocol>
 </connection>
 <connection>
-  <from>/icub/right_leg/state:o</from>
+  <from>/icub_description/right_leg/state:o</from>
   <to>/dump_upperbody/rightLeg</to>
   <protocol>udp</protocol>
 </connection>
 <connection>
-  <from>/icub/left_leg/state:o</from>
+  <from>/icub_description/left_leg/state:o</from>
   <to>/dump_upperbody/leftLeg</to>
+  <protocol>udp</protocol>
+</connection>
+
+<connection>
+  <from>/QP/comStabilizer</from>
+  <to>/comDes</to>
+  <protocol>udp</protocol>
+</connection>
+<connection>
+  <from>/LIP/comStabilizer</from>
+  <to>/comStab</to>
   <protocol>udp</protocol>
 </connection>
 

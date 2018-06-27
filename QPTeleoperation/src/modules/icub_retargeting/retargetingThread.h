@@ -37,10 +37,6 @@
 #include <yarp/sig/Vector.h>
 #include <yarp/os/Mutex.h>
 
-#include <wbi/wbi.h>
-#include <yarpWholeBodyInterface/yarpWholeBodyInterface.h>
-#include <yarpWholeBodyInterface/yarpWbiUtil.h>
-
 
 using namespace Eigen;
 
