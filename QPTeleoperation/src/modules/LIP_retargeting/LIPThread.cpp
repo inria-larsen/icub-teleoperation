@@ -59,11 +59,17 @@ void LIPThread::publishStableCoM()
 	Bottle& output = com_port.prepare();
 	output.clear();
 
-	for (int i=0; i < comPos_stab.size(); i++){
+	for (int i=0; i<2; i++){
 		output.addDouble(comPos_stab(i));
+	}
+	for (int i=0; i<2; i++){
 		output.addDouble(comVel_stab(i));
+	}
+	for (int i=0; i<2; i++){
 		output.addDouble(zmp(i));
-		output.addDouble(zmp_descom(i));
+	}
+	for (int i=0; i<2; i++){
+		output.addDouble(zmp_actcom(i));
 	}
 	output.addDouble(zmp(2));
 	com_port.write();
@@ -90,7 +96,7 @@ void LIPThread::getQPdata()
 		}
 		hc = qpdata(16);
 		T = qpdata(17);
-		zmp_descom = -(hc/G)*comAcc + comPos;
+		zmp_actcom = -(hc/G)*comAcc + comPos;
 	}
 	else{
 		streamingCoM = false;

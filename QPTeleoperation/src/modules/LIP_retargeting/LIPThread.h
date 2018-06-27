@@ -50,6 +50,8 @@ class LIPThread: public yarp::os::RateThread
 	yarp::os::Stamp timestamp;
 	bool streamingCoM=false;
 
+	bool firstRun=true;
+
     //Port for reading and writing CoM information
     yarp::os::BufferedPort<yarp::os::Bottle> com_port;
 
@@ -91,8 +93,9 @@ class LIPThread: public yarp::os::RateThread
     // solution of the QP
     Eigen::VectorXd zmp;
 
-    // zmp associated to the desired CoM
-    Eigen::VectorXd zmp_descom;
+    // zmp associated to the actual CoM
+    Eigen::VectorXd zmp_actcom;
+
 
 	void publishData();
 	void LIPretarget();
