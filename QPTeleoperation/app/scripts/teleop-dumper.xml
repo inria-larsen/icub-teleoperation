@@ -107,12 +107,12 @@
 </connection>
 
 <connection>
-  <from>/QP/comStabilizer</from>
+  <from>/comStabilizer/QPdata:o</from>
   <to>/comDes</to>
   <protocol>udp</protocol>
 </connection>
 <connection>
-  <from>/LIP/comStabilizer</from>
+  <from>/comStabilizer/LIPdata</from>
   <to>/comStab</to>
   <protocol>udp</protocol>
 </connection>

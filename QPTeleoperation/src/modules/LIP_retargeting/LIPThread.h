@@ -67,10 +67,6 @@ class LIPThread: public yarp::os::RateThread
     // Reg factor zmp norm
     Eigen::Vector2d lambdaD;
 
-    // Matrices for cost function
-    Eigen::MatrixXd costFunctionH;
-    Eigen::VectorXd costFunctionF;
-
     // Matrices for the stacked constraints
     Eigen::Vector2d bConstraintMax;
     Eigen::Vector2d bConstraintMin;
@@ -91,15 +87,16 @@ class LIPThread: public yarp::os::RateThread
     Eigen::Vector2d comVel_stab;
 
     // solution of the QP
-    Eigen::VectorXd zmp;
+    Eigen::Vector2d zmp;
 
     // zmp associated to the actual CoM
-    Eigen::VectorXd zmp_actcom;
+    Eigen::Vector2d zmp_actcom;
 
 
 	void publishData();
 	void LIPretarget();
-    Eigen::VectorXd solveQP();
+    double solveQPX();
+    double solveQPY();
     void getQPdata();
     void publishStableCoM();
 
