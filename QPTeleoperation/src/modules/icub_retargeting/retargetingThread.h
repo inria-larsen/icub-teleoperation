@@ -37,6 +37,10 @@
 #include <yarp/sig/Vector.h>
 #include <yarp/os/Mutex.h>
 
+// iDynTree includes
+#include "iCub/iDynTree/yarp_kdl.h"
+#include <iCub/iDynTree/DynTree.h>
+
 
 using namespace Eigen;
 
@@ -82,6 +86,13 @@ class retargetingThread: public yarp::os::RateThread
     bool stream_base;
     Eigen::VectorXd l_foot;
     Eigen::VectorXd r_foot;
+    // base orientation
+    double roll_start_h;
+    double pitch_start_h;
+    double yaw_start_h;
+    double delta_roll;
+    double delta_pitch;
+    double delta_yaw;
 	/*CoM related*/
 	Eigen::VectorXd com;
 	double o_com; // com offset from left foot on the vector connecting the two feet
@@ -90,6 +101,14 @@ class retargetingThread: public yarp::os::RateThread
 	Eigen::Vector2d p_Rfoot;
 	Eigen::Vector2d p_RLfeet;
 
+	/*dummy robot related*/
+	iCub::iDynTree::DynTree icub_model;
+	int link_index;
+    Eigen::VectorXd qstart_r;
+    std::string urdf_file_path;
+    yarp::sig::Vector dummyCom_start;
+    yarp::sig::Vector dummyCom_;
+    double deltaCom; //duumy robot x com variation
 	
 	//Port for reading and writing the joint position
     yarp::os::BufferedPort<yarp::os::Bottle> joint_port; 
@@ -109,7 +128,65 @@ class retargetingThread: public yarp::os::RateThread
 	void publishJoints();
 	void publishPos();
 	void publishCoM();
+
+	Eigen::VectorXd toQuaternion(double pitch, double roll, double yaw)
+	{
+		Eigen::VectorXd q(4);
+	        // Abbreviations for the various angular functions
+		double cy = cos(yaw * 0.5);
+		double sy = sin(yaw * 0.5);
+		double cr = cos(roll * 0.5);
+		double sr = sin(roll * 0.5);
+		double cp = cos(pitch * 0.5);
+		double sp = sin(pitch * 0.5);
+
+		q(0) = cy * cr * cp + sy * sr * sp;
+		q(1) = cy * sr * cp - sy * cr * sp;
+		q(2) = cy * cr * sp + sy * sr * cp;
+		q(3) = sy * cr * cp - cy * sr * sp;
+		return q;
+	}
+
+	double toRoll(const Eigen::VectorXd& q){
+		double roll;
+		// roll (x-axis rotation)
+		double sinr = +2.0 * (q(0) * q(1) + q(2) * q(3));
+		double cosr = +1.0 - 2.0 * (q(1) * q(1) + q(2) * q(2));
+		roll = atan2(sinr, cosr);
+
+		return roll;
+	}
+
+	double toPitch(const Eigen::VectorXd& q){
+		double pitch;
+		// pitch (y-axis rotation)
+		double sinp = +2.0 * (q(0) * q(2) - q(3) * q(1));
+		if (fabs(sinp) >= 1)
+			pitch = copysign(M_PI / 2, sinp); // use 90 degrees if out of range
+		else
+			pitch = asin(sinp);
+
+		return pitch;
+	}
+
+	double toYaw(const Eigen::VectorXd& q){
+		double yaw;
+		// yaw (z-axis rotation)
+		double siny = +2.0 * (q(0) * q(3) + q(1) * q(2));
+		double cosy = +1.0 - 2.0 * (q(2) * q(2) + q(3) * q(3));  
+		yaw = atan2(siny, cosy);
+
+		return yaw;
+	}
 	  
+	yarp::sig::Vector eigenToYarp(const Eigen::VectorXd &eig){
+		yarp::sig::Vector vec;
+		vec.resize(eig.size());
+		for (int i=0; i<eig.size(); i++){
+			vec(i)=eig(i);
+		}
+		return vec;
+	}
 
 public:
 
@@ -129,7 +206,9 @@ public:
                std::string _start_pos,
                bool _stream_feet,
                bool _base_feet,
-               std::string _joint_value);
+               std::string _joint_value,
+               Eigen::VectorXd qstart_r_,
+               std::string urdf);
 	
 	bool threadInit();
 	void run();

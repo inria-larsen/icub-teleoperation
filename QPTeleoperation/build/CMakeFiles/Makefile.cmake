@@ -7,7 +7,18 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
+  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/iDynTree/iDynTreeConfig.cmake"
+  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/iDynTree/iDynTreeConfigVersion.cmake"
+  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/iDynTree/iDynTreeTargets-release.cmake"
+  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/iDynTree/iDynTreeTargets.cmake"
   "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/YCM/cmake/YCMConfigVersion.cmake"
+  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/orocos_kdl/OrocosKDLTargets-release.cmake"
+  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/orocos_kdl/OrocosKDLTargets.cmake"
+  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/orocos_kdl/orocos_kdl-config-version.cmake"
+  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/orocos_kdl/orocos_kdl-config.cmake"
+  "/home/waldezjr/icub/software/src/icub-main/build/icub-config.cmake"
+  "/home/waldezjr/icub/software/src/icub-main/build/icub-export-build-includes.cmake"
+  "/home/waldezjr/icub/software/src/icub-main/build/icub-export-build.cmake"
   "../CMakeLists.txt"
   "../app/CMakeLists.txt"
   "CMakeFiles/3.5.1/CMakeCCompiler.cmake"
@@ -24,6 +35,10 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/waldezjr/icub/software/src/yarp/cmake/YarpIDL.cmake"
   "/home/waldezjr/icub/software/src/yarp/cmake/YarpInstallationHelpers.cmake"
   "/home/waldezjr/icub/software/src/yarp/cmake/YarpPlugin.cmake"
+  "/home/waldezjr/icub/software/src/yarp/cmake/ycm-0.4.0/find-modules/FindTinyXML.cmake"
+  "/home/waldezjr/icub/software/src/yarp/cmake/ycm-0.4.0/modules/ExtractVersion.cmake"
+  "/home/waldezjr/icub/software/src/yarp/cmake/ycm-0.4.0/modules/ReplaceImportedTargets.cmake"
+  "/home/waldezjr/icub/software/src/yarp/cmake/ycm-0.4.0/modules/StandardFindModule.cmake"
   "/usr/share/cmake-3.5/Modules/CMakeCInformation.cmake"
   "/usr/share/cmake-3.5/Modules/CMakeCXXInformation.cmake"
   "/usr/share/cmake-3.5/Modules/CMakeCommonLanguageInclude.cmake"
@@ -38,6 +53,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.5/Modules/Compiler/GNU.cmake"
   "/usr/share/cmake-3.5/Modules/FindPackageHandleStandardArgs.cmake"
   "/usr/share/cmake-3.5/Modules/FindPackageMessage.cmake"
+  "/usr/share/cmake-3.5/Modules/FindPkgConfig.cmake"
   "/usr/share/cmake-3.5/Modules/GNUInstallDirs.cmake"
   "/usr/share/cmake-3.5/Modules/MultiArchCross.cmake"
   "/usr/share/cmake-3.5/Modules/Platform/Linux-GNU-C.cmake"
@@ -45,6 +61,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.5/Modules/Platform/Linux-GNU.cmake"
   "/usr/share/cmake-3.5/Modules/Platform/Linux.cmake"
   "/usr/share/cmake-3.5/Modules/Platform/UnixPaths.cmake"
+  "/usr/share/cmake-3.5/Modules/SelectLibraryConfigurations.cmake"
   )
 
 # The corresponding makefile is:

@@ -22,6 +22,13 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/home/waldezjr/icub/software/src/yarp/src/libYARP_name/include"
   "/home/waldezjr/icub/software/src/yarp/src/libYARP_manager/include"
   "/home/waldezjr/icub/software/src/yarp/src/libYARP_logger/include"
+  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/include"
+  "/usr/include/eigen3"
+  "/home/waldezjr/icub/software/src/icub-main/src/libraries/iKin/include"
+  "/home/waldezjr/icub/software/src/icub-main/src/libraries/ctrlLib/include"
+  "/usr/include/coin"
+  "/home/waldezjr/icub/software/src/icub-main/src/libraries/skinDynLib/include"
+  "/home/waldezjr/icub/software/src/icub-main/src/libraries/iDyn/include"
   )
 
 # Targets to which this target links.

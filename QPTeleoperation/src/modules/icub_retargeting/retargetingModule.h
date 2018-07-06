@@ -53,6 +53,9 @@ class retargetingModule: public yarp::os::RFModule
     double base_start_r_T;  
     bool stream_feet;
     bool stream_base; 
+    /*dummy robot related*/
+    Eigen::VectorXd q_start_r;
+    std::string urdf_file_path;
 
     double  avgTime, stdDev, avgTimeUsed, stdDevUsed;
     
