@@ -17,4 +17,9 @@ waist-head	0.544920235
 shoulder-hand	0.509457093
 hip-foot	0.485220301
 world-base z	0.457225798	
+
+Augusto
+
+world-pelvis z  109.159
 	
+0,431423886
