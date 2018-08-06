@@ -180,7 +180,7 @@ void retargetingThread::getRobotJoints()
 
 			double torso_pitch = (input->get(5).asDouble()+input->get(8).asDouble()+input->get(11).asDouble());
 			double torso_roll = (input->get(3).asDouble()+input->get(6).asDouble()+input->get(9).asDouble())*-1;
-			double torso_yaw = (input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble())*-1; 
+			double torso_yaw = (input->get(1).asDouble()+input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble()+input->get(13).asDouble())*-1; 
 			double neck_pitch = (input->get(17).asDouble())*-1;
 			double neck_roll = input->get(15).asDouble();
 			double neck_yaw = input->get(16).asDouble();
@@ -188,16 +188,16 @@ void retargetingThread::getRobotJoints()
 			double l_shoulder_roll = input->get(33).asDouble();
 			double l_shoulder_yaw = input->get(34).asDouble();
 			double l_elbow = input->get(38).asDouble();
-			double l_wrist_prosup = (input->get(40).asDouble())*-1;
-			double l_wrist_pitch = (input->get(41).asDouble())*-1;
-			double l_wrist_yaw = (input->get(39).asDouble())*-1;
+			double l_wrist_prosup = (input->get(40).asDouble());
+			double l_wrist_pitch = (input->get(39).asDouble())*-1;
+			double l_wrist_yaw = (input->get(41).asDouble())*-1;
 			double r_shoulder_pitch = (input->get(23).asDouble())*-1;
 			double r_shoulder_roll = input->get(21).asDouble();
 			double r_shoulder_yaw = input->get(22).asDouble();
 			double r_elbow = input->get(26).asDouble();
-			double r_wrist_prosup = (input->get(28).asDouble())*-1;
-			double r_wrist_pitch = (input->get(29).asDouble())*-1;
-			double r_wrist_yaw = (input->get(27).asDouble())*-1;
+			double r_wrist_prosup = (input->get(28).asDouble());
+			double r_wrist_pitch = (input->get(27).asDouble())*-1;
+			double r_wrist_yaw = (input->get(29).asDouble())*-1;
 			double l_hip_pitch = input->get(56).asDouble();
 			double l_hip_roll = input->get(54).asDouble();
 			double l_hip_yaw = (input->get(55).asDouble())*-1;
