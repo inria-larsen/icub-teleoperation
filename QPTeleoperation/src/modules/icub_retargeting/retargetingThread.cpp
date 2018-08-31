@@ -142,6 +142,9 @@ void retargetingThread::publishPos()
 		output.addDouble(delta_pitch);
 		output.addDouble(delta_yaw);
 	}
+	output.addDouble(n_delta_roll);
+	output.addDouble(n_delta_pitch);
+	output.addDouble(n_delta_yaw);
 
 	pos_port.write();
 }
@@ -368,6 +371,12 @@ void retargetingThread::getRobotPos()
 		double pitch_h;
 		double yaw_h;
 
+		// Robot and human neck orientation
+		Eigen::VectorXd	neck_quat_h(4);
+		double n_roll_h;
+		double n_pitch_h;
+		double n_yaw_h;
+
 
 		// compute human relative position in global frame
 		for (int i=0; i<3; i++) {
@@ -405,6 +414,11 @@ void retargetingThread::getRobotPos()
 		roll_h = toRoll(base_quat_h);
 		pitch_h = toPitch(base_quat_h);
 		yaw_h = toYaw(base_quat_h);
+
+		neck_quat_h << neck(3), neck(4), neck(5), neck(6);
+		n_roll_h = toRoll(neck_quat_h);
+		n_pitch_h = toPitch(neck_quat_h);
+		n_yaw_h = toYaw(neck_quat_h);
 		
 		// store starting reference human position
 		if(firstRunPos) {
@@ -413,6 +427,10 @@ void retargetingThread::getRobotPos()
 			roll_start_h = roll_h;
 			pitch_start_h = pitch_h;
 			yaw_start_h = yaw_h;
+
+			n_roll_start_h = n_roll_h;
+			n_pitch_start_h = n_pitch_h;
+			n_yaw_start_h = n_yaw_h;
 		}
 		firstRunPos = false;
 
@@ -434,6 +452,10 @@ void retargetingThread::getRobotPos()
 		delta_roll = roll_h - roll_start_h;
 		delta_pitch = pitch_h - pitch_start_h;
 		delta_yaw = yaw_h - yaw_start_h;
+
+		n_delta_roll = n_roll_h - n_roll_start_h;
+		n_delta_pitch = n_pitch_h - n_pitch_start_h;
+		n_delta_yaw = n_yaw_h - n_yaw_start_h;
 		// pi_r = p_start_r + delta_p_r 
 		//		= p_start_r + m * delta_p_h
 		//		= p_start_r + m * (pi_h - p_start_h)

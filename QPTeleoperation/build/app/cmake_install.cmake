@@ -2,7 +2,7 @@
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/usr/local")
+  set(CMAKE_INSTALL_PREFIX "/home/waldezjr/icub/software")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "")
+    set(CMAKE_INSTALL_CONFIG_NAME "Release")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -36,6 +36,7 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/yarp/contexts" TYPE FILE FILES
     "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/app/conf/retargetingLIP.ini"
     "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/app/conf/retargetingIcub.ini"
+    "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/app/conf/MpcSolver.ini"
     )
 endif()
 
@@ -45,6 +46,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/yarp/applications" TYPE FILE FILES
+    "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/app/scripts/teleop-dumperNancy.xml"
     "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/app/scripts/teleop-dumper.xml"
     "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/app/scripts/icub-teleoperation.xml"
     )

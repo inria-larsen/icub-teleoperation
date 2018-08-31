@@ -19,7 +19,8 @@ hip-foot	0.485220301
 world-base z	0.457225798	
 
 Augusto
-
 world-pelvis z  109.159
+
+Taha 97
 	
 0,431423886

@@ -14,6 +14,13 @@
         <tag>retargetingModule</tag>
     </module>
 
+    <module>
+        <name>LIP</name>
+        <node>luigi</node>
+        <stdio>luigi</stdio>
+        <tag>LIPretargetingModule</tag>
+    </module>
+
 <!--
     <module>
         <name>teleoperation</name>
@@ -28,6 +35,8 @@
         <stdio>luigi</stdio>
         <tag>XsensStreamer</tag>
     </module>
+
+
 
     <!-- CONNECTIONS -->
 

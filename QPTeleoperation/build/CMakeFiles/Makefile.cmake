@@ -7,11 +7,14 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
+  "/home/waldezjr/icub/software/lib/ICUBcontrib/ICUBcontribConfig.cmake"
+  "/home/waldezjr/icub/software/share/ICUBcontrib/cmake/ICUBcontribHelpers.cmake"
+  "/home/waldezjr/icub/software/share/ICUBcontrib/cmake/ICUBcontribOptions.cmake"
+  "/home/waldezjr/icub/software/share/ICUBcontrib/cmake/templates/icubcontrib-config-uninstall.cmake.in"
   "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/iDynTree/iDynTreeConfig.cmake"
   "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/iDynTree/iDynTreeConfigVersion.cmake"
   "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/iDynTree/iDynTreeTargets-release.cmake"
   "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/lib/cmake/iDynTree/iDynTreeTargets.cmake"
-  "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/YCM/cmake/YCMConfigVersion.cmake"
   "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/orocos_kdl/OrocosKDLTargets-release.cmake"
   "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/orocos_kdl/OrocosKDLTargets.cmake"
   "/home/waldezjr/icub/software/src/codyco-superbuild/build/install/share/orocos_kdl/orocos_kdl-config-version.cmake"
@@ -72,6 +75,7 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
+  "icubcontrib-config-uninstall.cmake"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "src/CMakeFiles/CMakeDirectoryInformation.cmake"
   "src/modules/CMakeFiles/CMakeDirectoryInformation.cmake"
@@ -82,6 +86,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "CMakeFiles/uninstall.dir/DependInfo.cmake"
   "src/modules/icub_retargeting/CMakeFiles/retargeting.dir/DependInfo.cmake"
   "src/modules/LIP_retargeting/CMakeFiles/LIP.dir/DependInfo.cmake"
   )

@@ -76,32 +76,32 @@
 
 <!-- CONNECTIONS -->
 <connection>
-  <from>/icub_description/right_arm/state:o</from>
+  <from>/iCubNancy01/right_arm/state:o</from>
   <to>/dump_upperbody/rightArm</to>
   <protocol>udp</protocol>
 </connection>
 <connection>
-  <from>/icub_description/left_arm/state:o</from>
+  <from>/iCubNancy01/left_arm/state:o</from>
   <to>/dump_upperbody/leftArm</to>
   <protocol>udp</protocol>
 </connection>
 <connection>
-  <from>/icub_description/head/state:o</from>
+  <from>/iCubNancy01/head/state:o</from>
   <to>/dump_upperbody/head</to>
   <protocol>udp</protocol>
 </connection>
 <connection>
-  <from>/icub_description/torso/state:o</from>
+  <from>/iCubNancy01/torso/state:o</from>
   <to>/dump_upperbody/torso</to>
   <protocol>udp</protocol>
 </connection>
 <connection>
-  <from>/icub_description/right_leg/state:o</from>
+  <from>/iCubNancy01/right_leg/state:o</from>
   <to>/dump_upperbody/rightLeg</to>
   <protocol>udp</protocol>
 </connection>
 <connection>
-  <from>/icub_description/left_leg/state:o</from>
+  <from>/iCubNancy01/left_leg/state:o</from>
   <to>/dump_upperbody/leftLeg</to>
   <protocol>udp</protocol>
 </connection>

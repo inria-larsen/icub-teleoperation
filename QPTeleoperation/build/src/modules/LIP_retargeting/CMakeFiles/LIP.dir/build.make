@@ -57,9 +57,33 @@ include src/modules/LIP_retargeting/CMakeFiles/LIP.dir/progress.make
 # Include the compile flags for this target's objects.
 include src/modules/LIP_retargeting/CMakeFiles/LIP.dir/flags.make
 
+src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/flags.make
+src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o: ../src/modules/LIP_retargeting/LIPvelThread.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o"
+	cd /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/src/modules/LIP_retargeting && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LIP.dir/LIPvelThread.cpp.o -c /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPvelThread.cpp
+
+src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LIP.dir/LIPvelThread.cpp.i"
+	cd /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/src/modules/LIP_retargeting && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPvelThread.cpp > CMakeFiles/LIP.dir/LIPvelThread.cpp.i
+
+src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LIP.dir/LIPvelThread.cpp.s"
+	cd /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/src/modules/LIP_retargeting && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPvelThread.cpp -o CMakeFiles/LIP.dir/LIPvelThread.cpp.s
+
+src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o.requires:
+
+.PHONY : src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o.requires
+
+src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o.provides: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o.requires
+	$(MAKE) -f src/modules/LIP_retargeting/CMakeFiles/LIP.dir/build.make src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o.provides.build
+.PHONY : src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o.provides
+
+src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o.provides.build: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o
+
+
 src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPThread.cpp.o: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/flags.make
 src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPThread.cpp.o: ../src/modules/LIP_retargeting/LIPThread.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPThread.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPThread.cpp.o"
 	cd /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/src/modules/LIP_retargeting && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LIP.dir/LIPThread.cpp.o -c /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPThread.cpp
 
 src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPThread.cpp.i: cmake_force
@@ -83,7 +107,7 @@ src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPThread.cpp.o.provides.build: s
 
 src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPModule.cpp.o: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/flags.make
 src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPModule.cpp.o: ../src/modules/LIP_retargeting/LIPModule.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPModule.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPModule.cpp.o"
 	cd /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/src/modules/LIP_retargeting && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LIP.dir/LIPModule.cpp.o -c /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPModule.cpp
 
 src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPModule.cpp.i: cmake_force
@@ -107,7 +131,7 @@ src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPModule.cpp.o.provides.build: s
 
 src/modules/LIP_retargeting/CMakeFiles/LIP.dir/main.cpp.o: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/flags.make
 src/modules/LIP_retargeting/CMakeFiles/LIP.dir/main.cpp.o: ../src/modules/LIP_retargeting/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/modules/LIP_retargeting/CMakeFiles/LIP.dir/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object src/modules/LIP_retargeting/CMakeFiles/LIP.dir/main.cpp.o"
 	cd /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/src/modules/LIP_retargeting && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/LIP.dir/main.cpp.o -c /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/main.cpp
 
 src/modules/LIP_retargeting/CMakeFiles/LIP.dir/main.cpp.i: cmake_force
@@ -131,6 +155,7 @@ src/modules/LIP_retargeting/CMakeFiles/LIP.dir/main.cpp.o.provides.build: src/mo
 
 # Object files for target LIP
 LIP_OBJECTS = \
+"CMakeFiles/LIP.dir/LIPvelThread.cpp.o" \
 "CMakeFiles/LIP.dir/LIPThread.cpp.o" \
 "CMakeFiles/LIP.dir/LIPModule.cpp.o" \
 "CMakeFiles/LIP.dir/main.cpp.o"
@@ -138,26 +163,28 @@ LIP_OBJECTS = \
 # External object files for target LIP
 LIP_EXTERNAL_OBJECTS =
 
-src/modules/LIP_retargeting/LIP: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPThread.cpp.o
-src/modules/LIP_retargeting/LIP: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPModule.cpp.o
-src/modules/LIP_retargeting/LIP: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/main.cpp.o
-src/modules/LIP_retargeting/LIP: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/build.make
-src/modules/LIP_retargeting/LIP: /home/waldezjr/icub/software/src/yarp/build/lib/libYARP_dev.so.2.3.70.1
-src/modules/LIP_retargeting/LIP: /home/waldezjr/icub/software/src/yarp/build/lib/libYARP_name.so.2.3.70.1
-src/modules/LIP_retargeting/LIP: /home/waldezjr/icub/software/src/yarp/build/lib/libYARP_init.so.2.3.70.1
-src/modules/LIP_retargeting/LIP: /home/waldezjr/icub/software/src/qpOASES/bin/libqpOASES.so
-src/modules/LIP_retargeting/LIP: /home/waldezjr/icub/software/src/yarp/build/lib/libYARP_math.so.2.3.70.1
-src/modules/LIP_retargeting/LIP: /home/waldezjr/icub/software/src/yarp/build/lib/libYARP_sig.so.2.3.70.1
-src/modules/LIP_retargeting/LIP: /home/waldezjr/icub/software/src/yarp/build/lib/libYARP_OS.so.2.3.70.1
-src/modules/LIP_retargeting/LIP: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable LIP"
+bin/LIP: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o
+bin/LIP: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPThread.cpp.o
+bin/LIP: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPModule.cpp.o
+bin/LIP: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/main.cpp.o
+bin/LIP: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/build.make
+bin/LIP: /home/waldezjr/icub/software/src/yarp/build/lib/libYARP_dev.so.2.3.70.1
+bin/LIP: /home/waldezjr/icub/software/src/yarp/build/lib/libYARP_name.so.2.3.70.1
+bin/LIP: /home/waldezjr/icub/software/src/yarp/build/lib/libYARP_init.so.2.3.70.1
+bin/LIP: /home/waldezjr/icub/software/src/qpOASES/bin/libqpOASES.so
+bin/LIP: /home/waldezjr/icub/software/src/yarp/build/lib/libYARP_math.so.2.3.70.1
+bin/LIP: /home/waldezjr/icub/software/src/yarp/build/lib/libYARP_sig.so.2.3.70.1
+bin/LIP: /home/waldezjr/icub/software/src/yarp/build/lib/libYARP_OS.so.2.3.70.1
+bin/LIP: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable ../../../bin/LIP"
 	cd /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/src/modules/LIP_retargeting && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/LIP.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-src/modules/LIP_retargeting/CMakeFiles/LIP.dir/build: src/modules/LIP_retargeting/LIP
+src/modules/LIP_retargeting/CMakeFiles/LIP.dir/build: bin/LIP
 
 .PHONY : src/modules/LIP_retargeting/CMakeFiles/LIP.dir/build
 
+src/modules/LIP_retargeting/CMakeFiles/LIP.dir/requires: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o.requires
 src/modules/LIP_retargeting/CMakeFiles/LIP.dir/requires: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPThread.cpp.o.requires
 src/modules/LIP_retargeting/CMakeFiles/LIP.dir/requires: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPModule.cpp.o.requires
 src/modules/LIP_retargeting/CMakeFiles/LIP.dir/requires: src/modules/LIP_retargeting/CMakeFiles/LIP.dir/main.cpp.o.requires

@@ -5,7 +5,7 @@
 */
 
 #include "LIPModule.h"
-#include "LIPThread.h"
+#include "LIPvelThread.h"
 
 using namespace yarp::os;
 
@@ -66,7 +66,7 @@ bool LIPModule::configure(yarp::os::ResourceFinder &rf)
     }
     
 
-    lThread = new LIPThread(moduleName, robotName, period, m_lambdaD);
+    lThread = new LIPvelThread(moduleName, robotName, period, m_lambdaD);
     if(!lThread->start())
     {
 	   yError() << getName()

@@ -10,7 +10,7 @@
 #include <iostream>
 #include <fstream>
 #include <Eigen/Cholesky>
-#include "LIPThread.h"
+#include "LIPvelThread.h"
 #include <math.h>   
 
 using namespace yarp::os;
@@ -24,7 +24,7 @@ const double G = 9.80665;
 //         Main THREAD
 //===============================================
 
-LIPThread::LIPThread(string _name,
+LIPvelThread::LIPvelThread(string _name,
 			       string _robotName,
 			       int _period,
 			       Eigen::Vector2d m_lambdaD)
@@ -42,19 +42,20 @@ yInfo() << "Launching LIPThread with name : " << _name << " and robotName " << _
 }
 
 
-bool LIPThread::threadInit()
+bool LIPvelThread::threadInit()
 {  
 	//opening ports
 	com_port.open(string("/comStabilizer/LIPdata").c_str());
 
 	qpdata.resize(18);
+	zmp_old.setZero();
 	yInfo() << "LIPThread::threadInit finished successfully.";
 
 	return true;
 }
 
 
-void LIPThread::publishStableCoM()
+void LIPvelThread::publishStableCoM()
 {
 	Bottle& output = com_port.prepare();
 	output.clear();
@@ -75,7 +76,7 @@ void LIPThread::publishStableCoM()
 }
 
 
-void LIPThread::getQPdata()
+void LIPvelThread::getQPdata()
 {
 	Bottle *input = com_port.read(false);
 	if(input!=NULL){   
@@ -104,7 +105,7 @@ void LIPThread::getQPdata()
 
 
 //------ RUN ------
-void LIPThread::run()
+void LIPvelThread::run()
 {
 	getQPdata();
 	LIPretarget();
@@ -116,10 +117,14 @@ void LIPThread::run()
 //----------------------------
 //-- Robot-LIP CoM Retargeting
 //----------------------------
-void LIPThread::LIPretarget() {
+void LIPvelThread::LIPretarget() {
 	// Solve QP
-    zmp(0) = solveQPX();
-    zmp(1) = solveQPY();
+    zmpVel(0) = solveQPX();
+    zmpVel(1) = solveQPY();
+    zmp(0) = zmp_old(0)+T*zmpVel(0);
+    zmp(1) = zmp_old(1)+T*zmpVel(1);
+    zmp_old(0) = zmp(0);
+    zmp_old(1) = zmp(1);
     // Get the CoM velocity value associated to the zmp solution
     comVel_stab(0) = comVel(0) + (T*G/hc)*comPos(0) - (T*G/hc)*zmp(0);
     comVel_stab(1) = comVel(1) + (T*G/hc)*comPos_des(1) - (T*G/hc)*zmp(1);
@@ -129,18 +134,18 @@ void LIPThread::LIPretarget() {
 }
 
 
-double LIPThread::solveQPX() {
+double LIPvelThread::solveQPX() {
 
 	USING_NAMESPACE_QPOASES 
 
-	qpOASES::real_t H[1]= { T*T*G*G/(hc*hc) + lambdaD(0) };
-	qpOASES::real_t g[1] = { 2*comVel_des(0)*T*G/hc - 2*comVel(0)*T*G/hc - 2*comPos(0)*T*T*G*G/(hc*hc) };
+	qpOASES::real_t H[1]= { T*T*T*G*G/(hc*hc) + lambdaD(0) };
+	qpOASES::real_t g[1] = { 2*comVel_des(0)*T*T*G/hc - 2*comVel(0)*T*T*G/hc - 2*comPos(0)*T*T*T*G*G/(hc*hc) };
 
 	qpOASES::real_t lb[1];
 	qpOASES::real_t ub[1];
 
-	lb[0] = bConstraintMin(0);
-	ub[0] = bConstraintMax(0);
+	lb[0] = (bConstraintMin(0)-zmp_old(0))/T;
+	ub[0] = (bConstraintMax(0)-zmp_old(0))/T;
 
 	qpOASES::real_t xOpt[1];
 
@@ -166,18 +171,18 @@ double LIPThread::solveQPX() {
 	return decisionVariable;
 }
 
-double LIPThread::solveQPY() {
+double LIPvelThread::solveQPY() {
 
 	USING_NAMESPACE_QPOASES 
 
-	qpOASES::real_t H[1]= { T*T*G*G/(hc*hc) + lambdaD(1) };
-	qpOASES::real_t g[1] = { 2*comVel_des(1)*T*G/hc - 2*comVel(1)*T*G/hc - 2*comPos(1)*T*T*G*G/(hc*hc) };
+	qpOASES::real_t H[1]= { T*T*T*G*G/(hc*hc) + lambdaD(1) };
+	qpOASES::real_t g[1] = { 2*comVel_des(1)*T*T*G/hc - 2*comVel(1)*T*T*G/hc - 2*comPos(1)*T*T*T*G*G/(hc*hc) };
 
 	qpOASES::real_t lb[1];
 	qpOASES::real_t ub[1];
 
-	lb[0] = bConstraintMin(1);
-	ub[0] = bConstraintMax(1);
+	lb[0] = (bConstraintMin(1)-zmp_old(1))/T;
+	ub[0] = (bConstraintMax(1)-zmp_old(1))/T;
 
 	qpOASES::real_t yOpt[1];
 
@@ -204,7 +209,7 @@ double LIPThread::solveQPY() {
 }
 
 
-void LIPThread::publishData()
+void LIPvelThread::publishData()
 {
 	if (streamingCoM){
 		publishStableCoM();
@@ -219,7 +224,7 @@ void LIPThread::publishData()
 }
 
 
-void LIPThread::closePort()
+void LIPvelThread::closePort()
 {
 	yInfo() << "Closing com stabilizer port";
 	com_port.interrupt();

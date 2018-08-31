@@ -93,6 +93,13 @@ class retargetingThread: public yarp::os::RateThread
     double delta_roll;
     double delta_pitch;
     double delta_yaw;
+    // neck orientation
+    double n_roll_start_h;
+    double n_pitch_start_h;
+    double n_yaw_start_h;
+    double n_delta_roll;
+    double n_delta_pitch;
+    double n_delta_yaw;
 	/*CoM related*/
 	Eigen::VectorXd com;
 	double o_com; // com offset from left foot on the vector connecting the two feet

@@ -26,7 +26,7 @@
 
 #include <yarp/os/LogStream.h>
 
-#include "LIPThread.h"
+#include "LIPvelThread.h"
 
 
 class LIPModule: public yarp::os::RFModule
@@ -40,7 +40,7 @@ class LIPModule: public yarp::os::RFModule
     double  avgTime, stdDev, avgTimeUsed, stdDevUsed;
     
     yarp::os::Port                 rpcPort;        // a port to handle rpc messages
-    LIPThread*     lThread;     //  control thread
+    LIPvelThread*     lThread;     //  control thread
 
 
 

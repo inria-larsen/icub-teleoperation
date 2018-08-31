@@ -2,7 +2,7 @@
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/usr/local")
+  set(CMAKE_INSTALL_PREFIX "/home/waldezjr/icub/software")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -12,7 +12,7 @@ if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME)
     string(REGEX REPLACE "^[^A-Za-z0-9_]+" ""
            CMAKE_INSTALL_CONFIG_NAME "${BUILD_TYPE}")
   else()
-    set(CMAKE_INSTALL_CONFIG_NAME "")
+    set(CMAKE_INSTALL_CONFIG_NAME "Release")
   endif()
   message(STATUS "Install configuration: \"${CMAKE_INSTALL_CONFIG_NAME}\"")
 endif()
@@ -37,15 +37,15 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/LIP")
     file(RPATH_CHECK
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/LIP"
-         RPATH "")
+         RPATH "/home/waldezjr/icub/software/lib:/home/waldezjr/icub/software/src/yarp/build/lib:/home/waldezjr/icub/software/src/qpOASES/bin")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/src/modules/LIP_retargeting/LIP")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build/bin/LIP")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/LIP" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/LIP")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/LIP"
-         OLD_RPATH "/home/waldezjr/icub/software/src/yarp/build/lib:/home/waldezjr/icub/software/src/qpOASES/bin:"
-         NEW_RPATH "")
+         OLD_RPATH "/home/waldezjr/icub/software/src/yarp/build/lib:/home/waldezjr/icub/software/src/qpOASES/bin:::::::::::::::::::::::::::::::::"
+         NEW_RPATH "/home/waldezjr/icub/software/lib:/home/waldezjr/icub/software/src/yarp/build/lib:/home/waldezjr/icub/software/src/qpOASES/bin")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/LIP")
     endif()

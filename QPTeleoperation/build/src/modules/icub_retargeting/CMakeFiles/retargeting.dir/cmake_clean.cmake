@@ -2,8 +2,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/retargeting.dir/main.cpp.o"
   "CMakeFiles/retargeting.dir/retargetingThread.cpp.o"
   "CMakeFiles/retargeting.dir/retargetingModule.cpp.o"
-  "retargeting.pdb"
-  "retargeting"
+  "../../../bin/retargeting.pdb"
+  "../../../bin/retargeting"
 )
 
 # Per-language clean rules from dependency scanning.

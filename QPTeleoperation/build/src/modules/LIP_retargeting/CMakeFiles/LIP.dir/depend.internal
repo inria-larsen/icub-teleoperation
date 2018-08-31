@@ -4,7 +4,7 @@
 src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPModule.cpp.o
  /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPModule.cpp
  /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPModule.h
- /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPThread.h
+ /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPvelThread.h
  /home/waldezjr/icub/software/src/yarp/build/src/libYARP_conf/include/yarp/conf/api.h
  /home/waldezjr/icub/software/src/yarp/build/src/libYARP_conf/include/yarp/conf/compiler.h
  /home/waldezjr/icub/software/src/yarp/build/src/libYARP_conf/include/yarp/conf/numeric.h
@@ -201,9 +201,124 @@ src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPThread.cpp.o
  /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/api.h
  /home/waldezjr/icub/software/src/yarp/src/libYARP_sig/include/yarp/sig/Vector.h
  /home/waldezjr/icub/software/src/yarp/src/libYARP_sig/include/yarp/sig/api.h
+src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o
+ /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPvelThread.cpp
+ /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPvelThread.h
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/Bounds.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/Bounds.ipp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/Constants.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/ConstraintProduct.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/Constraints.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/Constraints.ipp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/Flipper.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/Indexlist.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/Indexlist.ipp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/Matrices.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/MessageHandling.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/MessageHandling.ipp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/Options.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/QProblem.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/QProblem.ipp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/QProblemB.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/QProblemB.ipp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/SQProblem.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/SQProblem.ipp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/SQProblemSchur.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/SQProblemSchur.ipp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/SparseSolver.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/SubjectTo.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/SubjectTo.ipp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/Types.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/Utils.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/Utils.ipp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/extras/OQPinterface.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/extras/SolutionAnalysis.hpp
+ /home/waldezjr/icub/software/src/qpOASES/include/qpOASES/extras/SolutionAnalysis.ipp
+ /home/waldezjr/icub/software/src/yarp/build/src/libYARP_conf/include/yarp/conf/api.h
+ /home/waldezjr/icub/software/src/yarp/build/src/libYARP_conf/include/yarp/conf/compiler.h
+ /home/waldezjr/icub/software/src/yarp/build/src/libYARP_conf/include/yarp/conf/numeric.h
+ /home/waldezjr/icub/software/src/yarp/build/src/libYARP_conf/include/yarp/conf/system.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/AbstractContactable.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/BinPortable.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Bottle.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/BufferedPort.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Bytes.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Clock.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/ConnectionReader.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/ConnectionWriter.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/ConstString.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Contact.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/ContactStyle.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Contactable.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Contactables.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/DummyConnector.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Event.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/LocalReader.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/LockGuard.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Log.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/LogStream.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/ManagedBytes.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/MessageStack.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Mutex.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/NameStore.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/NestedContact.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/NetFloat32.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/NetFloat64.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/NetInt16.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/NetInt32.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/NetInt64.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/NetUint16.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/NetUint32.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/NetUint64.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Network.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/NetworkClock.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Node.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Os.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Port.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/PortInfo.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/PortReader.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/PortReaderBuffer.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/PortReaderCreator.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/PortReport.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/PortWriter.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/PortWriterBuffer.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Portable.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/PortablePair.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Property.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Publisher.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/QosStyle.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/RFModule.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Random.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/RateThread.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/RecursiveMutex.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/ResourceFinder.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/ResourceFinderOptions.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/RpcClient.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/RpcServer.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Runnable.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Searchable.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Semaphore.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Stamp.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Subscriber.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/SystemClock.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Terminator.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Things.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Thread.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Time.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Type.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/UnbufferedContactable.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Value.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Vocab.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/Wire.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/WireLink.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/all.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_OS/include/yarp/os/api.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_sig/include/yarp/sig/Vector.h
+ /home/waldezjr/icub/software/src/yarp/src/libYARP_sig/include/yarp/sig/api.h
 src/modules/LIP_retargeting/CMakeFiles/LIP.dir/main.cpp.o
  /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPModule.h
- /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPThread.h
+ /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/LIPvelThread.h
  /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/src/modules/LIP_retargeting/main.cpp
  /home/waldezjr/icub/software/src/yarp/build/src/libYARP_conf/include/yarp/conf/api.h
  /home/waldezjr/icub/software/src/yarp/build/src/libYARP_conf/include/yarp/conf/compiler.h

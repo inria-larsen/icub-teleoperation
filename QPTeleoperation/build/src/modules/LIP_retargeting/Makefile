@@ -223,6 +223,33 @@ LIPThread.cpp.s:
 	cd /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build && $(MAKE) -f src/modules/LIP_retargeting/CMakeFiles/LIP.dir/build.make src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPThread.cpp.s
 .PHONY : LIPThread.cpp.s
 
+LIPvelThread.o: LIPvelThread.cpp.o
+
+.PHONY : LIPvelThread.o
+
+# target to build an object file
+LIPvelThread.cpp.o:
+	cd /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build && $(MAKE) -f src/modules/LIP_retargeting/CMakeFiles/LIP.dir/build.make src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.o
+.PHONY : LIPvelThread.cpp.o
+
+LIPvelThread.i: LIPvelThread.cpp.i
+
+.PHONY : LIPvelThread.i
+
+# target to preprocess a source file
+LIPvelThread.cpp.i:
+	cd /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build && $(MAKE) -f src/modules/LIP_retargeting/CMakeFiles/LIP.dir/build.make src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.i
+.PHONY : LIPvelThread.cpp.i
+
+LIPvelThread.s: LIPvelThread.cpp.s
+
+.PHONY : LIPvelThread.s
+
+# target to generate assembly for a file
+LIPvelThread.cpp.s:
+	cd /home/waldezjr/icub/software/src/icub-teleoperation/QPTeleoperation/build && $(MAKE) -f src/modules/LIP_retargeting/CMakeFiles/LIP.dir/build.make src/modules/LIP_retargeting/CMakeFiles/LIP.dir/LIPvelThread.cpp.s
+.PHONY : LIPvelThread.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -269,6 +296,9 @@ help:
 	@echo "... LIPThread.o"
 	@echo "... LIPThread.i"
 	@echo "... LIPThread.s"
+	@echo "... LIPvelThread.o"
+	@echo "... LIPvelThread.i"
+	@echo "... LIPvelThread.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
