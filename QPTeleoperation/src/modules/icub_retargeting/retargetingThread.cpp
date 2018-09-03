@@ -130,10 +130,10 @@ void retargetingThread::publishPos()
 	}
 	if (stream_feet){
 		for (int i=0; i < 3; i++){
-			output.addDouble(l_foot(i));
+			output.addDouble(delta_l_foot(i));
 		}
 		for (int i=0; i < 3; i++){
-			output.addDouble(r_foot(i));
+			output.addDouble(delta_r_foot(i));
 		}
 	}
 	if (stream_base){
@@ -377,6 +377,10 @@ void retargetingThread::getRobotPos()
 		double n_pitch_h;
 		double n_yaw_h;
 
+		//feet positions
+		Eigen::Vector3d l_footi;
+		Eigen::Vector3d r_footi;
+
 
 		// compute human relative position in global frame
 		for (int i=0; i<3; i++) {
@@ -419,6 +423,9 @@ void retargetingThread::getRobotPos()
 		n_roll_h = toRoll(neck_quat_h);
 		n_pitch_h = toPitch(neck_quat_h);
 		n_yaw_h = toYaw(neck_quat_h);
+
+		l_footi << l_foot(0), l_foot(1), l_foot(2);
+		r_footi << r_foot(0), r_foot(1), r_foot(2);
 		
 		// store starting reference human position
 		if(firstRunPos) {
@@ -431,6 +438,9 @@ void retargetingThread::getRobotPos()
 			n_roll_start_h = n_roll_h;
 			n_pitch_start_h = n_pitch_h;
 			n_yaw_start_h = n_yaw_h;
+
+			l_foot_start = l_footi;
+			r_foot_start = r_footi;
 		}
 		firstRunPos = false;
 
@@ -456,6 +466,9 @@ void retargetingThread::getRobotPos()
 		n_delta_roll = n_roll_h - n_roll_start_h;
 		n_delta_pitch = n_pitch_h - n_pitch_start_h;
 		n_delta_yaw = n_yaw_h - n_yaw_start_h;
+
+		delta_l_foot = l_footi - l_foot_start;
+		delta_r_foot = r_footi - r_foot_start;
 		// pi_r = p_start_r + delta_p_r 
 		//		= p_start_r + m * delta_p_h
 		//		= p_start_r + m * (pi_h - p_start_h)

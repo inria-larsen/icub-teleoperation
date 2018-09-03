@@ -79,13 +79,18 @@ class retargetingThread: public yarp::os::RateThread
     Eigen::VectorXd m_ratioLimbs; 
     Eigen::VectorXd p_start_r_T;  
     Eigen::VectorXd p_start_h;
+    Eigen::VectorXd l_foot;
+    Eigen::VectorXd r_foot;
     double base_start_r_T;  
     double base_start_h;
     std::string start_pos; 
     bool stream_feet;
     bool stream_base;
-    Eigen::VectorXd l_foot;
-    Eigen::VectorXd r_foot;
+    //feet positions
+    Eigen::Vector3d l_foot_start;
+    Eigen::Vector3d r_foot_start;
+    Eigen::Vector3d delta_l_foot;
+    Eigen::Vector3d delta_r_foot;
     // base orientation
     double roll_start_h;
     double pitch_start_h;
