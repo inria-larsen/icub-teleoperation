@@ -145,6 +145,12 @@ void retargetingThread::publishPos()
 	output.addDouble(n_delta_roll);
 	output.addDouble(n_delta_pitch);
 	output.addDouble(n_delta_yaw);
+	output.addDouble(lf_delta_roll);
+	output.addDouble(lf_delta_pitch);
+	output.addDouble(lf_delta_yaw);
+	output.addDouble(rf_delta_roll);
+	output.addDouble(rf_delta_pitch);
+	output.addDouble(rf_delta_yaw);
 
 	pos_port.write();
 }
@@ -381,6 +387,17 @@ void retargetingThread::getRobotPos()
 		Eigen::Vector3d l_footi;
 		Eigen::Vector3d r_footi;
 
+		// Robot and human feet orientation
+		Eigen::VectorXd	lf_quat_h(4);
+		double lf_roll_h;
+		double lf_pitch_h;
+		double lf_yaw_h;
+		Eigen::VectorXd	rf_quat_h(4);
+		double rf_roll_h;
+		double rf_pitch_h;
+		double rf_yaw_h;
+
+
 
 		// compute human relative position in global frame
 		for (int i=0; i<3; i++) {
@@ -424,13 +441,25 @@ void retargetingThread::getRobotPos()
 		n_pitch_h = toPitch(neck_quat_h);
 		n_yaw_h = toYaw(neck_quat_h);
 
+		lf_quat_h << l_foot(3), l_foot(4), l_foot(5), l_foot(6);
+		lf_roll_h = toRoll(lf_quat_h);
+		lf_pitch_h = toPitch(lf_quat_h);
+		lf_yaw_h = toYaw(lf_quat_h);
+
+		rf_quat_h << r_foot(3), r_foot(4), r_foot(5), r_foot(6);
+		rf_roll_h = toRoll(rf_quat_h);
+		rf_pitch_h = toPitch(rf_quat_h);
+		rf_yaw_h = toYaw(rf_quat_h);
+
 		l_footi << l_foot(0), l_foot(1), l_foot(2);
 		r_footi << r_foot(0), r_foot(1), r_foot(2);
 		
 		// store starting reference human position
 		if(firstRunPos) {
 			p_start_h = pi_h;
+
 			base_start_h = basei_h;
+
 			roll_start_h = roll_h;
 			pitch_start_h = pitch_h;
 			yaw_start_h = yaw_h;
@@ -438,6 +467,14 @@ void retargetingThread::getRobotPos()
 			n_roll_start_h = n_roll_h;
 			n_pitch_start_h = n_pitch_h;
 			n_yaw_start_h = n_yaw_h;
+
+			lf_roll_start_h = lf_roll_h;
+			lf_pitch_start_h = lf_pitch_h;
+			lf_yaw_start_h = lf_yaw_h;
+
+			rf_roll_start_h = rf_roll_h;
+			rf_pitch_start_h = rf_pitch_h;
+			rf_yaw_start_h = rf_yaw_h;
 
 			l_foot_start = l_footi;
 			r_foot_start = r_footi;
@@ -466,6 +503,14 @@ void retargetingThread::getRobotPos()
 		n_delta_roll = n_roll_h - n_roll_start_h;
 		n_delta_pitch = n_pitch_h - n_pitch_start_h;
 		n_delta_yaw = n_yaw_h - n_yaw_start_h;
+
+		lf_delta_roll = lf_roll_h - lf_roll_start_h;
+		lf_delta_pitch = lf_pitch_h - lf_pitch_start_h;
+		lf_delta_yaw = lf_yaw_h - lf_yaw_start_h;
+
+		rf_delta_roll = rf_roll_h - rf_roll_start_h;
+		rf_delta_pitch = rf_pitch_h - rf_pitch_start_h;
+		rf_delta_yaw = rf_yaw_h - rf_yaw_start_h;
 
 		delta_l_foot = l_footi - l_foot_start;
 		delta_r_foot = r_footi - r_foot_start;

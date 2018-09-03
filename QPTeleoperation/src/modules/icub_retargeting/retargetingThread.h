@@ -91,6 +91,20 @@ class retargetingThread: public yarp::os::RateThread
     Eigen::Vector3d r_foot_start;
     Eigen::Vector3d delta_l_foot;
     Eigen::Vector3d delta_r_foot;
+    //feet orientation
+    double lf_roll_start_h;
+    double lf_pitch_start_h;
+    double lf_yaw_start_h;
+    double lf_delta_roll;
+    double lf_delta_pitch;
+    double lf_delta_yaw;
+
+    double rf_roll_start_h;
+    double rf_pitch_start_h;
+    double rf_yaw_start_h;
+    double rf_delta_roll;
+    double rf_delta_pitch;
+    double rf_delta_yaw;
     // base orientation
     double roll_start_h;
     double pitch_start_h;
