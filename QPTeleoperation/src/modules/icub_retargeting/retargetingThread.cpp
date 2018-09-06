@@ -130,10 +130,10 @@ void retargetingThread::publishPos()
 	}
 	if (stream_feet){
 		for (int i=0; i < 3; i++){
-			output.addDouble(delta_l_foot(i));
+			output.addDouble(l_foot_yaw(i));
 		}
 		for (int i=0; i < 3; i++){
-			output.addDouble(delta_r_foot(i));
+			output.addDouble(r_foot_yaw(i));
 		}
 	}
 	if (stream_base){
@@ -383,10 +383,6 @@ void retargetingThread::getRobotPos()
 		double n_pitch_h;
 		double n_yaw_h;
 
-		//feet positions
-		Eigen::Vector3d l_footi;
-		Eigen::Vector3d r_footi;
-
 		// Robot and human feet orientation
 		Eigen::VectorXd	lf_quat_h(4);
 		double lf_roll_h;
@@ -451,8 +447,23 @@ void retargetingThread::getRobotPos()
 		rf_pitch_h = toPitch(rf_quat_h);
 		rf_yaw_h = toYaw(rf_quat_h);
 
+		Eigen::Matrix3d Ryaw_lf;
+		Eigen::Matrix3d Ryaw_rf;
+
+		Ryaw_lf << cos(lf_yaw_h), -1*sin(lf_yaw_h), 0,
+				sin(lf_yaw_h), cos(lf_yaw_h), 0,
+				0, 0, 1;
+		Ryaw_rf << cos(rf_yaw_h), -1*sin(rf_yaw_h), 0,
+				sin(rf_yaw_h), cos(rf_yaw_h), 0,
+				0, 0, 1;
+
 		l_footi << l_foot(0), l_foot(1), l_foot(2);
 		r_footi << r_foot(0), r_foot(1), r_foot(2);
+
+		for (int i=0; i<3; i++) {
+			l_foot_yaw(i) = Ryaw_lf(i,0)*l_footi(0)+Ryaw_lf(i,1)*l_footi(1)+Ryaw_lf(i,2)*l_footi(2);
+			r_foot_yaw(i) = Ryaw_rf(i,0)*r_footi(0)+Ryaw_rf(i,1)*r_footi(1)+Ryaw_rf(i,2)*r_footi(2);
+		}
 		
 		// store starting reference human position
 		if(firstRunPos) {
@@ -475,9 +486,6 @@ void retargetingThread::getRobotPos()
 			rf_roll_start_h = rf_roll_h;
 			rf_pitch_start_h = rf_pitch_h;
 			rf_yaw_start_h = rf_yaw_h;
-
-			l_foot_start = l_footi;
-			r_foot_start = r_footi;
 		}
 		firstRunPos = false;
 
@@ -512,8 +520,6 @@ void retargetingThread::getRobotPos()
 		rf_delta_pitch = rf_pitch_h - rf_pitch_start_h;
 		rf_delta_yaw = rf_yaw_h - rf_yaw_start_h;
 
-		delta_l_foot = l_footi - l_foot_start;
-		delta_r_foot = r_footi - r_foot_start;
 		// pi_r = p_start_r + delta_p_r 
 		//		= p_start_r + m * delta_p_h
 		//		= p_start_r + m * (pi_h - p_start_h)

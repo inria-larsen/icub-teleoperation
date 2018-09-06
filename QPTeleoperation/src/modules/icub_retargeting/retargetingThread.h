@@ -87,10 +87,10 @@ class retargetingThread: public yarp::os::RateThread
     bool stream_feet;
     bool stream_base;
     //feet positions
-    Eigen::Vector3d l_foot_start;
-    Eigen::Vector3d r_foot_start;
-    Eigen::Vector3d delta_l_foot;
-    Eigen::Vector3d delta_r_foot;
+	Eigen::Vector3d l_footi;
+	Eigen::Vector3d r_footi;
+    Eigen::Vector3d l_foot_yaw;
+    Eigen::Vector3d r_foot_yaw;
     //feet orientation
     double lf_roll_start_h;
     double lf_pitch_start_h;

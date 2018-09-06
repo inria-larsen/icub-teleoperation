@@ -1,0 +1,55 @@
+ <!-- Data dumper xsens recordings -- (C) Luigi Penco -->
+
+<application>
+<name>xsens retargeting data dumper</name>
+<dependencies>
+	<port>/xsens/JointAngles</port>
+	<port>/xsens/COM</port>
+	<port>/xsens/PoseQuaternion</port>
+</dependencies>
+
+
+    <!-- JOINTS -->
+<module>
+	<name>yarpdatadumper</name>
+	<parameters>--name /jointAngles --type bottle --rxTime</parameters>
+	<node>luigi</node>
+	<stdio>luigi</stdio>
+	<tag>joints</tag>
+</module>
+<module>
+	<name>yarpdatadumper</name>
+	<parameters>--name /COM --type bottle --rxTime</parameters>
+	<node>luigi</node>
+	<stdio>luigi</stdio>
+	<tag>CoM</tag>
+</module>
+<module>
+	<name>yarpdatadumper</name>
+	<parameters>--name /pos --type bottle --rxTime</parameters>
+	<node>luigi</node>
+	<stdio>luigi</stdio>
+	<tag>Pose</tag>
+</module>
+
+
+<!-- CONNECTIONS -->
+<!--
+<connection>
+  <from>/xsens/JointAngles</from>
+  <to>/jointAngles</to>
+  <protocol>udp</protocol>
+</connection>
+<connection>
+  <from>/xsens/COM</from>
+  <to>/COM</to>
+  <protocol>udp</protocol>
+</connection>
+<connection>
+  <from>/xsens/PoseQuaternion</from>
+  <to>/pos</to>
+  <protocol>udp</protocol>
+</connection>
+-->
+ 
+</application>
