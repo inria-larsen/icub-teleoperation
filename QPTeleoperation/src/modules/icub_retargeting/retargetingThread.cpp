@@ -138,19 +138,10 @@ void retargetingThread::publishPos()
 	}
 	if (stream_base){
 		output.addDouble(basei_r);
-		output.addDouble(delta_roll);
-		output.addDouble(delta_pitch);
-		output.addDouble(delta_yaw);
 	}
 	output.addDouble(n_delta_roll);
 	output.addDouble(n_delta_pitch);
 	output.addDouble(n_delta_yaw);
-	output.addDouble(lf_delta_roll);
-	output.addDouble(lf_delta_pitch);
-	output.addDouble(lf_delta_yaw);
-	output.addDouble(rf_delta_roll);
-	output.addDouble(rf_delta_pitch);
-	output.addDouble(rf_delta_yaw);
 
 	pos_port.write();
 }
