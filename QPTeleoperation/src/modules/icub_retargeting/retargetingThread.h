@@ -52,6 +52,7 @@ class retargetingThread: public yarp::os::RateThread
 	/** prefix for all the ports of the robot at which we are connecting */
 	std::string robotName;
 	double offset;
+	int period;
 	/** helper variable for printing every printPeriod milliseconds */
 	int                 printCountdown;
 	/** period after which some diagnostic messages are print */
@@ -121,6 +122,8 @@ class retargetingThread: public yarp::os::RateThread
     double n_delta_yaw;
 	/*CoM related*/
 	Eigen::VectorXd com;
+    Eigen::Vector2d old_com;
+	Eigen::Vector3d comVel;
 	double o_com; // com offset from left foot on the vector connecting the two feet
 	Eigen::Vector2d p_com;
 	Eigen::Vector2d p_Lfoot;

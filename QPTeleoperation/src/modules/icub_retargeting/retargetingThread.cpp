@@ -39,6 +39,7 @@ retargetingThread::retargetingThread(string _name,
 	               Eigen::VectorXd qstart_r_,
 	               std::string urdf)
 :   RateThread(_period),
+	period(_period),
 	moduleName(_name),
 	robotName(_robotName),
 	actuatedDOFs(_actuatedDOFs),
@@ -101,6 +102,8 @@ bool retargetingThread::threadInit()
 	bodySegPos.resize(15);
 	j_start_h.resize(actuatedDOFs);
 	p_start_h.resize(15);
+	old_com.setZero();
+	comVel.setZero();
 
 	yInfo() << "retargetingThread::threadInit finished successfully.";
 
@@ -154,6 +157,8 @@ void retargetingThread::publishCoM()
 	for (int i=0; i < com.size(); i++){
 		output.addDouble(com(i));
 	}
+	output.addDouble(comVel(0));
+	output.addDouble(comVel(1));
 
 	com_port.write();
 }
@@ -544,6 +549,10 @@ void retargetingThread::getXsensCoM()
 	else {
 		streamingCoM = false;	
 	}
+	comVel(0) = (com(0) - old_com(0))/period;
+	comVel(1) = (com(1) - old_com(1))/period;
+	old_com(0) = com(0);
+	old_com(1) = com(1);
 	//compute CoM offset from left_foot on the vector connecting the two feet
 	if (streamingPos) {
 		p_com(0) = com(0);
