@@ -33,9 +33,7 @@ retargetingThread::retargetingThread(string _name,
                    double base_start_r_,
                    std::string _ref_frame,
                    std::string _start_pos,
-                   std::string _joint_value,
-	               Eigen::VectorXd qstart_r_,
-	               std::string urdf)
+                   std::string _joint_value)
 :   RateThread(_period),
 	period(_period),
 	moduleName(_name),
@@ -52,8 +50,6 @@ retargetingThread::retargetingThread(string _name,
 	ref_frame(_ref_frame),
 	start_pos(_start_pos),
 	joint_value(_joint_value),
-	qstart_r(qstart_r_),
-	urdf_file_path(urdf),
 	printCountdown(0),
 	printPeriod(2000)
 
@@ -67,39 +63,40 @@ yInfo() << "Launching retargetingThread with name : " << _name << " and robotNam
 bool retargetingThread::threadInit()
 {  
 	if (this->m_checkJointLimits) {
-		std::cout << "[INFO]Joint limits are:\nmin" <<m_minJointLimits.transpose() << "\nmax " << m_maxJointLimits.transpose() << "\n";
+		std::cout << "Joint limits are:\nmin" << m_minJointLimits.transpose() << "\nmax " << m_maxJointLimits.transpose();
 	} else {
 		yInfo("Joint limits disabled");
 	}
 
-	bool ok = icub_model.loadURDFModel(urdf_file_path);
+	// bool ok = icub_model.loadURDFModel(urdf_file_path);
 
-    if(ok){
-        yInfo("Dummy model of the robot successfully istantiated");
-    }  
-    else {
-    	std::cerr << "Loading urdf file failed, exiting" << std::endl;
-        return false;
-    }
+ //    if(ok){
+ //        yInfo("Dummy model of the robot successfully istantiated");
+ //    }  
+ //    else {
+ //    	std::cerr << "Loading urdf file failed, exiting" << std::endl;
+ //        return false;
+ //    }
 
 
-    icub_model.setAng(eigenToYarp(qstart_r));
-    std::string link_name = "l_foot";
-    link_index = icub_model.getLinkIndex(link_name);
-    dummyCom_start = icub_model.getCOM(link_index);
+    // icub_model.setAng(eigenToYarp(qstart_r));
+    // std::string link_name = "l_foot";
+    // link_index = icub_model.getLinkIndex(link_name);
+    // dummyCom_start = icub_model.getCOM(link_index);
 
 	//opening ports
 	joint_port.open(string("/"+moduleName+"/q:o").c_str());
 	pos_port.open(string("/"+moduleName+"/pos:o").c_str());
 	com_port.open(string("/"+moduleName+"/com:o").c_str());
 
-	com.resize(5); //x,y,z + offset from left foot + deltaCoMx
+	com.resize(6); //x,y,z + offset from left foot + deltaCoMx_i + deltaCoMx_start
 	jointPos.resize(actuatedDOFs);
 	bodySegPos.resize(15);
 	j_start_h.resize(actuatedDOFs);
 	p_start_h.resize(15);
 	old_com.setZero();
 	comVel.setZero();
+	com_start.setZero();
 
 	yInfo() << "retargetingThread::threadInit finished successfully.";
 
@@ -127,16 +124,16 @@ void retargetingThread::publishPos()
 	for (int i=0; i < bodySegPos.size(); i++){
 		output.addDouble(bodySegPos(i));
 	}
+	output.addDouble(basei_r);
+	output.addDouble(n_delta_roll);
+	output.addDouble(n_delta_pitch);
+	output.addDouble(n_delta_yaw);
 	for (int i=0; i < 3; i++){
 		output.addDouble(l_foot_yaw(i));
 	}
 	for (int i=0; i < 3; i++){
 		output.addDouble(r_foot_yaw(i));
 	}
-	output.addDouble(basei_r);
-	output.addDouble(n_delta_roll);
-	output.addDouble(n_delta_pitch);
-	output.addDouble(n_delta_yaw);
 
 	pos_port.write();
 }
@@ -218,8 +215,9 @@ void retargetingThread::getRobotJoints()
 			// store starting reference human joint angles
 			if(firstRunJ) {
 				j_start_h = ji_h;
+				firstRunJ = false;
 			}
-			firstRunJ = false;
+			
 
 			//compute delta joint angles
 			delta_j_h = ji_h - j_start_h;
@@ -474,8 +472,10 @@ void retargetingThread::getRobotPos()
 			rf_roll_start_h = rf_roll_h;
 			rf_pitch_start_h = rf_pitch_h;
 			rf_yaw_start_h = rf_yaw_h;
+
+			firstRunPos = false;
 		}
-		firstRunPos = false;
+		
 
 		// compute delta position
 		delta_p_h = pi_h - p_start_h;
@@ -541,8 +541,19 @@ void retargetingThread::getXsensCoM()
 	else {
 		streamingCoM = false;	
 	}
+
+	if (firstRunCom){
+		com_start(0) = com(0);
+		firstRunCom = false;
+	}
+
 	comVel(0) = (com(0) - old_com(0))/period;
 	comVel(1) = (com(1) - old_com(1))/period;
+
+	deltaCom_i = com(0) - old_com(0);
+	deltaCom_start = com(0) - com_start(0);
+
+
 	old_com(0) = com(0);
 	old_com(1) = com(1);
 	//compute CoM offset from left_foot on the vector connecting the two feet
@@ -561,21 +572,22 @@ void retargetingThread::getXsensCoM()
 		o_com = ((p_com - p_Lfoot).dot(p_Rfoot - p_Lfoot))/norm;
 		com(3) = o_com;
 	}
-	//compute DeltaCoM outside feet line 
-	if (streamingJoint) {
-		Eigen::VectorXd qdummy_r(actuatedDOFs);
-		// copy retargeted joint values but keep same initial q for the legs
-		qdummy_r = qstart_r;
-		for (int i=0; i<20; i++){
-			qdummy_r(i) = jointPos(i)+qstart_r(i);
-		}
-		icub_model.setAng(eigenToYarp(qdummy_r));
-		dummyCom_ = icub_model.getCOM(link_index);
+	// //compute DeltaCoM outside feet line 
+	// if (streamingJoint) {
+	// 	Eigen::VectorXd qdummy_r(actuatedDOFs);
+	// 	// copy retargeted joint values but keep same initial q for the legs
+	// 	qdummy_r = qstart_r;
+	// 	for (int i=0; i<20; i++){
+	// 		qdummy_r(i) = jointPos(i)+qstart_r(i);
+	// 	}
+	// 	icub_model.setAng(eigenToYarp(qdummy_r));
+	// 	dummyCom_ = icub_model.getCOM(link_index);
 
-		deltaCom = dummyCom_(0) - dummyCom_start(0);
-		com(4) = deltaCom;
-	}
-
+	// 	deltaCom = dummyCom_(0) - dummyCom_start(0);
+	// 	com(4) = deltaCom;
+	// }
+	com(4)=deltaCom_i;
+	com(5)=deltaCom_start;
 }
 
 

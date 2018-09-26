@@ -37,10 +37,6 @@
 #include <yarp/sig/Vector.h>
 #include <yarp/os/Mutex.h>
 
-// iDynTree includes
-#include "iCub/iDynTree/yarp_kdl.h"
-#include <iCub/iDynTree/DynTree.h>
-
 
 using namespace Eigen;
 
@@ -63,6 +59,8 @@ class retargetingThread: public yarp::os::RateThread
 	bool streamingCoM=false;
 	bool firstRunPos=true;
 	bool firstRunJ=true;
+	bool firstRunCom=true;
+
 
 	/*Joint related*/
 	Eigen::VectorXd jointPos;
@@ -73,6 +71,8 @@ class retargetingThread: public yarp::os::RateThread
     std::string joint_value;
     Eigen::VectorXd j_start_r;
     Eigen::VectorXd j_start_h;
+    ///////////////////////////
+
     /*Body segment pose related*/
     Eigen::VectorXd bodySegPos;
     double basei_r;
@@ -118,9 +118,12 @@ class retargetingThread: public yarp::os::RateThread
     double n_delta_roll;
     double n_delta_pitch;
     double n_delta_yaw;
+    //////////////////////
+
 	/*CoM related*/
 	Eigen::VectorXd com;
     Eigen::Vector2d old_com;
+    Eigen::Vector2d com_start;
 	Eigen::Vector3d comVel;
 	double o_com; // com offset from left foot on the vector connecting the two feet
 	Eigen::Vector2d p_com;
@@ -128,14 +131,18 @@ class retargetingThread: public yarp::os::RateThread
 	Eigen::Vector2d p_Rfoot;
 	Eigen::Vector2d p_RLfeet;
 
-	/*dummy robot related*/
-	iCub::iDynTree::DynTree icub_model;
-	int link_index;
-    Eigen::VectorXd qstart_r;
-    std::string urdf_file_path;
-    yarp::sig::Vector dummyCom_start;
-    yarp::sig::Vector dummyCom_;
-    double deltaCom; //duumy robot x com variation
+	// /*dummy robot related*/
+	// iCub::iDynTree::DynTree icub_model;
+	// int link_index;
+ //    Eigen::VectorXd qstart_r;
+ //    std::string urdf_file_path;
+ //    yarp::sig::Vector dummyCom_start;
+ //    yarp::sig::Vector dummyCom_;
+ //    double deltaCom; //dummy robot x com variation
+	double deltaCom_i;
+	double deltaCom_start;
+	///////////////////////
+
 	
 	//Port for reading and writing the joint position
     yarp::os::BufferedPort<yarp::os::Bottle> joint_port; 
@@ -231,9 +238,7 @@ public:
                double base_start_r_T_,
                std::string _ref_frame,
                std::string _start_pos,
-               std::string _joint_value,
-               Eigen::VectorXd qstart_r_,
-               std::string urdf);
+               std::string _joint_value);
 	
 	bool threadInit();
 	void run();

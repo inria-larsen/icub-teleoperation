@@ -119,17 +119,17 @@ bool retargetingModule::configure(yarp::os::ResourceFinder &rf)
        base_start_r = rf.find("base_start_r").asDouble();
     }
 
-    //dummy robot values
-    Bottle *q_start_r_ = rf.find("j_start_dummy").asList(); 
-    size = q_start_r_->size();
-    q_start_r.resize(size);
-    for (int i=0; i<size; i++){
-        q_start_r(i) = q_start_r_->get(i).asDouble();
-    }
-    if( rf.check("urdf") && rf.find("urdf").isString() )
-    {
-       urdf_file_path = rf.find("urdf").asString();
-    }
+    // //dummy robot values
+    // Bottle *q_start_r_ = rf.find("j_start_dummy").asList(); 
+    // size = q_start_r_->size();
+    // q_start_r.resize(size);
+    // for (int i=0; i<size; i++){
+    //     q_start_r(i) = q_start_r_->get(i).asDouble();
+    // }
+    // if( rf.check("urdf") && rf.find("urdf").isString() )
+    // {
+    //    urdf_file_path = rf.find("urdf").asString();
+    // }
 
 
 
@@ -159,9 +159,7 @@ bool retargetingModule::configure(yarp::os::ResourceFinder &rf)
                                         base_start_r,
                                         ref_frame,
 				                        start_pos,
-                                        joint_value,
-                                        q_start_r,
-                                        urdf_file_path);
+                                        joint_value);
     if(!rThread->start())
     {
 	   yError() << getName()

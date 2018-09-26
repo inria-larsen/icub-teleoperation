@@ -51,9 +51,9 @@ class retargetingModule: public yarp::os::RFModule
     Eigen::VectorXd p_start_r;
     Eigen::VectorXd j_start_r; 
     double base_start_r;  
-    /*dummy robot related*/
-    Eigen::VectorXd q_start_r;
-    std::string urdf_file_path;
+    // /*dummy robot related*/
+    // Eigen::VectorXd q_start_r;
+    // std::string urdf_file_path;
 
     double  avgTime, stdDev, avgTimeUsed, stdDevUsed;
     
