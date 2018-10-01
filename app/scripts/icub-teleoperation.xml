@@ -1,6 +1,6 @@
  <!-- iCub teleoperation -- (C) Luigi Penco --> 
 <application>
-    <name>iCub Teleoperation</name>
+    <name>iCub Teleoperation Modules</name>
     <description>from XSens to iCub</description>
     <version>1.0</version>
 
@@ -15,10 +15,10 @@
     </module>
 
     <module>
-        <name>LIP</name>
+        <name>LIP_corrector</name>
         <node>luigi</node>
         <stdio>luigi</stdio>
-        <tag>LIPretargetingModule</tag>
+        <tag>LIPcorrectorModule</tag>
     </module>
 
 <!--

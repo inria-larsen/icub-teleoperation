@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 2.8.12)
 
 add_compile_options(-std=c++11)
 
-set(PROJECTNAME LIP)
+set(PROJECTNAME LIP_corrector)
 project(${PROJECTNAME})
 
 

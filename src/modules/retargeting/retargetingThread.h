@@ -131,14 +131,6 @@ class retargetingThread: public yarp::os::RateThread
 	Eigen::Vector2d p_Rfoot;
 	Eigen::Vector2d p_RLfeet;
 
-	// /*dummy robot related*/
-	// iCub::iDynTree::DynTree icub_model;
-	// int link_index;
- //    Eigen::VectorXd qstart_r;
- //    std::string urdf_file_path;
- //    yarp::sig::Vector dummyCom_start;
- //    yarp::sig::Vector dummyCom_;
- //    double deltaCom; //dummy robot x com variation
 	double deltaCom_i;
 	double deltaCom_start;
 	///////////////////////
@@ -235,7 +227,7 @@ public:
                Eigen::VectorXd ratioLimbs,
                Eigen::VectorXd j_start_r_,
                Eigen::VectorXd p_start_r_,
-               double base_start_r_T_,
+               double base_start_r_,
                std::string _ref_frame,
                std::string _start_pos,
                std::string _joint_value);

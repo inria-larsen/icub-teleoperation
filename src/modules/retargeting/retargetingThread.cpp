@@ -9,7 +9,6 @@
 #include <math.h>       
 
 using namespace yarp::os;
-using namespace std;
 using namespace Eigen;
 
 const double PI = 3.141592653589793;
@@ -19,8 +18,8 @@ const double PI = 3.141592653589793;
 //        Retargeting Main THREAD
 //===============================================
 
-retargetingThread::retargetingThread(string _name,
-			       string _robotName,
+retargetingThread::retargetingThread(std::string _name,
+			       std::string _robotName,
 			       int _actuatedDOFs,
 			       bool checkJointLimits,
                    Eigen::VectorXd minJointLimits,
@@ -54,7 +53,6 @@ retargetingThread::retargetingThread(string _name,
 	printPeriod(2000)
 
 {
-
 yInfo() << "Launching retargetingThread with name : " << _name << " and robotName " << _robotName << " and period " << _period;
 
 }
@@ -68,26 +66,10 @@ bool retargetingThread::threadInit()
 		yInfo("Joint limits disabled");
 	}
 
-	// bool ok = icub_model.loadURDFModel(urdf_file_path);
-
- //    if(ok){
- //        yInfo("Dummy model of the robot successfully istantiated");
- //    }  
- //    else {
- //    	std::cerr << "Loading urdf file failed, exiting" << std::endl;
- //        return false;
- //    }
-
-
-    // icub_model.setAng(eigenToYarp(qstart_r));
-    // std::string link_name = "l_foot";
-    // link_index = icub_model.getLinkIndex(link_name);
-    // dummyCom_start = icub_model.getCOM(link_index);
-
 	//opening ports
-	joint_port.open(string("/"+moduleName+"/q:o").c_str());
-	pos_port.open(string("/"+moduleName+"/pos:o").c_str());
-	com_port.open(string("/"+moduleName+"/com:o").c_str());
+	joint_port.open(std::string("/"+moduleName+"/q:o").c_str());
+	pos_port.open(std::string("/"+moduleName+"/pos:o").c_str());
+	com_port.open(std::string("/"+moduleName+"/com:o").c_str());
 
 	com.resize(6); //x,y,z + offset from left foot + deltaCoMx_i + deltaCoMx_start
 	jointPos.resize(actuatedDOFs);
@@ -125,9 +107,10 @@ void retargetingThread::publishPos()
 		output.addDouble(bodySegPos(i));
 	}
 	output.addDouble(basei_r);
-	output.addDouble(n_delta_roll);
-	output.addDouble(n_delta_pitch);
-	output.addDouble(n_delta_yaw);
+	output.addDouble(delta_roll);
+	output.addDouble(delta_pitch);
+	output.addDouble(delta_yaw);
+	std::cout << "delta_pitch " << n_delta_pitch << "\ndelta_roll " << delta_roll << "\ndelta_yaw " << delta_yaw << std::endl;
 	for (int i=0; i < 3; i++){
 		output.addDouble(l_foot_yaw(i));
 	}
@@ -174,7 +157,7 @@ void retargetingThread::getRobotJoints()
 
 			double torso_pitch = (input->get(5).asDouble()+input->get(8).asDouble()+input->get(11).asDouble());
 			double torso_roll = (input->get(3).asDouble()+input->get(6).asDouble()+input->get(9).asDouble())*-1;
-			double torso_yaw = (input->get(1).asDouble()+input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble()+input->get(13).asDouble())*-1; 
+			double torso_yaw = (input->get(1).asDouble()+input->get(4).asDouble()+input->get(7).asDouble()+input->get(10).asDouble())*-1; 
 			double neck_pitch = (input->get(17).asDouble())*-1;
 			double neck_roll = input->get(15).asDouble();
 			double neck_yaw = input->get(16).asDouble();
