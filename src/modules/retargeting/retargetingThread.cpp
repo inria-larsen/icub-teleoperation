@@ -110,7 +110,7 @@ void retargetingThread::publishPos()
 	output.addDouble(delta_roll);
 	output.addDouble(delta_pitch);
 	output.addDouble(delta_yaw);
-	std::cout << "delta_pitch " << n_delta_pitch << "\ndelta_roll " << delta_roll << "\ndelta_yaw " << delta_yaw << std::endl;
+	std::cout << "delta_pitch " << delta_pitch << "\ndelta_roll " << delta_roll << "\ndelta_yaw " << delta_yaw << std::endl;
 	for (int i=0; i < 3; i++){
 		output.addDouble(l_foot_yaw(i));
 	}

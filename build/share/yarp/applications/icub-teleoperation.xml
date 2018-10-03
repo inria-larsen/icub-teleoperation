@@ -1,0 +1,85 @@
+ <!-- iCub teleoperation -- (C) Luigi Penco --> 
+<application>
+    <name>iCub Teleoperation Modules</name>
+    <description>from XSens to iCub</description>
+    <version>1.0</version>
+
+
+    <!-- MODULES -->
+
+    <module>
+        <name>retargeting</name>
+        <node>luigi</node>
+        <stdio>luigi</stdio>
+        <tag>retargetingModule</tag>
+    </module>
+
+    <module>
+        <name>LIP_corrector</name>
+        <node>luigi</node>
+        <stdio>luigi</stdio>
+        <tag>LIPcorrectorModule</tag>
+    </module>
+
+<!--
+    <module>
+        <name>teleoperation</name>
+        <node>dock</node>
+        <stdio>dock</stdio>
+        <tag>controller</tag>
+    </module>
+-->
+    <module>
+        <name>yarpdataplayer</name>
+        <node>luigi</node>
+        <stdio>luigi</stdio>
+        <tag>XsensStreamer</tag>
+    </module>
+
+
+
+    <!-- CONNECTIONS -->
+
+    <connection>
+          <from>/xsens/JointAngles</from>
+          <to>/retargeting/q:o</to>
+          <protocol>udp</protocol>
+    </connection>
+
+    <connection>
+          <from>/xsens/PoseQuaternion</from>
+          <to>/retargeting/pos:o</to>
+          <protocol>udp</protocol>
+    </connection>
+
+    <connection>
+          <from>/xsens/COM</from>
+          <to>/retargeting/com:o</to>
+          <protocol>udp</protocol>
+    </connection>
+
+
+<!--
+    <connection>
+          <from>/retargeting/com:o</from>
+          <to>/retargeting/com:i</to>
+          <protocol>udp</protocol>
+    </connection>
+-->
+
+<!--
+    <connection>
+          <from>/retargeting/q:o</from>
+          <to>/retargeting/q:i</to>
+          <protocol>udp</protocol>
+    </connection>
+-->
+<!--
+    <connection>
+          <from>/retargeting/pos:o</from>
+          <to>/retargeting/pos:i</to>
+          <protocol>udp</protocol>
+    </connection>
+-->
+ 
+</application>

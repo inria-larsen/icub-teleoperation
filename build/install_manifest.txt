@@ -1,0 +1,9 @@
+/home/waldezjr/icub/software/bin/retargeting
+/home/waldezjr/icub/software/bin/LIP_corrector
+/home/waldezjr/icub/software/share/yarp/contexts/retargetingIcub.ini
+/home/waldezjr/icub/software/share/yarp/contexts/MpcSolver.ini
+/home/waldezjr/icub/software/share/yarp/contexts/LIP_corrector.ini
+/home/waldezjr/icub/software/share/yarp/applications/icub-teleoperation.xml.template
+/home/waldezjr/icub/software/share/yarp/applications/teleop-dumperNancy.xml
+/home/waldezjr/icub/software/share/yarp/applications/teleop-dumper.xml
+/home/waldezjr/icub/software/share/yarp/applications/icub-teleoperation.xml
